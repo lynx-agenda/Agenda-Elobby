@@ -1,6 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import Image from 'react-bootstrap/Image'
+import ReactHtmlParser from 'react-html-parser';
+
 
 import 'bootstrap/dist/css/bootstrap.min.css';
 
@@ -42,7 +44,7 @@ console.log(game);
                 <h3 className="my-4">{game.name}</h3>
                 <Image src={game.background_image} fluid  rounded />
                 <h4 className="my-4">Descripcion</h4>
-                <p>{game.description}</p>
+                <p>{ReactHtmlParser(game.description)}</p>
                 <div className="row">
                     <div className="col-6">
                         <p><strong>Nota: </strong>{game.metacritic}</p>
