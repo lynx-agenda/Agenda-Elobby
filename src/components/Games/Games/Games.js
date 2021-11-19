@@ -1,0 +1,88 @@
+import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom';
+
+import 'bootstrap/dist/css/bootstrap.min.css';
+import Button from 'react-bootstrap/Button'
+
+import Game from '../Game/Game'
+import Search from '../../Search/Search';
+import Loading from '../../Loading/Loading'
+
+function Games() {
+    const { page } = useParams();
+    let navigate = useNavigate();
+    const [fetchend, setFetchend] = useState(false);
+    const [games, setGames] = useState({});
+    const [url, setUrl] = useState(`https://api.rawg.io/api/games?key=f65e3ff64bf5436f83b6ba0f8b83ac3b&parent_platforms=1,2,3,7&exclude_additions=true&page=${page}`)
+
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                let response = await fetch(url)
+                response = await response.json()
+                setGames(response) 
+                setFetchend(true)
+            }catch(e){
+                window.location.href = "/NotFound"
+            }
+        } 
+        fetchData();
+}, [url])
+
+const nextPage = () =>{
+    navigate(`/Games/Page/${+page+1}`);
+    setUrl(`https://api.rawg.io/api/games?key=f65e3ff64bf5436f83b6ba0f8b83ac3b&page=${+page+1}`)
+    setFetchend(false);
+}
+
+const previousPage = () =>{
+    if (games.previous!== null) {
+        navigate(`/Games/Page/${+page-1}`);
+        setUrl(`https://api.rawg.io/api/games?key=f65e3ff64bf5436f83b6ba0f8b83ac3b&page=${+page-1}`)
+        setFetchend(false);
+    }
+}
+
+const PaginationBasic = () =>{
+
+return (
+    <div className="d-flex justify-content-center mt-3">
+
+        {games.previous==null ? 
+        <Button variant="primary" onClick={previousPage} disabled>Anterior</Button> : 
+        <Button variant="primary" onClick={previousPage}>Anterior</Button>}{' '}
+
+        <input className="mx-2" type="number" value={page} disabled />
+
+        {games.next==null ? 
+        <Button variant="primary" onClick={nextPage} disabled>Siguiente</Button> : 
+        <Button variant="primary" onClick={nextPage}>Siguiente</Button>}{' '}
+    </div>
+);
+
+} 
+
+if (!fetchend) {
+    return (<Loading />);
+}
+
+    return (
+
+
+    <section className="py-5 marginNav">
+        <div className="container">
+            <Search url="/Games/Browser/"/>
+            <h2>Videojuegos</h2>
+            <hr/>
+            <div className="row">
+                    {games.results.map((element) => { 
+                        return <div key={element.id} className="col-12 col-md-4 mt-3"><Game name={element.name} img={element.background_image} id={element.id}/></div>;
+                    })}
+            </div>
+        <PaginationBasic />
+        </div>
+    </section>
+    );
+}
+
+export default Games;
