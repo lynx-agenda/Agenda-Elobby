@@ -3,39 +3,39 @@ import { useParams } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import Game from "../Game/Game";
+import Movie from "../Movie/Movie";
 import Search from "../../Search/Search";
 import Loading from "../../Loading/Loading";
 
-export default function BrowserGames() {
+export default function BrowserMovies() {
   const { text } = useParams();
-  const [games, setGames] = useState({});
-  const [fetchend, setFetchend] = useState(false);
-  const url = `https://api.rawg.io/api/games?key=f65e3ff64bf5436f83b6ba0f8b83ac3b&search=${text}&search_precise=true&parent_platforms=1,2,3,7&exclude_additions=true`;
+  const [response, setResponse] = useState({});
+  const [loading, setLoading] = useState(false);
+  const url = `https://api.themoviedb.org/3/search/movie?api_key=d6c7a342258732312d949314913635e7&query=${text}`;
 
   useEffect(() => {
-    async function fetchData() {
+    async function getData() {
       try {
         let response = await fetch(url);
         response = await response.json();
-        setGames(response);
-        setFetchend(true);
+        setResponse(response);
+        setLoading(true);
       } catch (e) {
         window.location.href = "/NotFound";
       }
     }
-    fetchData();
+    getData();
   }, [url]);
 
-  if (!fetchend) {
+  if (!loading) {
     return <Loading />;
   }
 
-  if (games.count === 0) {
+  if (response.results === 0) {
     return (
       <section className="section py-5 marginNav">
         <div className="container">
-          <h3>Ningun juego encontrado</h3>
+          <h3>Ninguna película encontrado</h3>
         </div>
       </section>
     );
@@ -43,15 +43,16 @@ export default function BrowserGames() {
     return (
       <section className="py-5 marginNav">
         <div className="container">
-          <Search url="/Games/Browser/" />
+          <Search url="/Movies/Browser/" />
           <div className="row">
-            {games.results.map((element) => {
+            {response.results.map((movie) => {
               return (
-                <div key={element.id} className="col-12 col-md-4 mt-3">
-                  <Game
-                    name={element.name}
-                    img={element.background_image}
-                    id={element.id}
+                <div key={movie.id} className="col-12 col-md-3">
+                  <Movie
+                    id={movie.id}
+                    original_title={movie.original_title}
+                    overview={movie.overview}
+                    poster_path={movie.poster_path}
                   />
                 </div>
               );

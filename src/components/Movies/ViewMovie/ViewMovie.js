@@ -7,62 +7,61 @@ import "bootstrap/dist/css/bootstrap.min.css";
 
 import Loading from "../../Loading/Loading";
 
-export default function ViewGame() {
+export default function ViewMovie() {
   const { id } = useParams();
-  const [game, setGame] = useState({});
-  const [fetchend, setFetchend] = useState(false);
-  console.log(id);
-  const url = `https://api.rawg.io/api/games/${id}?key=f65e3ff64bf5436f83b6ba0f8b83ac3b`;
+  const [response, setResponse] = useState({});
+  const [loading, setLoading] = useState(false);
+  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=d6c7a342258732312d949314913635e7`;
 
   useEffect(() => {
-    async function fetchData() {
+    async function getData() {
       try {
         let response = await fetch(url);
         response = await response.json();
-        setGame(response);
-        setFetchend(true);
+        setResponse(response);
+        setLoading(true);
       } catch (e) {
         window.location.href = "/NotFound";
       }
     }
-    fetchData();
+    getData();
   }, [url]);
 
-  if (!fetchend) {
+  if (!loading) {
     return <Loading />;
   }
 
-  if (game.detail === "Not found.") window.location.href = "/NotFound";
-
-  console.log(game);
+  function ImageByMovieId(posterPath) {
+    return `https://image.tmdb.org/t/p/original/${posterPath}`;
+  }
 
   return (
     <section className="py-5 marginNav">
       <div className="container">
         <article>
-          <h3 className="my-4">{game.name}</h3>
-          <Image src={game.background_image} fluid rounded />
+          <h3 className="my-4">{response.title}</h3>
+          <Image src={ImageByMovieId(response?.poster_path)} fluid rounded />
           <h4 className="my-4">Descripcion</h4>
-          <p>{ReactHtmlParser(game.description)}</p>
+          <p>{ReactHtmlParser(response.overview)}</p>
           <div className="row">
             <div className="col-6">
               <p>
                 <strong>Nota: </strong>
-                {game.metacritic}
+                {response.vote_average}
               </p>
             </div>
             <div className="col-6">
               <p>
                 <strong>Fecha: </strong>
-                {game.released}
+                {response.release_date}
               </p>
             </div>
-            <div className="col-12">
+            {/* <div className="col-12">
               <p>
                 <strong>Url: </strong>
-                {game.website}
+                {response.website}***
               </p>
-            </div>
+            </div> */}
           </div>
         </article>
       </div>
