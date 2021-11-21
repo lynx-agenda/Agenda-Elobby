@@ -10,6 +10,9 @@ import ViewBook from "./components/Books/ViewBook/ViewBook";
 import BrowserGames from "./components/Games/BrowserGames/BrowserGames";
 import BrowserBooks from "./components/Books/BrowserBooks/BrowserBooks";
 import NotFound from "./components/NotFound/NotFound";
+import ViewShow from "./components/TV/ViewShow/ViewShow";
+import BrowserTV from "./components/TV/BrowserTV/BrowserTV";
+import TVShows from "./components/TV/TVShows/TVShows";
 import NavbarMain from "./components/NavbarMain/NavbarMain";
 
 function Main() {
@@ -52,6 +55,21 @@ function App() {
 				</Route>
 				{/* Fin Routin de Peliculas */}
 				{/* Inicio Routin de Series */}
+        <Route
+          path="/TV"
+          element={<Navigate replace to="/TV/Page/1" />}
+        />
+        <Route path="/TV">
+          <Route path="Page/:page" element={<TVShows />} />
+          <Route
+            path="View"
+            element={<Navigate replace to="/TV/Page/1" />}
+          />
+          <Route path="View">
+            <Route path=":id" element={<ViewShow />} />
+          </Route>
+          <Route path="Browser/:text" element={<BrowserTV />} />
+        </Route>
 				{/* Fin Routin de Serie */}
 				{/* Inicio Routin de Libros */}
 				<Route path="/Books" 
