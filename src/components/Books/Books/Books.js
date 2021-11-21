@@ -90,8 +90,9 @@ function BooksData(props) {
 
 	const nextPage = () => {
 		navigate(`/Books/Page/${+page + 1}`);
+
         setPage(page+1)
-		setStartIndex(maxResults * (page - 1));
+		setStartIndex(maxResults + maxResults * (page - 1));
 		setFetching(true);
 	};
 
@@ -100,7 +101,8 @@ function BooksData(props) {
             navigate(`/Books/Page/${+page - 1}`);
             setPage(page-1)
         }
-		setStartIndex(maxResults * (page - 1));
+
+		setStartIndex(startIndex - maxResults * (page - 1));
 		setFetching(true);
 	};
 
