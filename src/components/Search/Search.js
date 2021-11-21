@@ -25,7 +25,7 @@ export default function Search(props) {
     return (
         <form onSubmit={handlerSearch} >
             <InputGroup className="mb-4">
-            <InputGroup.Text id="search">Lupa</InputGroup.Text>
+                <InputGroup.Text id="search">Lupa</InputGroup.Text>
                 <FormControl
                     placeholder="Search"
                     aria-label="Search"
