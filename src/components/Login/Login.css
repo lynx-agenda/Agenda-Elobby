@@ -1,0 +1,44 @@
+.login {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.user_card {
+    width: 350px;
+    background: #11101d;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 10px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -webkit-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    -moz-box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 5px;
+    color: white;
+}
+
+.login span {
+    background-color: whitesmoke;
+    color: black;
+    padding: 10px 15px;
+    border-top-left-radius: 5px;
+    border-bottom-left-radius: 5px;
+}
+
+.logo {
+    width: 50%;
+    margin-top: -30%;
+    margin-bottom: 1rem;
+}
+
+.login .inputs{
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+}
+
+.login .inputs:focus, .singup .inputs:focus{
+    box-shadow: none !important;
+}
