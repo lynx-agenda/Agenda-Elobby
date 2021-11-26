@@ -4,6 +4,7 @@ import FormControl from 'react-bootstrap/FormControl'
 import Button from 'react-bootstrap/Button'
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { BiSearch } from "react-icons/bi";
 
 export default function Search(props) {
     const [text, setText] = useState('');
@@ -25,7 +26,7 @@ export default function Search(props) {
     return (
         <form onSubmit={handlerSearch} >
             <InputGroup className="mb-4">
-                <InputGroup.Text id="search">Lupa</InputGroup.Text>
+                <InputGroup.Text id="search"><BiSearch /></InputGroup.Text>
                 <FormControl
                     placeholder="Search"
                     aria-label="Search"

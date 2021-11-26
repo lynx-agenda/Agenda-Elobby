@@ -17,14 +17,13 @@ import NavbarMain from "../NavbarMain/NavbarMain";
 import Singup from "../Singup/Singup";
 import Login from "../Login/Login";
 import useUser from "../../hooks/useUser";
-import { useEffect } from "react";
+
+
+//Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
 export default function Home() {
+	//isLogged es una variable de nuestro Hook perzonalisado
     const {isLogged} = useUser()
-
-	useEffect(() => {
-		console.log("En APP " + isLogged);
-	}, [isLogged])
 
     if (!isLogged){
 		return (
@@ -104,6 +103,9 @@ export default function Home() {
 }
 
 function Main() {
+	// let {user} = useUser()
+	// user = JSON.parse(user);
+
 	return (
 		<section className="py-5 marginNav">
 			<div className="container">

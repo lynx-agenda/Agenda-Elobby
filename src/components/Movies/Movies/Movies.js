@@ -7,6 +7,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Movie from "../Movie/Movie";
 import Search from "../../Search/Search";
 import Loading from "../../Loading/Loading";
+import FormControl  from "react-bootstrap/FormControl";
 
 export default function Movies() {
   const { page } = useParams();
@@ -67,7 +68,7 @@ export default function Movies() {
             Anterior
           </Button>
         )}{" "}
-        <input className="mx-2" type="number" value={page} disabled />
+        <FormControl className="mx-2" type="number" value={page} disabled/>
         {response.page < response.total_pages ? (
           <Button variant="primary" onClick={nextPage}>
             Siguiente

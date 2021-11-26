@@ -2,10 +2,13 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import Form from 'react-bootstrap/Form'
 import Button from 'react-bootstrap/Button'
 import Alert from 'react-bootstrap/Alert'
-import { useEffect, useState } from "react";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import "./Singup.css"
+import singup from "../../services/singup";
 
 export default function Singup(){
+    let navigate = useNavigate()
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
@@ -13,17 +16,24 @@ export default function Singup(){
     const [repeatPassword, setRepeatPassword] = useState("")
     const [passCkeck, setPassCkeck] = useState(false);
     const [msg, setMsg] = useState("")
-
     const handlerSubmitNewUser = (e) => {
         e.preventDefault();
         if (password===repeatPassword){
             setPassCkeck(false);
             setMsg("");
+            singup({name,email,username,password,repeatPassword})
+                .then(res =>{
+                    if (res.success){
+                        navigate("/");
+                    }else {
+                        setMsg(res.message)
+                    }
+                })
+                .catch(error => console.log(error))
         }else {
             setPassCkeck(true);
             setMsg("Las contraseñas no coinciden")
         }
-        console.log(email,username,name,password,repeatPassword)
     }
 
     return (

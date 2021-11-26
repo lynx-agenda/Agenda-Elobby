@@ -3,6 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+import FormControl  from "react-bootstrap/FormControl";
 
 import Game from "../Game/Game";
 import Search from "../../Search/Search";
@@ -65,7 +66,7 @@ function Games() {
             Anterior
           </Button>
         )}{" "}
-        <input className="mx-2" type="number" value={page} disabled />
+        <FormControl className="mx-2" type="number" value={page} disabled/>
         {games.next == null ? (
           <Button variant="primary" onClick={nextPage} disabled>
             Siguiente

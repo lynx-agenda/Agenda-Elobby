@@ -5,27 +5,21 @@ import Alert from 'react-bootstrap/Alert'
 import Image from 'react-bootstrap/Image'
 import { BiUser, BiKey } from "react-icons/bi";import './Login.css'
 import { useNavigate } from "react-router-dom";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import useUser from "../../hooks/useUser";
 import logo from "../../img/lince.png"
-
 
 export default function Login(){
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
-    const {login, isLogged, error, setError} = useUser();
+    const {login, error, setError} = useUser();
     const [ckeckRemenber, setCkeckRemenber] = useState(false)
     let navigate = useNavigate();
-
-    useEffect(() => {
-        if (isLogged) console.log(isLogged);
-    }, [isLogged])
 
     const handlerSubmitUser = (e) => {
         e.preventDefault();
         if(email!=="" && password!==""){
-            if (isLogged) console.log("Ya estas Logeado");
-            else login({email, password, ckeckRemenber});
+            login({email, password, ckeckRemenber});
         }
     }
 

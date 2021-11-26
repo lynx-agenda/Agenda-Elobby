@@ -1,14 +1,15 @@
-const ENDPOINT = "https://localhost:8000"
+const ENDPOINT = "http://localhost:27017/auth"
 
 export default function login({email , password}){
-    return fetch(`${ENDPOINT}/login` , {
+    return fetch(`${ENDPOINT}/signin` , {
         headers: {"Content-Type": "application/json"},
+        method: "POST",
         body: JSON.stringify({email, password})
     }).then(res => {
-        if (!res.ok) throw new Error('Response is NOT ok')
         return res.json()
     }).then(res => {
-        const { jwt } = res;
-        return jwt;
-    })
+        let { token } = res;
+        if (token === undefined) token = null;
+        return token;
+    }).catch(error => console.log(error))
 }

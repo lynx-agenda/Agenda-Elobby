@@ -12,6 +12,9 @@ import SSRProvider from "react-bootstrap/SSRProvider";
 import Button from "react-bootstrap/Button";
 import Spinner from "react-bootstrap/Spinner";
 import Alert from "react-bootstrap/Alert";
+
+import FormControl  from "react-bootstrap/FormControl";
+
 // import { FcSearch } from "react-icons/fc";
 
 /**
@@ -113,7 +116,7 @@ function BooksData(props) {
 					Anterior
 				</Button>
 
-				<input className="mx-2" type="number" value={page} disabled />
+				<FormControl className="mx-2" type="number" value={page} disabled/>
 
 				<Button variant="primary" onClick={nextPage} disabled={data.totalItems <= data.items.length || fetching}>
 					Siguiente
@@ -124,10 +127,6 @@ function BooksData(props) {
 
 	return (
 		<div >
-			<div className="card-group-buttons">
-				<PaginationBasic />
-			</div>
-
 			<div className="card-group">
 				{data.items.map((item) => {
 					return (
@@ -148,7 +147,11 @@ function BooksData(props) {
 					);
 				})}
 			</div>
+			<div className="card-group-buttons">
+				<PaginationBasic />
+			</div>
 		</div>
+		
 	);
 }
 
