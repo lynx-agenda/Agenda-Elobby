@@ -11,7 +11,7 @@ import getBooks from "../GoogleBooksAPI";
 
 import SSRProvider from "react-bootstrap/SSRProvider";
 import Button from "react-bootstrap/Button";
-import Spinner from "react-bootstrap/Spinner";
+import Loading from "../../Loading/Loading";
 import Alert from "react-bootstrap/Alert";
 
 import FormControl  from "react-bootstrap/FormControl";
@@ -77,11 +77,7 @@ function BooksData(props) {
 	}
 
 	if (fetching) {
-		return (
-			<Spinner animation="border" role="status">
-				<span className="visually-hidden">Loading...</span>
-			</Spinner>
-		);
+		return <Loading />;
 	}
 
 	if (data === null || data.items === undefined) {
