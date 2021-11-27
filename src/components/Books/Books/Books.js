@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import "bootstrap/dist/css/bootstrap.min.css";
 
 import "../index.css";
 
@@ -12,6 +13,9 @@ import SSRProvider from "react-bootstrap/SSRProvider";
 import Button from "react-bootstrap/Button";
 import Loading from "../../Loading/Loading";
 import Alert from "react-bootstrap/Alert";
+
+import FormControl  from "react-bootstrap/FormControl";
+
 // import { FcSearch } from "react-icons/fc";
 
 /**
@@ -109,7 +113,7 @@ function BooksData(props) {
 					Anterior
 				</Button>
 
-				<input className="mx-2" type="number" value={page} disabled />
+				<FormControl className="mx-2" type="number" value={page} disabled/>
 
 				<Button variant="primary" onClick={nextPage} disabled={data.totalItems <= data.items.length || fetching}>
 					Siguiente
@@ -119,32 +123,34 @@ function BooksData(props) {
 	};
 
 	return (
-		<div >
-			<div className="card-group-buttons">
-				<PaginationBasic />
-			</div>
-
-			<div className="card-group">
+		<div className="container">
+			<div className="row">
 				{data.items.map((item) => {
 					return (
-						<BookCard
-							title={item.volumeInfo.title !== undefined ? item.volumeInfo.title : "Título"}
-							image={
-								item.volumeInfo.imageLinks?.thumbnail !== undefined
-									? item.volumeInfo.imageLinks.thumbnail
-									: "Thumbnail"
-							}
-							desc={
-								item.volumeInfo.description !== undefined ? item.volumeInfo.description : "Description"
-							}
-							authors={item.volumeInfo.authors !== undefined ? item.volumeInfo.authors : "Authors"}
-                            id={item.id !== undefined ? item.id : "id"}
-							key={item.id !== undefined ? item.id : "id"}
-						/>
+						<div key={item.id} className="col-12 col-md-6 col-lg-4">
+							<BookCard
+								title={item.volumeInfo.title !== undefined ? item.volumeInfo.title : "Título"}
+								image={
+									item.volumeInfo.imageLinks?.thumbnail !== undefined
+										? item.volumeInfo.imageLinks.thumbnail
+										: "Thumbnail"
+								}
+								desc={
+									item.volumeInfo.description !== undefined ? item.volumeInfo.description : "Description"
+								}
+								authors={item.volumeInfo.authors !== undefined ? item.volumeInfo.authors : "Authors"}
+								id={item.id !== undefined ? item.id : "id"}
+								key={item.id !== undefined ? item.id : "id"}
+							/>
+						</div>
 					);
 				})}
 			</div>
+			<div className="card-group-buttons">
+				<PaginationBasic />
+			</div>
 		</div>
+		
 	);
 }
 
@@ -155,13 +161,11 @@ function Books() {
 		<SSRProvider>
 			<section className="py-5 marginNav">
 				<div className="container">
-					<div className="row">
-						<Search url="/Books/Browser/" />
+					<Search url="/Books/Browser/" />
 
-						<h1>Destacados</h1>
+					<h1>Destacados</h1>
 
-						<BooksData subject="Fiction" key="Fiction" page={page} />
-					</div>
+					<BooksData subject="Fiction" key="Fiction" page={page} />
 				</div>
 			</section>
 		</SSRProvider>

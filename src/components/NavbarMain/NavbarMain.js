@@ -3,8 +3,10 @@ import './NavbarMain.css';
 import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import Container from 'react-bootstrap/Container'
+import useUser from '../../hooks/useUser';
 
 export default function NavbarMain(){
+    const {logout} = useUser();
     return(
     <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
         <Container>
@@ -15,7 +17,8 @@ export default function NavbarMain(){
                     <Nav.Link href="/Movies">Peliculas</Nav.Link>
                     <Nav.Link href="/TV">Series</Nav.Link>
                     <Nav.Link href="/Games">Videojuegos</Nav.Link>
-                    <Nav.Link href="/Books">Libros</Nav.Link>   
+                    <Nav.Link href="/Books">Libros</Nav.Link>
+                    <Nav.Link onClick={logout}>Cerrar sesion</Nav.Link>   
                 </Nav>
             </Navbar.Collapse>
         </Container>

@@ -1,6 +1,5 @@
 import { useNavigate } from "react-router-dom";
 
-import Button from "react-bootstrap/Button";
 import "bootstrap/dist/css/bootstrap.min.css";
 import SSRProvider from "react-bootstrap/SSRProvider";
 
@@ -40,12 +39,6 @@ export default function BookCard(props) {
 						<small>{book.authors}</small>
 						<br />
 					</div>
-				</div>
-				<div className="book-card-buttons-group">
-					<Button className="book-card-button" variant="dark">
-						Ver ficha
-					</Button>
-					{/* <Button className="book-card-button" variant="success">Agregar</Button> */}
 				</div>
 			</div>
 		</SSRProvider>

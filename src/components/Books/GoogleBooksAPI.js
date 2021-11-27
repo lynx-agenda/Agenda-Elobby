@@ -14,7 +14,7 @@ var axios = require("axios");
 	startIndex = 0, // The position in the collection at which to start. The index of the first item is 0.
 	fields = "totalItems,items(id,volumeInfo(title,authors,publisher,publishedDate,description,industryIdentifiers,pageCount,categories,imageLinks,language))", // Filter search results by volume type and availability.
 } = {}) {
-	const key = "AIzaSyDijpjeKfyPxZXvCLC3YTg08Iy5UAocMtg";
+	// const key = "AIzaSyDijpjeKfyPxZXvCLC3YTg08Iy5UAocMtg"; Lo comento porque sale un warning que no se usa -- Alejandro
 	const url = "https://www.googleapis.com/books/v1/volumes";
 
 	return axios
