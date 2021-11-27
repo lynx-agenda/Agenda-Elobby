@@ -1,4 +1,4 @@
-const ENDPOINT = "http://localhost:27017/api/users"
+const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/users"
 
 export default function getUser({email, jwt}){
     return fetch(`${ENDPOINT}/${email}` , {
