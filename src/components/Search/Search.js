@@ -1,12 +1,3 @@
-<<<<<<< HEAD
-import 'bootstrap/dist/css/bootstrap.min.css';
-import InputGroup from 'react-bootstrap/InputGroup'
-import FormControl from 'react-bootstrap/FormControl'
-import Button from 'react-bootstrap/Button'
-import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { BiSearch } from "react-icons/bi";
-=======
 import { useState, useCallback } from "react";
 import { useNavigate } from "react-router-dom";
 import debounce from "lodash/debounce";
@@ -17,7 +8,6 @@ import Button from "react-bootstrap/Button";
 import queryApi from "../../lib/queryApi";
 import type from "../../lib/types.enum";
 import CardSwitch from "../CardSwitch/CardSwitch";
->>>>>>> origin/develop-lorenzo
 
 export default function Search(props) {
   const [text, setText] = useState("");
