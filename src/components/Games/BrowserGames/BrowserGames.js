@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { getGamesFromThird } from "../../../services/getFromThirdApis";
+
 import Game from "../Game/Game";
 import Search from "../../Search/Search";
 import Loading from "../../Loading/Loading";
@@ -11,13 +13,13 @@ export default function BrowserGames() {
   const { text } = useParams();
   const [games, setGames] = useState({});
   const [fetchend, setFetchend] = useState(false);
-  const url = `https://api.rawg.io/api/games?key=f65e3ff64bf5436f83b6ba0f8b83ac3b&search=${text}&search_precise=true&parent_platforms=1,2,3,7&exclude_additions=true`;
 
   useEffect(() => {
     async function fetchData() {
       try {
-        let response = await fetch(url);
-        response = await response.json();
+        
+				let response = await getGamesFromThird({ search: `${text}` });
+        
         setGames(response);
         setFetchend(true);
       } catch (e) {
@@ -25,7 +27,7 @@ export default function BrowserGames() {
       }
     }
     fetchData();
-  }, [url]);
+  }, [text]);
 
   if (!fetchend) {
     return <Loading />;

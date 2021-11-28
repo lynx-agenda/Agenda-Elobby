@@ -3,55 +3,46 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
+import FormControl  from "react-bootstrap/FormControl";
+
+import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
 
 import Movie from "../Movie/Movie";
 import Search from "../../Search/Search";
 import Loading from "../../Loading/Loading";
-import FormControl  from "react-bootstrap/FormControl";
 
 export default function Movies() {
   const { page } = useParams();
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState({});
-  const [url, setUrl] = useState(
-    `https://api.themoviedb.org/3/discover/movie?api_key=d6c7a342258732312d949314913635e7&page=${page}`
-  );
+  const [reloadPage, setReloadPage] = useState(page)
 
   useEffect(() => {
     async function getData() {
       try {
-        let res = await fetch(url);
-        res = await res.json();
+
+        let res = await getFromTheMovieDB({ page: `${reloadPage}`, action: "discover", resourceType: "movie"  });
+
         setResponse(res);
         setIsLoading(true);
       } catch (e) {
-        console.log(e);
         window.location.href = "/NotFound";
       }
     }
-    console.log(url);
     getData();
-  }, [url]);
+  }, [reloadPage]);
 
   const nextPage = () => {
     navigate(`/Movies/Page/${+page + 1}`);
-    setUrl(
-      `https://api.themoviedb.org/3/discover/movie?api_key=d6c7a342258732312d949314913635e7&page=${
-        +page + 1
-      }`
-    );
+    setReloadPage( +page + 1 );
     setIsLoading(false);
   };
 
   const previousPage = () => {
     if (response.page > 1) {
       navigate(`/Movies/Page/${+page - 1}`);
-      setUrl(
-        `https://api.themoviedb.org/3/discover/movie?api_key=d6c7a342258732312d949314913635e7&page=${
-          +page - 1
-        }`
-      );
+      setReloadPage( +page - 1 );
       setIsLoading(false);
     }
   };

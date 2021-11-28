@@ -4,6 +4,8 @@ import { Tabs, Tab } from "react-bootstrap"
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
+
 import Loading from "../../Loading/Loading";
 import Season from "./Season"
 
@@ -12,7 +14,6 @@ export default function Seasons(props) {
   const [response, setResponse] = useState({});
   const [loading, setLoading] = useState(false);
   const [season, setSeason] = useState('1');
-  const url = `https://api.themoviedb.org/3/tv/${id}/season/${season}?api_key=d6c7a342258732312d949314913635e7`;
   const seasons = []
   for(let k=1; k<=props.numberOfSeasons; k++){
     seasons.push(k)
@@ -21,8 +22,9 @@ export default function Seasons(props) {
   useEffect(() => {
     async function getData() {
       try {
-        let response = await fetch(url);
-        response = await response.json();
+
+				let response = await getFromTheMovieDB({ idResource: `${id}`, resourceType: "tv", season: `${season}` });
+
         setResponse(response);
         setLoading(true);
       } catch (e) {
@@ -30,7 +32,7 @@ export default function Seasons(props) {
       }
     }
     getData();
-  }, [url]);
+  }, [id, season]);
 
   if (!loading) {
     return <Loading />;
