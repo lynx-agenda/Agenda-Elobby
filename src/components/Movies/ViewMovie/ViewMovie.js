@@ -5,19 +5,21 @@ import ReactHtmlParser from "react-html-parser";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
+
 import Loading from "../../Loading/Loading";
 
 export default function ViewMovie() {
   const { id } = useParams();
   const [response, setResponse] = useState({});
   const [loading, setLoading] = useState(false);
-  const url = `https://api.themoviedb.org/3/movie/${id}?api_key=d6c7a342258732312d949314913635e7`;
-
+  
   useEffect(() => {
     async function getData() {
       try {
-        let response = await fetch(url);
-        response = await response.json();
+
+				let response = await getFromTheMovieDB({ idResource: `${id}`, resourceType: "movie" });
+
         setResponse(response);
         setLoading(true);
       } catch (e) {
@@ -25,7 +27,7 @@ export default function ViewMovie() {
       }
     }
     getData();
-  }, [url]);
+  }, [id]);
 
   if (!loading) {
     return <Loading />;

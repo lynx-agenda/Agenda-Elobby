@@ -2,12 +2,12 @@ import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import {getBooksFromThird} from "../../../services/getFromThirdApis";
+
 import "../index.css";
 
 import Search from "../../Search/Search";
 import BookCard from "../Book/Book";
-
-import getBooks from "../GoogleBooksAPI";
 
 import SSRProvider from "react-bootstrap/SSRProvider";
 import Button from "react-bootstrap/Button";
@@ -15,8 +15,6 @@ import Loading from "../../Loading/Loading";
 import Alert from "react-bootstrap/Alert";
 
 import FormControl  from "react-bootstrap/FormControl";
-
-// import { FcSearch } from "react-icons/fc";
 
 /**
  * La función realiza una petición a Google Books API especificando un subject
@@ -43,11 +41,12 @@ function BooksData(props) {
 	useEffect(() => {
 		async function getData() {
 			try {
-				const response = await getBooks({
+				
+				const response = await getBooksFromThird({
 					q: searchQuery,
 					maxResults: maxResults,
 					startIndex: startIndex,
-				});
+				})
 
 				const data = await response;
 

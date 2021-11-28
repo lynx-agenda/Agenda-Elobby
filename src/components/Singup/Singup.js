@@ -13,9 +13,9 @@ export default function Singup(){
     const [username, setUsername] = useState("");
     const [name, setName] = useState("");
     const [password, setPassword] = useState("");
-    const [repeatPassword, setRepeatPassword] = useState("")
+    const [repeatPassword, setRepeatPassword] = useState("");
     const [passCkeck, setPassCkeck] = useState(false);
-    const [msg, setMsg] = useState("")
+    const [msg, setMsg] = useState("");
     const handlerSubmitNewUser = (e) => {
         e.preventDefault();
         if (password===repeatPassword){

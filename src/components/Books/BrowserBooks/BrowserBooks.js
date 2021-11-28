@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import getBooks from "../GoogleBooksAPI";
+import {getBooksFromThird} from "../../../services/getFromThirdApis";
 
 import BookCard from "../Book/Book";
 import Search from "../../Search/Search";
@@ -27,11 +27,12 @@ export default function BrowserBooks() {
 	useEffect(() => {
 		async function getData() {
 			try {
-				const response = await getBooks({
+
+				const response = await getBooksFromThird({
 					q: searchQuery,
 					maxResults: maxResults,
 					startIndex: startIndex,
-				});
+				})
 
 				const data = await response;
 
