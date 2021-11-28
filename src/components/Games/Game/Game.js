@@ -1,25 +1,41 @@
-import 'bootstrap/dist/css/bootstrap.min.css';
-import Card from 'react-bootstrap/Card'
-import { useNavigate } from 'react-router-dom';
+import "bootstrap/dist/css/bootstrap.min.css";
+import Card from "react-bootstrap/Card";
+import { useNavigate } from "react-router-dom";
 
-export default function Game(promps) {
-    let navigate = useNavigate();
+export default function Game(props) {
+  let navigate = useNavigate();
 
-const handlerClickGame = () => {
-    navigate(`/Games/View/${promps.id}`);
+  const handlerClickGame = () => {
+    navigate(`/Games/View/${props.id}`);
+  };
+
+  const cardStyle = { cursor: "pointer" };
+
+  return (
+    <section className="mt-4">
+      <Card
+        onClick={handlerClickGame}
+        style={
+          props.isHorizontal
+            ? {
+                display: "flex",
+                flexDirection: "row",
+                height: "50px",
+                maxHeight: "50px",
+                ...cardStyle,
+              }
+            : cardStyle
+        }
+      >
+        <Card.Img
+          variant="bottom"
+          src={props.img}
+          style={props.isHorizontal ? { width: "inherit" } : {}}
+        />
+        <Card.Body>
+          <Card.Title>{props.name}</Card.Title>
+        </Card.Body>
+      </Card>
+    </section>
+  );
 }
-
-    return (
-        <section>
-            <Card onClick={handlerClickGame}>
-                <Card.Img variant="top" src={promps.img} />
-                <Card.Body>
-                    <Card.Title>
-                        {promps.name}
-                    </Card.Title>
-                </Card.Body>
-            </Card>
-        </section>
-    );
-}
-
