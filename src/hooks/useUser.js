@@ -6,7 +6,7 @@ import loginService from "../services/login";
 //Hook creando para control de usuario en toda la web, este hook hace de intermediario entre el contexto y los componentes
 
 export default function useUser() {
-    const {jwt, setJwt, user} = useContext(Context);
+    const {jwt, setJwt} = useContext(Context);
     const [error, setError] = useState(false);
 
     const login =  useCallback(({email, password, ckeckRemenber}) => {
@@ -15,16 +15,7 @@ export default function useUser() {
                 if(jwt!==null){
                     window.sessionStorage.setItem('jwt',jwt);
                     if(ckeckRemenber) window.localStorage.setItem('jwt',jwt);
-                    console.log("token almacenado")
-                    // getUser({email, jwt})
-                    //     .then(res => {
-                    //         window.sessionStorage.setItem('user',JSON.stringify(res));
-                    //         if(ckeckRemenber) window.localStorage.setItem('user',JSON.stringify(res));
-                    //         setUser(res);
-                    //         console.log("Usuario almacenado")
-                    //     })
-                    //     .catch(error => console.log(error))
-                    setJwt(jwt)
+                    setJwt(jwt);
                 }else {
                     setError(true)
                 }
@@ -40,8 +31,6 @@ export default function useUser() {
     const logout = useCallback(() => {
         window.sessionStorage.removeItem('jwt');
         window.localStorage.removeItem('jwt');
-        // window.sessionStorage.removeItem('user');
-        // window.localStorage.removeItem('user');
         setJwt(null)
     }, [setJwt])
 
@@ -49,8 +38,7 @@ export default function useUser() {
 
     return {
         isLogged: Boolean(jwt),
-        isLoggedAUser: Boolean(user),
-        user,
+        jwt,
         error,
         setError,
         login,

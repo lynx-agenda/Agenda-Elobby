@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
+// import { getFromTheMovieDB } from "../../../services/getFromThirdApis"; Nunca se usa
 
 import Movie from "../Movie/Movie";
 import Search from "../../Search/Search";

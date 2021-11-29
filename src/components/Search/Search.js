@@ -8,6 +8,8 @@ import Button from "react-bootstrap/Button";
 import queryApi from "../../lib/queryApi";
 import type from "../../lib/types.enum";
 import CardSwitch from "../CardSwitch/CardSwitch";
+import { BiSearch } from "react-icons/bi";
+
 
 export default function Search(props) {
   const [text, setText] = useState("");
@@ -55,7 +57,7 @@ export default function Search(props) {
     <div style={{ position: "relative" }}>
       <form onSubmit={handleSearch}>
         <InputGroup>
-          <InputGroup.Text id="search">Lupa</InputGroup.Text>
+          <InputGroup.Text id="search"><BiSearch /></InputGroup.Text>
           <FormControl
             placeholder="Search"
             aria-label="Search"
