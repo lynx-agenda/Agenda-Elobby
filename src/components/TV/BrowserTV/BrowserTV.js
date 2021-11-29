@@ -3,6 +3,8 @@ import { useParams } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
+import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
+
 import TVShow from "../TVShow/TVShow";
 import Search from "../../Search/Search";
 import Loading from "../../Loading/Loading";
@@ -11,13 +13,13 @@ export default function BrowserTV() {
   const { text } = useParams();
   const [response, setResponse] = useState({});
   const [loading, setLoading] = useState(false);
-  const url = `https://api.themoviedb.org/3/search/tv?api_key=d6c7a342258732312d949314913635e7&query=${text}`;
 
   useEffect(() => {
     async function getData() {
       try {
-        let response = await fetch(url);
-        response = await response.json();
+
+        let response = await getFromTheMovieDB({ query: `${text}`, action: "search", resourceType: "tv" });
+
         setResponse(response);
         setLoading(true);
       } catch (e) {
@@ -25,7 +27,7 @@ export default function BrowserTV() {
       }
     }
     getData();
-  }, [url]);
+  }, [text]);
 
   if (!loading) {
     return <Loading />;

@@ -13,9 +13,9 @@ export default function Profile (){
                 <Col md={4} className='user-info-wrapper'>
                     <UserInfo />
                 </Col>
-                <Col md={8}>
-                    <TierList />
-                    <Posts />
+                <Col md={8} className='user-content'>
+                    {/* <TierList />
+                    <Posts /> */}
                 </Col>
             </Row>
         </Container>

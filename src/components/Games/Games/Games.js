@@ -3,6 +3,9 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
+import FormControl  from "react-bootstrap/FormControl";
+
+import { getGamesFromThird } from "../../../services/getFromThirdApis";
 
 import Game from "../Game/Game";
 import Search from "../../Search/Search";
@@ -13,15 +16,14 @@ function Games() {
   let navigate = useNavigate();
   const [fetchend, setFetchend] = useState(false);
   const [games, setGames] = useState({});
-  const [url, setUrl] = useState(
-    `https://api.rawg.io/api/games?key=f65e3ff64bf5436f83b6ba0f8b83ac3b&parent_platforms=1,2,3,7&exclude_additions=true&page=${page}`
-  );
+  const [reloadPage, setReloadPage] = useState(page)
 
   useEffect(() => {
     async function fetchData() {
       try {
-        let response = await fetch(url);
-        response = await response.json();
+
+        let response = await getGamesFromThird({ page: `${reloadPage}` });
+
         setGames(response);
         setFetchend(true);
       } catch (e) {
@@ -29,26 +31,18 @@ function Games() {
       }
     }
     fetchData();
-  }, [url]);
+  }, [reloadPage]);
 
   const nextPage = () => {
     navigate(`/Games/Page/${+page + 1}`);
-    setUrl(
-      `https://api.rawg.io/api/games?key=f65e3ff64bf5436f83b6ba0f8b83ac3b&page=${
-        +page + 1
-      }`
-    );
+    setReloadPage( +page + 1 );
     setFetchend(false);
   };
 
   const previousPage = () => {
     if (games.previous !== null) {
       navigate(`/Games/Page/${+page - 1}`);
-      setUrl(
-        `https://api.rawg.io/api/games?key=f65e3ff64bf5436f83b6ba0f8b83ac3b&page=${
-          +page - 1
-        }`
-      );
+      setReloadPage( +page - 1 );
       setFetchend(false);
     }
   };
@@ -65,7 +59,7 @@ function Games() {
             Anterior
           </Button>
         )}{" "}
-        <input className="mx-2" type="number" value={page} disabled />
+        <FormControl className="mx-2" type="number" value={page} disabled/>
         {games.next == null ? (
           <Button variant="primary" onClick={nextPage} disabled>
             Siguiente
