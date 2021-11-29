@@ -17,6 +17,9 @@ import NavbarMain from "../NavbarMain/NavbarMain";
 import Singup from "../Singup/Singup";
 import Login from "../Login/Login";
 import useUser from "../../hooks/useUser";
+import getUser from "../../services/getUser";
+import { useEffect, useState } from "react";
+import Loading from "../Loading/Loading";
 
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
@@ -103,13 +106,22 @@ export default function Home() {
 }
 
 function Main() {
-	// let {user} = useUser()
-	// user = JSON.parse(user);
+	const[user, setUser] = useState(null);
+	const {jwt} = useUser();
 
+	useEffect(() => {
+		if(user===null){
+			getUser({jwt})
+				.then(res => setUser(res));
+		}
+	}, [user, jwt]);
+
+	if (user===null) return <Loading />
+	console.log(user);
 	return (
 		<section className="py-5 marginNav">
 			<div className="container">
-				<h1>Bienvenido</h1>
+				<h1>Bienvenido {user.name}</h1>
 				<h3>Actualmente la agenda esta en desarrollo pero puede navegar por nuestros elementos de ocio</h3>
 			</div>
 		</section>
