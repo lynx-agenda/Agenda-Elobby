@@ -16,7 +16,6 @@ export default function Movie(props) {
   const cardStyle = { cursor: "pointer" };
 
   return (
-    <section className="mt-4">
       <Card
         onClick={handlerClickMovie}
         style={
@@ -38,12 +37,11 @@ export default function Movie(props) {
           style={props.isHorizontal ? { width: "inherit" } : {}}
         />
         <Card.Body>
-          <Card.Title>Título: {props?.original_title}</Card.Title>
+          <Card.Title>{props?.original_title}</Card.Title>
           {!props.isHorizontal && (
-            <Card.Text>Descripción: {props?.overview}</Card.Text>
+            <Card.Text>{props?.overview}</Card.Text>
           )}
         </Card.Body>
       </Card>
-    </section>
   );
 }

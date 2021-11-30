@@ -84,7 +84,7 @@ export default function Movies() {
           <Search url="/Movies/Browser/" />
           {response.results.map((movie) => {
             return (
-              <div key={movie.id} className="col-12 col-md-3">
+              <div key={movie.id} className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-between">
                 <Movie
                   id={movie.id}
                   original_title={movie.original_title}

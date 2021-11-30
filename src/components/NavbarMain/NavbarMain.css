@@ -1,3 +1,3 @@
 .bg-dark {
-    background-color: #11101d !important; 
+    background-color: var(--color-primary) !important; 
 }

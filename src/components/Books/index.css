@@ -56,3 +56,12 @@
   justify-content: center;
   flex-wrap: wrap;
 }
+
+.card-game img{
+  flex: 50% 100;
+  object-fit: cover;
+}
+
+.card-game .card-body{
+  flex: auto;
+}
