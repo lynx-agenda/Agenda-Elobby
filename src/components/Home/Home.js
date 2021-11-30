@@ -20,6 +20,7 @@ import useUser from "../../hooks/useUser";
 import { useState } from "react";
 import Sidebar from "../NavbarMain/Sidebar";
 import Profile from '../Profile/Profile'
+import './Home.css'
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 

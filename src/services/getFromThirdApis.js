@@ -1,4 +1,4 @@
-const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/third`;
+const ENDPOINT = `https://young-badlands-18005.herokuapp.com/third`;
 
 module.exports = {
 	getBooksFromThird,

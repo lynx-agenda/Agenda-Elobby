@@ -14,7 +14,7 @@ export default function TierList() {
       <Carousel.Item interval={5000}>
         <img
           className="d-block w-100"
-          src="https://fakeimg.pl/800x400/"
+          src="https://fakeimg.pl/800x200/"
           alt="First slide"
         />
         <Carousel.Caption>
@@ -25,7 +25,7 @@ export default function TierList() {
       <Carousel.Item interval={5000}>
         <img
           className="d-block w-100"
-          src="https://fakeimg.pl/800x400/"
+          src="https://fakeimg.pl/800x200/"
           alt="Second slide"
         />
 
@@ -37,7 +37,7 @@ export default function TierList() {
       <Carousel.Item interval={5000}>
         <img
           className="d-block w-100"
-          src="https://fakeimg.pl/800x400/"
+          src="https://fakeimg.pl/800x200/"
           alt="Third slide"
         />
 

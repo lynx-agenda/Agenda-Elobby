@@ -1,37 +1,46 @@
 .user-info{
-    padding: 20px;
     display: flex;
-    flex-direction: column;
-    height: 100vh;
-
+    flex-direction: row;
+    width: 100vw;
+    height: 100px;
+    text-align: center;
+    background-color: #212528;
+    justify-content: space-between;
 }   
 
-.avatar{
-    width: auto;
-    height: auto;
-    max-width: 100%;
-    max-height: 100%;
+.profile-avatar {
+    margin: auto;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    align-self: center;
 }
 
 .user-info > h2{
-    text-align: center;
-    margin-bottom: 20px;
+    margin: auto;
+    color: white;
+    text-align: left;
 }
 
-.user-data{
-    margin-top: 20px;
+.user-data-list{
+    margin: auto;
     padding: 0;
-    list-style: none;
-    text-align: center;
+    display: flex;
+    flex-direction: row;
 }
 
-.user-data > li{
+.user-data-item{
     list-style: none;
+    padding: 10px;
+    color: white;
 }
 
+.btn{
+    width: auto;
+    height: 40px;
+    margin: auto;
+}
 
-@media (max-width: 425px){
-    .user-info{
-        height: auto;
-    }
+.btn > svg{
+    font-size: 1.25rem;
 }
