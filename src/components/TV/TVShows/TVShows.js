@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import FormControl  from "react-bootstrap/FormControl";
+import FormControl from "react-bootstrap/FormControl";
 
 import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
 
@@ -21,13 +21,15 @@ export default function TVShows() {
   useEffect(() => {
     async function getData() {
       try {
-        
-        let res = await getFromTheMovieDB({ page: `${reloadPage}`, action: "discover", resourceType: "tv"  });
-        
+        let res = await getFromTheMovieDB({
+          page: `${reloadPage}`,
+          action: "discover",
+          resourceType: "tv",
+        });
+
         setResponse(res);
         setIsLoading(true);
       } catch (e) {
-        console.log(e);
         window.location.href = "/NotFound";
       }
     }
@@ -36,14 +38,14 @@ export default function TVShows() {
 
   const nextPage = () => {
     navigate(`/TV/Page/${+page + 1}`);
-    setReloadPage( +page + 1 );
+    setReloadPage(+page + 1);
     setIsLoading(false);
   };
 
   const previousPage = () => {
     if (response.page > 1) {
       navigate(`/TV/Page/${+page - 1}`);
-      setReloadPage( +page - 1 );
+      setReloadPage(+page - 1);
       setIsLoading(false);
     }
   };
@@ -60,7 +62,7 @@ export default function TVShows() {
             Anterior
           </Button>
         )}{" "}
-        <FormControl className="mx-2" type="number" value={page} disabled/>
+        <FormControl className="mx-2" type="number" value={page} disabled />
         {response.page < response.total_pages ? (
           <Button variant="primary" onClick={nextPage}>
             Siguiente
