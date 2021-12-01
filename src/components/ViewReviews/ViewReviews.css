@@ -1,0 +1,21 @@
+.review-img img{
+    min-height: 100px;
+    max-height: 150px;
+}
+
+.review {
+    border: 1px solid rgba(0,0,0,.125);
+    cursor: pointer;
+}
+
+.review svg {
+    font-size: 2rem;
+}
+
+.review-info{
+    display: none;
+}
+
+.review:hover .review-info{
+    display: block;
+}

@@ -20,6 +20,7 @@ import useUser from "../../hooks/useUser";
 import getUser from "../../services/getUser";
 import { useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
+import ViewReviews from '../ViewReviews/ViewReviews';
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -95,22 +96,21 @@ export default function Home() {
           element={<Navigate replace to="/Books/Page/1" />}
         />
 
-        <Route path="/Books">
-          <Route path="Page/:page" element={<Books />} />
-          <Route
-            path="View"
-            element={<Navigate replace to="/Books/Page/1" />}
-          />
-          <Route path="View">
-            <Route path=":id" element={<ViewBook />} />
-          </Route>
-          <Route path="Browser/:text" element={<BrowserBooks />} />
-        </Route>
-        {/* Fin Routin de Libros */}
-        <Route path="*" element={<NotFound />} />
-      </Routes>
-    </BrowserRouter>
-  );
+
+					<Route path="/Books">
+						<Route path="Page/:page" element={<Books />} />
+						<Route path="View" element={<Navigate replace to="/Books/Page/1" />} />
+						<Route path="View">
+							<Route path=":id" element={<ViewBook />} />
+						</Route>
+						<Route path="Browser/:text" element={<BrowserBooks />} /> 
+					</Route>
+					{/* Fin Routin de Libros */}
+					<Route path="/test" element={<ViewReviews />} />
+					<Route path="*" element={<NotFound />} />
+				</Routes>
+			</BrowserRouter>
+	);
 }
 
 function Main() {

@@ -20,7 +20,6 @@ export default function Movie(props) {
   const imageStyle = { display: !srcImage ? "none" : "inherit" };
 
   return (
-    <section className="mt-4">
       <Card
         onClick={handlerClickMovie}
         style={
@@ -49,14 +48,13 @@ export default function Movie(props) {
           }
         />
         <Card.Body>
-          <Card.Title>{`${!props.isHorizontal ? "Título: " : ""}${
-            props?.original_title ?? ""
-          }`}</Card.Title>
+
+          <Card.Title>{props?.original_title}</Card.Title>
+
           {!props.isHorizontal && (
-            <Card.Text>Descripción: {props?.overview}</Card.Text>
+            <Card.Text>{props?.overview}</Card.Text>
           )}
         </Card.Body>
       </Card>
-    </section>
   );
 }
