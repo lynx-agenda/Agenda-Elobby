@@ -126,7 +126,7 @@ function BooksData(props) {
 			<div className="row">
 				{data.items.map((item) => {
 					return (
-						<div key={item.id} className="col-12 col-md-6 col-lg-4">
+						<div key={item.id} className="col-12 col-md-6 col-lg-4 mt-4 d-flex justify-content-between">
 							<BookCard
 								title={item.volumeInfo.title !== undefined ? item.volumeInfo.title : "Título"}
 								image={

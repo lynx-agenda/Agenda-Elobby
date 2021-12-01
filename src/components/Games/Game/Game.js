@@ -1,4 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
+import "./Game.css"
 import Card from "react-bootstrap/Card";
 import { useNavigate } from "react-router-dom";
 
@@ -12,8 +13,7 @@ export default function Game(props) {
   const cardStyle = { cursor: "pointer" };
 
   return (
-    <section className="mt-4">
-      <Card
+      <Card className="card-game"
         onClick={handlerClickGame}
         style={
           props.isHorizontal
@@ -36,6 +36,5 @@ export default function Game(props) {
           <Card.Title>{props.name}</Card.Title>
         </Card.Body>
       </Card>
-    </section>
   );
 }

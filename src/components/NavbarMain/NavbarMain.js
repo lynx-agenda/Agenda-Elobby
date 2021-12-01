@@ -8,7 +8,7 @@ import useUser from '../../hooks/useUser';
 export default function NavbarMain(){
     const {logout} = useUser();
     return(
-    <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
+    <Navbar bg="dark" variant="dark" expand="lg" fixed="top" className="shadow">
         <Container>
             <Navbar.Brand href="/">Elobby</Navbar.Brand>
             <Navbar.Toggle aria-controls="basic-navbar-nav" />
