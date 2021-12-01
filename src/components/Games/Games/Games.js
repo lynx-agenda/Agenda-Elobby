@@ -81,8 +81,6 @@ function Games() {
     <section className="py-5 marginNav">
       <div className="container">
         <Search url="/Games/Browser/" />
-        <h2>Videojuegos</h2>
-        <hr />
         <div className="row">
           {games.results.map((element) => {
             return (
