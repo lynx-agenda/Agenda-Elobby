@@ -21,9 +21,14 @@ import { useState } from "react";
 import Sidebar from "../NavbarMain/Sidebar";
 import Profile from '../Profile/Profile'
 import './Home.css'
+import '../Agenda/Agenda.css'
 import Landing from "../Landing/Landing";
 import UserInfo from "../Profile/UserInfo";
 import { Card } from "react-bootstrap";
+import MyMovies from '../Agenda/MyMovies'
+import MyTV from '../Agenda/MyTV'
+import MyGames from '../Agenda/MyGames'
+import MyBooks from '../Agenda/MyBooks'
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -121,10 +126,16 @@ export default function Home() {
               <Route path="Browser/:text" element={<BrowserBooks />} />
             </Route>
             {/* Fin Routin de Libros */}
-            <Route
-            path="/Profile"
-            element={<Profile />}
-            />
+            {/* Inicio Rutin de perfil y agenda*/}
+            <Route path="/Profile" element={<Profile />}/>
+            <Route path="/Agenda" element={<Navigate replace to="/" />} />
+            <Route path="/Agenda">
+              <Route path="Movies" element={<MyMovies />}/>
+              <Route path="Games" element={<MyGames />}/>
+              <Route path="TV" element={<MyTV />}/>
+              <Route path="Books" element={<MyBooks />}/>
+            </Route>
+            {/* Fin Rutin de perfil y agenda*/}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>

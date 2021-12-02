@@ -18,7 +18,7 @@
   width: 100vw;
 }
 
-.state-section{
+/* .state-section{
   padding-bottom: 20px;
 }
 
@@ -29,7 +29,6 @@
 .elements-list{
   display: flex;
   flex-direction: row;
-  /* justify-content: space-between; */
 }
 
 .list-item{
@@ -42,7 +41,7 @@
   height: 300px;
   width: 200px;
   object-fit: cover;
-}
+} */
 
 
 
@@ -57,12 +56,12 @@
     width: auto;
     height: auto;
   }
-  .elements-list{
+  /* .elements-list{
     flex-direction: column;
     margin: auto;
   }
   .list-item{
     margin: auto;
     margin-bottom: 10px;
-  }
+  } */
 }
