@@ -8,14 +8,17 @@ import Toast from 'react-bootstrap/Toast'
 import moment from 'moment';
 import { BiCommentDetail } from "react-icons/bi";
 
+
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./ViewGame.css"
 
 import Loading from "../../Loading/Loading";
 
 import { getGamesFromThird } from "../../../services/getFromThirdApis";
+import useModal from "../../../hooks/useModal";
 
 export default function ViewGame() {
+	const {ViewModalReview, ViewModalState} = useModal();
 	const { id } = useParams();
 	const [game, setGame] = useState({});
 	const [fetchend, setFetchend] = useState(false);
@@ -34,6 +37,16 @@ export default function ViewGame() {
 		}
 		fetchData();
 	}, [id]);
+
+	const handlerReviewClick = () => {
+		let type = "Videojuego"
+		ViewModalReview({type})
+	}
+
+	const handlerAddClick = () => {
+		ViewModalState()
+	}
+
 
 	if (!fetchend) {
 		return <Loading />;
@@ -85,8 +98,8 @@ export default function ViewGame() {
                 				{game.genres.map((genre, index) => {return ( <span key={index} className="badge bg-secondary mx-1">{genre.name}</span> ) })}
             				</p>
 							<div className="d-flex">
-                				<Button variant="secondary" className="w-50 me-2">Añadir</Button>{' '}
-                				<Button variant="outline-dark" className="w-50 "><BiCommentDetail /> Review</Button>
+                				<Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>{' '}
+                				<Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
                     		</div>
 						</div>
 					</div>
