@@ -53,13 +53,13 @@ export default function ViewMovie() {
             <div className="col-12 col-md-8 col-lg-9">
               <h3 className="text-center mb-5">{response.title}</h3>
               <div className="row">
-                <div className="col-4 d-flex justify-content-center align-items-center">
+                <div className="col-12 col-md-4 d-flex justify-content-center align-items-center mb-md-0 mb-4">
                   {response.vote_average < 5 ? <div className="note bad"> {response.vote_average.toFixed(1)} </div>: null}
                   {response.vote_average >= 5 && response.vote_average < 7 ? <div className="note nice"> {response.vote_average.toFixed(1)} </div>: null}
                   {response.vote_average >= 7 && response.vote_average < 9 ? <div className="note great"> {response.vote_average.toFixed(1)} </div>: null}
-                  {response.vote_average >= 9 ? <div className="note great"> {response.vote_average.toFixed(1)} </div>: null}
+                  {response.vote_average >= 9 ? <div className="note spectacular"> {response.vote_average.toFixed(1)} </div>: null}
                 </div>
-                <div className="col-8 d-flex justify-content-center">
+                <div className="col-12 col-md-8 d-flex justify-content-center">
                   <div>
                     <p>
                       <strong>Estreno: </strong>

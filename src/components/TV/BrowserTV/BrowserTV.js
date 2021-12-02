@@ -49,7 +49,7 @@ export default function BrowserTV() {
           <div className="row">
             {response.results.map((show) => {
               return (
-                <div key={show.id} className="col-12 col-md-3">
+                <div key={show.id} className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-between">
                   <TVShow
                     id={show.id}
                     original_name={show.original_name}
