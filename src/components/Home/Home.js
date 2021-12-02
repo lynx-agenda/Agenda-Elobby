@@ -21,6 +21,9 @@ import { useState } from "react";
 import Sidebar from "../NavbarMain/Sidebar";
 import Profile from '../Profile/Profile'
 import './Home.css'
+import Landing from "../Landing/Landing";
+import UserInfo from "../Profile/UserInfo";
+import { Card } from "react-bootstrap";
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -34,7 +37,7 @@ export default function Home() {
     return (
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Login />} />
+          <Route path="/" element={<Landing />} />
           <Route path="/Singup" element={<Singup />} />
           <Route path="*" element={<Login />} />
         </Routes>
@@ -135,13 +138,49 @@ function Main() {
   // user = JSON.parse(user);
 
   return (
-    <section className="py-5 marginNav">
+    <section className=" py-5 marginNav">
+      {/* <UserInfo /> */}
       <div className="container">
-        <h1>Bienvenido</h1>
-        <h3>
-          Actualmente la agenda esta en desarrollo pero puede navegar por
-          nuestros elementos de ocio
-        </h3>
+        <div className='state-section'>
+          <h2>Siguiendo</h2>
+          <div className='elements-list'>
+            <Card className='list-item'>
+              <Card.Img variant='top' src='https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg'/>
+              <Card.Body>
+                <Card.Text className='text-center'>Titulo</Card.Text>
+              </Card.Body>
+            </Card>
+            <Card className='list-item'>
+              <Card.Img variant='top' src='https://image.tmdb.org/t/p/original//mpgDeLhl8HbhI03XLB7iKO6M6JE.jpg'/>
+              <Card.Body>
+                <Card.Text className='text-center'>Titulo</Card.Text>
+              </Card.Body>
+            </Card>
+            <Card className='list-item'>
+              <Card.Img variant='top' src='https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg'/>
+              <Card.Body>
+                <Card.Text className='text-center'>Titulo</Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        </div> 
+        <div className='state-section'>
+          <h2>Pendiente</h2>
+          <div className='elements-list'>
+            <Card className='list-item'>
+              <Card.Img variant='top' src='http://books.google.com/books/content?id=nzmEDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'/>
+              <Card.Body>
+                <Card.Text className='text-center'>Titulo</Card.Text>
+              </Card.Body>
+            </Card>
+          </div>
+        </div> 
+        <div className='state-section'>
+          <h2>Terminado</h2>
+        </div>  
+        <div className='state-section'>
+          <h2>Abandonado</h2>
+        </div> 
       </div>
     </section>
   );

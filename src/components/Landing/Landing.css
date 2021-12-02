@@ -1,0 +1,18 @@
+.landing-page{
+    margin: 0;
+    padding: 0;
+    width: 100vw;
+    height: 100vh;
+    background-image: url('https://pixabay.com/get/g7b2258357608bb28dc4f92fd5238166eee571a6a499f4e567715acadbeca093b7626ee64544ab358b9329b22b9489d380a5fb4c9dbcc6ef9dcfda7137ae259ac555e6246f44ea0d8bb14dc00c104eeb2_1920.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    object-fit: cover;
+}
+
+.form{
+    background-color: rgba(0, 0, 0, 0.8);
+}
+
+.slogan{
+    margin: auto;
+}
