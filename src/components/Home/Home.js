@@ -29,6 +29,7 @@ import MyMovies from '../Agenda/MyMovies'
 import MyTV from '../Agenda/MyTV'
 import MyGames from '../Agenda/MyGames'
 import MyBooks from '../Agenda/MyBooks'
+import { Image } from "react-bootstrap";
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -155,35 +156,18 @@ function Main() {
         <div className='state-section'>
           <h2>Siguiendo</h2>
           <div className='elements-list'>
-            <Card className='list-item'>
-              <Card.Img variant='top' src='https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg'/>
-              <Card.Body>
-                <Card.Text className='text-center'>Titulo</Card.Text>
-              </Card.Body>
-            </Card>
-            <Card className='list-item'>
-              <Card.Img variant='top' src='https://image.tmdb.org/t/p/original//mpgDeLhl8HbhI03XLB7iKO6M6JE.jpg'/>
-              <Card.Body>
-                <Card.Text className='text-center'>Titulo</Card.Text>
-              </Card.Body>
-            </Card>
-            <Card className='list-item'>
-              <Card.Img variant='top' src='https://media.rawg.io/media/games/7cf/7cfc9220b401b7a300e409e539c9afd5.jpg'/>
-              <Card.Body>
-                <Card.Text className='text-center'>Titulo</Card.Text>
-              </Card.Body>
-            </Card>
+            <div className='list-item'>
+              <Image src='https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg' fluid/>
+              <div className='overlay'>
+                <h1>Titulo</h1>
+              </div>
+            </div>
           </div>
         </div> 
         <div className='state-section'>
           <h2>Pendiente</h2>
           <div className='elements-list'>
-            <Card className='list-item'>
-              <Card.Img variant='top' src='http://books.google.com/books/content?id=nzmEDwAAQBAJ&printsec=frontcover&img=1&zoom=1&edge=curl&source=gbs_api'/>
-              <Card.Body>
-                <Card.Text className='text-center'>Titulo</Card.Text>
-              </Card.Body>
-            </Card>
+            
           </div>
         </div> 
         <div className='state-section'>
