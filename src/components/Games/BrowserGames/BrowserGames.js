@@ -49,7 +49,7 @@ export default function BrowserGames() {
           <div className="row">
             {games.results.map((element) => {
               return (
-                <div key={element.id} className="col-12 col-md-4 mt-3">
+                <div key={element.id} className="col-12 col-md-6 col-lg-4 mt-4 d-flex justify-content-between">
                   <Game
                     name={element.name}
                     img={element.background_image}

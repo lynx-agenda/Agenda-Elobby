@@ -28,3 +28,14 @@
 .toast {
     width: auto !important;
 }
+
+.platafo-img {
+    height: 100%;
+    max-height: 30px;
+}
+
+.platafo ul{
+    list-style: none;
+    margin-bottom: 1rem;
+    padding-left: .5rem;
+}
