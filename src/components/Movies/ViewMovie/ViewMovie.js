@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Toast from 'react-bootstrap/Toast'
 import moment from 'moment';
 import { BiCommentDetail } from "react-icons/bi";
+import useModal from "../../../hooks/useModal";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./ViewMovie.css"
@@ -15,6 +16,7 @@ import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
 import Loading from "../../Loading/Loading";
 
 export default function ViewMovie() {
+  const {ViewModalReview, ViewModalState} = useModal();
   const { id } = useParams();
   const [response, setResponse] = useState({});
   const [loading, setLoading] = useState(false);
@@ -33,6 +35,16 @@ export default function ViewMovie() {
     }
     getData();
   }, [id]);
+
+  const handlerReviewClick = () => {
+		let type = "Pelicula"
+		ViewModalReview({type})
+	}
+
+	const handlerAddClick = () => {
+		ViewModalState()
+	}
+
 
   if (!loading) {
     return <Loading />;
@@ -74,8 +86,8 @@ export default function ViewMovie() {
                       {response.genres.map((genre, index) => {return ( <span key={index} className="badge bg-secondary mx-1">{genre.name}</span> ) })}
                     </p>
                     <div className="d-flex">
-                      <Button variant="secondary" className="w-50 me-2">Añadir</Button>{' '}
-                      <Button variant="outline-dark" className="w-50 "><BiCommentDetail /> Review</Button>
+                      <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>{' '}
+                      <Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
                     </div>
                   </div>
                 </div>

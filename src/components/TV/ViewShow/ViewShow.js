@@ -6,6 +6,7 @@ import Button from 'react-bootstrap/Button'
 import Toast from 'react-bootstrap/Toast'
 import moment from 'moment';
 import { BiCommentDetail } from "react-icons/bi";
+import useModal from "../../../hooks/useModal";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
@@ -16,6 +17,7 @@ import Seasons from "./Seasons";
 
 export default function ViewShow() {
   const { id } = useParams();
+  const {ViewModalReview, ViewModalState} = useModal();
   const [response, setResponse] = useState({});
   const [loading, setLoading] = useState(false);
 
@@ -34,6 +36,15 @@ export default function ViewShow() {
     getData();
   }, [id]);
 
+  const handlerReviewClick = () => {
+		let type = "Serie"
+		ViewModalReview({type})
+	}
+
+	const handlerAddClick = () => {
+		ViewModalState()
+	}
+
   if (!loading) {
     return <Loading />;
   }
@@ -44,15 +55,6 @@ export default function ViewShow() {
 
   function NetworkImage(logoPath) {
     return `https://image.tmdb.org/t/p/original/${logoPath}`
-  }
-
-  function ListGenres(genres) {
-    let string = ``
-    for(let k = 0; k<genres.length; k++){
-      string += genres[k].name + ', '
-    }
-    string = string.slice(0, string.length-2)
-    return string
   }
 
   return (
@@ -97,8 +99,8 @@ export default function ViewShow() {
                       </ul>
                     </div>
                     <div className="d-flex">
-                      <Button variant="secondary" className="w-50 me-2">Añadir</Button>{' '}
-                      <Button variant="outline-dark" className="w-50 "><BiCommentDetail /> Review</Button>
+                      <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>{' '}
+                      <Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
                     </div>
                   </div>
                 </div>

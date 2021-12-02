@@ -5,7 +5,8 @@
     height: 55vh;
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: center top;
+    background-position: center;
+    background-size: cover;
 }
 
 .content-game-info{
