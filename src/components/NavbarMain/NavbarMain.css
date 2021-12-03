@@ -1,3 +1,10 @@
+.menu-user svg{
+    color: white;
+    font-size: 2.25rem;
+    margin-left: 20px;
+    background: none;
+    font-weight: lighter;
+}
 .bg-dark {
     background-color: var(--color-primary) !important; 
 }

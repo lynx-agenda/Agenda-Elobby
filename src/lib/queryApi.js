@@ -44,7 +44,7 @@ const queryApi = async ({ text, type, startIndex }) => {
     params,
   });
 
-  console.log(`response`, response.data);
+  // console.log(`response`, response.data);
   return response.data;
 };
 
