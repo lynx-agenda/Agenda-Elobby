@@ -98,14 +98,15 @@ export default function useModal()  {
         if (formValues!==undefined){
             
             const select = formValues.find(element => element.ckecked);
+            if(select!==undefined){
             const status = select.type;
-
-            await postElement({idApi, status, type, jwt});
-            Swal.fire({
-                icon: 'success',
-                title: 'Se ha añadido',
-                text: '¡Ya podras ver el elemento en tu agenda!'
-            })
+                await postElement({idApi, status, type, jwt});
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se ha añadido',
+                    text: '¡Ya podras ver el elemento en tu agenda!'
+                })
+            }
         }
     },[jwt])
 
