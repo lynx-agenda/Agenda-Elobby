@@ -77,11 +77,9 @@ function getGamesFromThird({ search = "", idResource = "", page = "" } = {}) {
 		body: JSON.stringify({ search, idResource, page }),
 	})
 		.then((res) => {
-			console.log(res);
 			return res.json();
 		})
 		.then((res) => {
-			console.log(res);
 			return res;
 		})
 		.catch((error) => console.log(error));
