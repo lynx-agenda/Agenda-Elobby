@@ -16,11 +16,15 @@ import Loading from "../../Loading/Loading";
 
 import { getGamesFromThird } from "../../../services/getFromThirdApis";
 import useModal from "../../../hooks/useModal";
+import getAllReviews from "../../../services/getAllReviews";
+import useUser from "../../../hooks/useUser";
 
 export default function ViewGame() {
 	const {ViewModalReview, ViewModalState} = useModal();
+	const {jwt} = useUser()
 	const { id } = useParams();
 	const [game, setGame] = useState({});
+	const [reviews, setReviews] = useState([]);
 	const [fetchend, setFetchend] = useState(false);
 
 	useEffect(() => {
@@ -28,20 +32,25 @@ export default function ViewGame() {
 			try {
 				
 				let response = await getGamesFromThird({ idResource: `${id}` });
-        
 				setGame(response);
+
+				const allReviews = await getAllReviews({jwt})
+				const ReviewsForElement = allReviews.filter(review => (review.idElement.idApi===id && review.idElement.type==="game"));
+
+				setReviews(ReviewsForElement);
 				setFetchend(true);
 			} catch (e) {
 				window.location.href = "/NotFound";
 			}
 		}
 		fetchData();
-	}, [id]);
+	}, [id,reviews]);
 
 	const handlerReviewClick = () => {
 		let idApi = id;
 		let type = "game"
 		ViewModalReview({idApi, type})
+		setReviews([])
 	}
 
 	const handlerAddClick = () => {
@@ -117,14 +126,18 @@ export default function ViewGame() {
 			</article>
 			<hr className="my-5" />
 			<article className="container pb-5">
-			<Toast>
-				<Toast.Header closeButton={false}>
-					<img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
-					<strong className="me-auto">Bootstrap</strong>
-					<small>11 mins ago</small>
-					</Toast.Header>
-					<Toast.Body>Hello, world! This is a toast message.</Toast.Body>
-			</Toast>
+			{reviews.length===0 ? <h3>No tine ninguna reseña</h3> : 
+			reviews.map(res => {
+				return (<Toast key={res._id} className="mt-2">
+					<Toast.Header closeButton={false}>
+						<img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
+						<strong className="me-auto">Bootstrap</strong>
+						<small>{moment(res.created).format('DD/MM/YYYY')}</small>
+						</Toast.Header>
+						<Toast.Body>{res.text}</Toast.Body>
+				</Toast>)
+			})
+			}
 			</article>
 		</section>
 	);

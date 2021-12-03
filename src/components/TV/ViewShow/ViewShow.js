@@ -15,10 +15,16 @@ import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
 import Loading from "../../Loading/Loading";
 import Seasons from "./Seasons";
 
+import getAllReviews from "../../../services/getAllReviews";
+import useUser from "../../../hooks/useUser";
+
+
 export default function ViewShow() {
   const { id } = useParams();
+  const {jwt} = useUser()
   const {ViewModalReview, ViewModalState} = useModal();
   const [response, setResponse] = useState({});
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -26,20 +32,25 @@ export default function ViewShow() {
       try {
 
         let response = await getFromTheMovieDB({ idResource: `${id}`, resourceType: "tv" });
-
         setResponse(response);
+
+        const allReviews = await getAllReviews({jwt})
+				const ReviewsForElement = allReviews.filter(review => (review.idElement.idApi===id && review.idElement.type==="tv"));
+
+				setReviews(ReviewsForElement);
         setLoading(true);
       } catch (e) {
         window.location.href = "/NotFound";
       }
     }
     getData();
-  }, [id]);
+  }, [id,reviews]);
 
   const handlerReviewClick = () => {
 		let idApi = id;
 		let type = "tv"
 		ViewModalReview({idApi, type})
+    setReviews([])
 	}
 
 	const handlerAddClick = () => {
@@ -133,16 +144,20 @@ export default function ViewShow() {
 
       <hr className="my-5" />
 
-      <article className="container">
-      <Toast>
-        <Toast.Header closeButton={false}>
-          <img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
-          <strong className="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-        </Toast.Header>
-        <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
-      </Toast>
-      </article>
+      <article className="container pb-5">
+			{reviews.length===0 ? <h3>No tine ninguna reseña</h3> : 
+			reviews.map(res => {
+				return (<Toast key={res._id} className="mt-2">
+					<Toast.Header closeButton={false}>
+						<img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
+						<strong className="me-auto">Bootstrap</strong>
+						<small>{moment(res.created).format('DD/MM/YYYY')}</small>
+						</Toast.Header>
+						<Toast.Body>{res.text}</Toast.Body>
+				</Toast>)
+			})
+			}
+			</article>
     </section>
   );
 }

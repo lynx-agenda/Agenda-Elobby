@@ -12,13 +12,18 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./ViewMovie.css"
 
 import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
+import getAllReviews from "../../../services/getAllReviews";
+import useUser from "../../../hooks/useUser";
+
 
 import Loading from "../../Loading/Loading";
 
 export default function ViewMovie() {
   const {ViewModalReview, ViewModalState} = useModal();
   const { id } = useParams();
+  const {jwt} = useUser()
   const [response, setResponse] = useState({});
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   
   useEffect(() => {
@@ -26,20 +31,25 @@ export default function ViewMovie() {
       try {
 
 				let response = await getFromTheMovieDB({ idResource: `${id}`, resourceType: "movie" });
-
         setResponse(response);
+
+        const allReviews = await getAllReviews({jwt})
+				const ReviewsForElement = allReviews.filter(review => (review.idElement.idApi===id && review.idElement.type==="movie"));
+
+				setReviews(ReviewsForElement);
         setLoading(true);
       } catch (e) {
         window.location.href = "/NotFound";
       }
     }
     getData();
-  }, [id]);
+  }, [id,reviews]);
 
   const handlerReviewClick = () => {
 		let idApi = id;
 		let type = "movie"
 		ViewModalReview({idApi, type})
+    setReviews([])
 	}
 
 	const handlerAddClick = () => {
@@ -107,16 +117,20 @@ export default function ViewMovie() {
         <p>{ReactHtmlParser(response.overview)}</p>
       </article>
       <hr className="my-5" />
-      <article className="container">
-      <Toast>
-        <Toast.Header closeButton={false}>
-          <img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
-          <strong className="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-        </Toast.Header>
-        <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
-      </Toast>
-      </article>
+      <article className="container pb-5">
+			{reviews.length===0 ? <h3>No tine ninguna reseña</h3> : 
+			reviews.map(res => {
+				return (<Toast key={res._id} className="mt-2">
+					<Toast.Header closeButton={false}>
+						<img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
+						<strong className="me-auto">Bootstrap</strong>
+						<small>{moment(res.created).format('DD/MM/YYYY')}</small>
+						</Toast.Header>
+						<Toast.Body>{res.text}</Toast.Body>
+				</Toast>)
+			})
+			}
+			</article>
     </section>
   );
 }
