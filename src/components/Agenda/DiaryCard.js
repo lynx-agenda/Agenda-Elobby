@@ -8,6 +8,7 @@ function ImageByMovieDB(posterPath) {
 
 export default function DiaryCard(props) {
     let elemento = props.elemento;
+    console.log(elemento.typeElobby);
   return (
     <Link to='#' className="list-item">
       {elemento.poster_path!==undefined ? <Image src={ImageByMovieDB(elemento.poster_path)} fluid/> : <Image src={elemento.background_image} fluid/>}
