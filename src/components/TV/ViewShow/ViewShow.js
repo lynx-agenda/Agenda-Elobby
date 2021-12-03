@@ -42,8 +42,11 @@ export default function ViewShow() {
 	}
 
 	const handlerAddClick = () => {
-		ViewModalState()
+		let idApi = id;
+		let type = "tv"
+		ViewModalState({idApi, type});
 	}
+
 
   if (!loading) {
     return <Loading />;

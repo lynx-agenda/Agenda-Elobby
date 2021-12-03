@@ -42,8 +42,11 @@ export default function ViewMovie() {
 	}
 
 	const handlerAddClick = () => {
-		ViewModalState()
+		let idApi = id;
+		let type = "movie"
+		ViewModalState({idApi, type});
 	}
+
 
 
   if (!loading) {

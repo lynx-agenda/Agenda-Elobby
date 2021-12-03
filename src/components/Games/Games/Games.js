@@ -30,6 +30,7 @@ function Games() {
         window.location.href = "/NotFound";
       }
     }
+    console.log(reloadPage)
     fetchData();
   }, [reloadPage]);
 

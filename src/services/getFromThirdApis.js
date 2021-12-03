@@ -48,12 +48,12 @@ function getFromTheMovieDB({ query = "", page = 1, idResource = "", action = "",
 		.catch((error) => console.log(error));
 }
 
-function getGamesFromThird({ search = "", idResource = "" } = {}) {
+function getGamesFromThird({ search = "", idResource = "", page = "" } = {}) {
 
 	return fetch(`${ENDPOINT}/games`, {
 		headers: { "Content-Type": "application/json" },
 		method: "POST",
-		body: JSON.stringify({ search, idResource }),
+		body: JSON.stringify({ search, idResource, page }),
 	})
 		.then((res) => {
 			console.log(res);

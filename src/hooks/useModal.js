@@ -1,10 +1,14 @@
 import { useCallback } from "react";
 import Swal from "sweetalert2";
+import postElement from "../services/postElement";
+import postReview from "../services/postReviews";
+import useUser from "./useUser"
 
 
 export default function useModal()  {
+    const {jwt} = useUser();
 
-    const ViewModalReview = useCallback(async ({type}) => { 
+    const ViewModalReview = useCallback(async ({idApi, type}) => { 
         const { value: formValues } = await Swal.fire({
             title: 'Crear review',
             showCancelButton: true,
@@ -32,7 +36,10 @@ export default function useModal()  {
             values[1] = parseInt(values[1]) 
         
             if (values[1]>=0 && values[1]<=10 && values[0]!=="") {
-                Swal.fire(JSON.stringify(formValues))
+                let note = values[1];
+                let text = values[0];
+                console.log({idApi, note, text, type, jwt});
+                const element = await postReview({idApi, note, text, type, jwt});
             }else {
                 Swal.fire({
                     icon: 'error',
@@ -41,9 +48,9 @@ export default function useModal()  {
                 })
             }
         }
-    },[])
+    },[jwt])
 
-    const ViewModalState = useCallback(async () => {
+    const ViewModalState = useCallback(async ({idApi, type}) => {
         const { value: formValues } = await Swal.fire({
             title: 'Añadir a...',
             showCancelButton: true,
@@ -87,10 +94,13 @@ export default function useModal()  {
         if (formValues!==undefined){
             
             const select = formValues.find(element => element.ckecked);
-            
-            console.log(select.type);
+            const status = select.type;
+
+            console.log({idApi, status, type, jwt});
+            const element = await postElement({idApi, status, type, jwt});
+            console.log(element);
         }
-    },[])
+    },[jwt])
 
     return{
         ViewModalReview,
