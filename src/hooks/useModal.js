@@ -39,7 +39,7 @@ export default function useModal()  {
                 let note = values[1];
                 let text = values[0];
                 console.log({idApi, note, text, type, jwt});
-                const element = await postReview({idApi, note, text, type, jwt});
+                await postReview({idApi, note, text, type, jwt});
             }else {
                 Swal.fire({
                     icon: 'error',
