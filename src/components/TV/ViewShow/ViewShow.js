@@ -37,8 +37,9 @@ export default function ViewShow() {
   }, [id]);
 
   const handlerReviewClick = () => {
-		let type = "Serie"
-		ViewModalReview({type})
+		let idApi = id;
+		let type = "tv"
+		ViewModalReview({idApi, type})
 	}
 
 	const handlerAddClick = () => {

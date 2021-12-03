@@ -37,8 +37,9 @@ export default function ViewMovie() {
   }, [id]);
 
   const handlerReviewClick = () => {
-		let type = "Pelicula"
-		ViewModalReview({type})
+		let idApi = id;
+		let type = "movie"
+		ViewModalReview({idApi, type})
 	}
 
 	const handlerAddClick = () => {
