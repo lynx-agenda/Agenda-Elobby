@@ -106,7 +106,6 @@ export default function Movies() {
 
 // //   function PaginationBar({ page, setPage }) {
 // //     const handleClickPlus = () => {
-// //       console.log(page);
 // //       setPage(page + 1);
 // //     };
 

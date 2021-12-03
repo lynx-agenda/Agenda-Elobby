@@ -44,13 +44,12 @@ export default function ViewGame() {
 			}
 		}
 		fetchData();
-	}, [reviews,id]);
+	}, [id, jwt]);
 
 	const handlerReviewClick = () => {
 		let idApi = id;
 		let type = "game"
 		ViewModalReview({idApi, type})
-		setReviews([]);
 	}
 
 	const handlerAddClick = () => {

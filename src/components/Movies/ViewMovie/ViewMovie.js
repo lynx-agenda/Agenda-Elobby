@@ -43,13 +43,13 @@ export default function ViewMovie() {
       }
     }
     getData();
-  }, [id,reviews]);
+  }, [id, jwt]);
 
   const handlerReviewClick = () => {
 		let idApi = id;
 		let type = "movie"
 		ViewModalReview({idApi, type})
-    setReviews([])
+
 	}
 
 	const handlerAddClick = () => {

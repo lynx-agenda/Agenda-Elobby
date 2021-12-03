@@ -10,10 +10,9 @@ export default function postElement({idApi, status, type, jwt}){
     }).then(res => {
         return res.json()
     }).then(res => {
-        console.log(res);
         let idElement = res.element._id;
         return addToDiary({idElement, status, jwt})
             .then(res2 => res2);
     })
-    .catch(error => console.log(error))
+    .catch(error => console.error(error))
 }

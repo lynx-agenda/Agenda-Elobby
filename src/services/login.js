@@ -11,5 +11,5 @@ export default function login({email , password}){
         let { token } = res;
         if (token === undefined) token = null;
         return token;
-    }).catch(error => console.log(error))
+    }).catch(error => console.error(error))
 }

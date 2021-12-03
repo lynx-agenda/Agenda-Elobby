@@ -38,7 +38,6 @@ export default function useModal()  {
             if (values[1]>=0 && values[1]<=10 && values[0]!=="") {
                 let note = values[1];
                 let text = values[0];
-                console.log({idApi, note, text, type, jwt});
                 await postReview({idApi, note, text, type, jwt});
                 Swal.fire({
                     icon: 'success',
@@ -99,14 +98,15 @@ export default function useModal()  {
         if (formValues!==undefined){
             
             const select = formValues.find(element => element.ckecked);
+            if(select!==undefined){
             const status = select.type;
-
-            await postElement({idApi, status, type, jwt});
-            Swal.fire({
-                icon: 'success',
-                title: 'Se ha añadido',
-                text: '¡Ya podras ver el elemento en tu agenda!'
-            })
+                await postElement({idApi, status, type, jwt});
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se ha añadido',
+                    text: '¡Ya podras ver el elemento en tu agenda!'
+                })
+            }
         }
     },[jwt])
 

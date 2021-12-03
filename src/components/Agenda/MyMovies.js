@@ -19,43 +19,42 @@ export default function MyMovies() {
     async function fetchData() {
 			try {
 				const diary = await getDiary({jwt})
-        console.log(diary);
 
         const allPromiseCompleted =  diary.completed.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          return null;
       })
 
         const allPromiseWatching =  diary.watching.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          return null;
       })
 
         const allPromiseDropped =  diary.dropped.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          return null;
       })
 
         const allPromisePending =  diary.pending.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          return null;
       })
 
       Promise.all(allPromiseCompleted).then(res => {
-        console.log(res);
         setCompleted(res);
         Promise.all(allPromiseWatching).then(res => {
-          console.log(res);
           setWatching(res);
           Promise.all(allPromiseDropped).then(res => {
-            console.log(res);
             setDropped(res);
             Promise.all(allPromisePending).then(res => {
-              console.log(res);
               setPending(res);
               setLoading(false);
             }).catch(error => console.error(error))
@@ -86,7 +85,7 @@ export default function MyMovies() {
                 return(
                   <DiaryCard key={item.id} elemento={item} />
                 )
-              }
+              }else return null;
             })}
           </div>
         </div>
@@ -98,7 +97,7 @@ export default function MyMovies() {
                 return(
                   <DiaryCard key={item.id} elemento={item} />
                 )
-              }
+              }else return null;
             })}
           </div>
         </div>
@@ -110,7 +109,7 @@ export default function MyMovies() {
                 return(
                   <DiaryCard key={item.id} elemento={item} />
                 )
-              }
+              }else return null;
             })}
           </div>
         </div>
@@ -122,7 +121,7 @@ export default function MyMovies() {
                 return(
                   <DiaryCard key={item.id} elemento={item} />
                 )
-              }
+              }else return null;
             })}
           </div>
         </div>
