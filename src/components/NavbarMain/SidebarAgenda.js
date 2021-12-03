@@ -41,7 +41,7 @@ export default function SidebarAgenda () {
         <div className='accordion'>
             <Accordion>
                 <AccordionHeader>
-                        <Link to='#' className='nav-text'><BiIcons.BiBookContent /> Agenda</Link>
+                        <Link to='/' className='nav-text'><BiIcons.BiBookContent /> Agenda</Link>
                 </AccordionHeader>
                 {agendaContent.map((item, idx) => {
                             return (

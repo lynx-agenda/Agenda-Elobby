@@ -17,19 +17,20 @@ import NavbarMain from "../NavbarMain/NavbarMain";
 import Singup from "../Singup/Singup";
 import Login from "../Login/Login";
 import useUser from "../../hooks/useUser";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Sidebar from "../NavbarMain/Sidebar";
-import Profile from '../Profile/Profile'
-import './Home.css'
-import '../Agenda/Agenda.css'
+import Profile from "../Profile/Profile";
+import "./Home.css";
+import "../Agenda/Agenda.css";
 import Landing from "../Landing/Landing";
-import MyMovies from '../Agenda/MyMovies'
-import MyTV from '../Agenda/MyTV'
-import MyGames from '../Agenda/MyGames'
-import MyBooks from '../Agenda/MyBooks'
+import MyMovies from "../Agenda/MyMovies";
+import MyTV from "../Agenda/MyTV";
+import MyGames from "../Agenda/MyGames";
+import MyBooks from "../Agenda/MyBooks";
 import { Image } from "react-bootstrap";
 import getUser from "../../services/getUser";
-import { useState } from "react";
+import Loading from "../Loading/Loading";
+import DiaryCard from "../Agenda/DiaryCard";
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -37,7 +38,7 @@ export default function Home() {
   //isLogged es una variable de nuestro Hook perzonalisado
   const { isLogged } = useUser();
 
-  const [sidebar, setSidebar] = useState(false)
+  const [sidebar, setSidebar] = useState(false);
 
   if (!isLogged) {
     return (
@@ -128,13 +129,13 @@ export default function Home() {
             </Route>
             {/* Fin Routin de Libros */}
             {/* Inicio Rutin de perfil y agenda*/}
-            <Route path="/Profile" element={<Profile />}/>
+            <Route path="/Profile" element={<Profile />} />
             <Route path="/Agenda" element={<Navigate replace to="/" />} />
             <Route path="/Agenda">
-              <Route path="Movies" element={<MyMovies />}/>
-              <Route path="Games" element={<MyGames />}/>
-              <Route path="TV" element={<MyTV />}/>
-              <Route path="Books" element={<MyBooks />}/>
+              <Route path="Movies" element={<MyMovies />} />
+              <Route path="Games" element={<MyGames />} />
+              <Route path="TV" element={<MyTV />} />
+              <Route path="Books" element={<MyBooks />} />
             </Route>
             {/* Fin Rutin de perfil y agenda*/}
             <Route path="*" element={<NotFound />} />
@@ -146,36 +147,56 @@ export default function Home() {
 }
 
 function Main() {
-  // let {user} = useUser()
-  // user = JSON.parse(user);
+  const [user, setUser] = useState(null);
+  const { jwt } = useUser();
+
+  useEffect(() => {
+    if (user === null) {
+      getUser({ jwt }).then((res) => setUser(res));
+    }
+  }, [user, jwt]);
+
+  if (user === null) return <Loading />;
+
+  let watching = user.diary.watching;
+  let pending = user.diary.pending;
+  let completed = user.diary.completed;
+  let dropped = user.diary.dropped;
+
+  console.log(user);
+  console.log(watching)
 
   return (
     <section className=" py-5 marginNav">
       {/* <UserInfo /> */}
       <div className="container">
-        <div className='state-section'>
+        <div className={watching.length !== 0 ? "state-section" : "invisible"}>
           <h2>Siguiendo</h2>
-          <div className='elements-list'>
-            <div className='list-item'>
-              <Image src='https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg' fluid/>
-              <div className='overlay'>
-                <h1>Titulo</h1>
-              </div>
-            </div>
+          <div className="elements-list">
+            {watching.map(item => <DiaryCard key={item.id} elemento={item}/>)}
           </div>
-        </div> 
-        <div className='state-section'>
+        </div>
+        <div className={pending.length !== 0 ? "state-section" : "invisible"}>
           <h2>Pendiente</h2>
-          <div className='elements-list'>
-            
+          <div className="elements-list">
+            {pending.map(item => <DiaryCard key={item.id} elemento={item}/>)}
           </div>
-        </div> 
-        <div className='state-section'>
+        </div>
+        <div className={completed.length !== 0 ? "state-section" : "invisible"}>
           <h2>Terminado</h2>
-        </div>  
-        <div className='state-section'>
+          <div className="elements-list">
+            {completed.map(item => <DiaryCard key={item.id} elemento={item}/>)}
+          </div>
+        </div>
+        <div className={dropped.length !== 0 ? "state-section" : "invisible"}>
           <h2>Abandonado</h2>
-        </div> 
+          <div className="elements-list">
+            {dropped.map(item => <DiaryCard key={item.id} elemento={item}/>)}
+          </div>
+        </div>
+        <p className={watching.length==0 && pending.length==0 && completed.length==0 && dropped.length== 0 ? "empty-diary" : "invisible"}>
+          ¡Oops...! Parece que tu agenda está vacía. Navega para añadir un elemento a la lista.
+        </p>
       </div>
     </section>
   );
