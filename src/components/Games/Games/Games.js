@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import Button from "react-bootstrap/Button";
-import FormControl  from "react-bootstrap/FormControl";
+import FormControl from "react-bootstrap/FormControl";
 
 import { getGamesFromThird } from "../../../services/getFromThirdApis";
 
@@ -16,12 +16,11 @@ function Games() {
   let navigate = useNavigate();
   const [fetchend, setFetchend] = useState(false);
   const [games, setGames] = useState({});
-  const [reloadPage, setReloadPage] = useState(page)
+  const [reloadPage, setReloadPage] = useState(page);
 
   useEffect(() => {
     async function fetchData() {
       try {
-
         let response = await getGamesFromThird({ page: `${reloadPage}` });
 
         setGames(response);
@@ -35,14 +34,14 @@ function Games() {
 
   const nextPage = () => {
     navigate(`/Games/Page/${+page + 1}`);
-    setReloadPage( +page + 1 );
+    setReloadPage(+page + 1);
     setFetchend(false);
   };
 
   const previousPage = () => {
     if (games.previous !== null) {
       navigate(`/Games/Page/${+page - 1}`);
-      setReloadPage( +page - 1 );
+      setReloadPage(+page - 1);
       setFetchend(false);
     }
   };
@@ -59,7 +58,7 @@ function Games() {
             Anterior
           </Button>
         )}{" "}
-        <FormControl className="mx-2" type="number" value={page} disabled/>
+        <FormControl className="mx-2" type="number" value={page} disabled />
         {games.next == null ? (
           <Button variant="primary" onClick={nextPage} disabled>
             Siguiente
@@ -81,12 +80,10 @@ function Games() {
     <section className="py-5 marginNav">
       <div className="container">
         <Search url="/Games/Browser/" />
-        <h2>Videojuegos</h2>
-        <hr />
         <div className="row">
           {games.results.map((element) => {
             return (
-              <div key={element.id} className="col-12 col-md-4 mt-3">
+              <div key={element.id} className="col-12 col-md-6 col-lg-4 mt-4 d-flex justify-content-between">
                 <Game
                   name={element.name}
                   img={element.background_image}

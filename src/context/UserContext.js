@@ -14,16 +14,8 @@ export function UserContextProvider({children}) {
         }
     })
 
-    const [user, setUser] = useState(() => {
-        if(window.localStorage.getItem('user')!==null){
-            window.sessionStorage.setItem('user', window.localStorage.getItem('user'))
-            return window.localStorage.getItem('user');
-        } else{
-            return window.sessionStorage.getItem('user')
-        }
-    })
 
-    return <Context.Provider value={{jwt, setJwt, user, setUser}}>
+    return <Context.Provider value={{jwt, setJwt}}>
         {children}
         </Context.Provider>
     

@@ -1,3 +1,4 @@
+import { useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import Card from "react-bootstrap/Card";
 import { useNavigate } from "react-router-dom";
@@ -5,18 +6,20 @@ import { useNavigate } from "react-router-dom";
 export default function Movie(props) {
   let navigate = useNavigate();
 
-  const handlerClickMovie = () => {
-    navigate(`/Movies/View/${props.id}`);
-  };
-
   function ImageByMovieId(posterPath) {
     return `https://image.tmdb.org/t/p/original/${posterPath}`;
   }
 
+  const [srcImage, setSrcImage] = useState(ImageByMovieId(props?.poster_path));
+
+  const handlerClickMovie = () => {
+    navigate(`/Movies/View/${props.id}`);
+  };
+
   const cardStyle = { cursor: "pointer" };
+  const imageStyle = { display: !srcImage ? "none" : "inherit" };
 
   return (
-    <section className="mt-4">
       <Card
         onClick={handlerClickMovie}
         style={
@@ -33,17 +36,25 @@ export default function Movie(props) {
       >
         <Card.Img
           variant="bottom"
+          onError={(_e) => {
+            setSrcImage(undefined);
+          }}
           alt={props?.original_title}
-          src={ImageByMovieId(props?.poster_path)}
-          style={props.isHorizontal ? { width: "inherit" } : {}}
+          src={srcImage}
+          style={
+            props.isHorizontal
+              ? { width: "inherit", ...imageStyle }
+              : imageStyle
+          }
         />
         <Card.Body>
-          <Card.Title>Título: {props?.original_title}</Card.Title>
+
+          <Card.Title>{props?.original_title}</Card.Title>
+
           {!props.isHorizontal && (
-            <Card.Text>Descripción: {props?.overview}</Card.Text>
+            <Card.Text>{props?.overview}</Card.Text>
           )}
         </Card.Body>
       </Card>
-    </section>
   );
 }

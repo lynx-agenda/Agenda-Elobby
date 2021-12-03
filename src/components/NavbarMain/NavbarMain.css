@@ -5,3 +5,6 @@
     background: none;
     font-weight: lighter;
 }
+.bg-dark {
+    background-color: var(--color-primary) !important; 
+}

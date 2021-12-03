@@ -23,13 +23,13 @@ import Profile from '../Profile/Profile'
 import './Home.css'
 import '../Agenda/Agenda.css'
 import Landing from "../Landing/Landing";
-import UserInfo from "../Profile/UserInfo";
-import { Card } from "react-bootstrap";
 import MyMovies from '../Agenda/MyMovies'
 import MyTV from '../Agenda/MyTV'
 import MyGames from '../Agenda/MyGames'
 import MyBooks from '../Agenda/MyBooks'
 import { Image } from "react-bootstrap";
+import getUser from "../../services/getUser";
+import { useState } from "react";
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 

@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
+// import { getFromTheMovieDB } from "../../../services/getFromThirdApis"; Nunca se usa
 
 import Movie from "../Movie/Movie";
 import Search from "../../Search/Search";
@@ -49,7 +49,7 @@ export default function BrowserMovies() {
           <div className="row">
             {response.results.map((movie) => {
               return (
-                <div key={movie.id} className="col-12 col-md-3">
+                <div key={movie.id} className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-between">
                   <Movie
                     id={movie.id}
                     original_title={movie.original_title}

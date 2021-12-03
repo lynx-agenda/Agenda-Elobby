@@ -3,7 +3,7 @@ import { useParams, useNavigate } from "react-router-dom";
 
 import { Button } from "react-bootstrap";
 import "bootstrap/dist/css/bootstrap.min.css";
-import FormControl  from "react-bootstrap/FormControl";
+import FormControl from "react-bootstrap/FormControl";
 
 import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
 
@@ -16,13 +16,16 @@ export default function Movies() {
   let navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
   const [response, setResponse] = useState({});
-  const [reloadPage, setReloadPage] = useState(page)
+  const [reloadPage, setReloadPage] = useState(page);
 
   useEffect(() => {
     async function getData() {
       try {
-
-        let res = await getFromTheMovieDB({ page: `${reloadPage}`, action: "discover", resourceType: "movie"  });
+        let res = await getFromTheMovieDB({
+          page: `${reloadPage}`,
+          action: "discover",
+          resourceType: "movie",
+        });
 
         setResponse(res);
         setIsLoading(true);
@@ -35,14 +38,14 @@ export default function Movies() {
 
   const nextPage = () => {
     navigate(`/Movies/Page/${+page + 1}`);
-    setReloadPage( +page + 1 );
+    setReloadPage(+page + 1);
     setIsLoading(false);
   };
 
   const previousPage = () => {
     if (response.page > 1) {
       navigate(`/Movies/Page/${+page - 1}`);
-      setReloadPage( +page - 1 );
+      setReloadPage(+page - 1);
       setIsLoading(false);
     }
   };
@@ -59,7 +62,7 @@ export default function Movies() {
             Anterior
           </Button>
         )}{" "}
-        <FormControl className="mx-2" type="number" value={page} disabled/>
+        <FormControl className="mx-2" type="number" value={page} disabled />
         {response.page < response.total_pages ? (
           <Button variant="primary" onClick={nextPage}>
             Siguiente
@@ -84,7 +87,7 @@ export default function Movies() {
           <Search url="/Movies/Browser/" />
           {response.results.map((movie) => {
             return (
-              <div key={movie.id} className="col-12 col-md-3">
+              <div key={movie.id} className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-between">
                 <Movie
                   id={movie.id}
                   original_title={movie.original_title}

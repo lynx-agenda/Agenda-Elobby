@@ -1,0 +1,26 @@
+.background-game{
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    height: 55vh;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: cover;
+}
+
+.content-game-info{
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.content-game-info svg{
+    color: #fff;
+    font-size: 3rem;
+
+}
+
+.content-game-info h1{
+    color: #fff;
+}

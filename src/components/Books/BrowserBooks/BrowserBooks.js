@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 
-import {getBooksFromThird} from "../../../services/getFromThirdApis";
+// import {getBooksFromThird} from "../../../services/getFromThirdApis"; Nunca se usa
 import queryApi from "../../../lib/queryApi";
 
 import BookCard from "../Book/Book";

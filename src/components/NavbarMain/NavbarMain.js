@@ -17,7 +17,7 @@ export default function NavbarMain(props){
         props.onShow(sidebar)
     }
     return(
-    <Navbar bg="dark" variant="dark" expand="lg" fixed="top">
+    <Navbar bg="dark" variant="dark" expand="lg" fixed="top" className="shadow">
         <Container>
             <Link to='#' className='menu-user'>
                 {sidebar ? <BiIcons.BiUserCircle onClick={showSidebar}/> : <MdIcons.MdClose onClick={showSidebar}/>} 
