@@ -46,6 +46,7 @@ function getFromTheMovieDB({
   action = "",
   resourceType = "",
   season = "",
+  typeElobby= "" 
 } = {}) {
   return fetch(`${ENDPOINT}/movies-tvshows`, {
     headers: { "Content-Type": "application/json" },
@@ -63,12 +64,13 @@ function getFromTheMovieDB({
       return res.json();
     })
     .then((res) => {
+      res.typeElobby = typeElobby;
       return res;
     })
     .catch((error) => console.log(error));
 }
 
-function getGamesFromThird({ search = "", idResource = "", page = "" } = {}) {
+function getGamesFromThird({ search = "", idResource = "", page = "", typeElobby= "" } = {}) {
 
 	return fetch(`${ENDPOINT}/games`, {
 		headers: { "Content-Type": "application/json" },
@@ -79,6 +81,7 @@ function getGamesFromThird({ search = "", idResource = "", page = "" } = {}) {
 			return res.json();
 		})
 		.then((res) => {
+      res.typeElobby = typeElobby;
 			return res;
 		})
 		.catch((error) => console.log(error));
