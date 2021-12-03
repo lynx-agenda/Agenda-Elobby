@@ -8,10 +8,10 @@ import ViewReviews from '../ViewReviews/ViewReviews'
 export default function Profile() {
   return (
     <div className="marginNav profile">
-        {/* <TierList />
+        {/* <TierList />*/}
         <div className='info-user-wrapper'>
             <UserInfo />
-        </div> */}
+        </div> 
       <ViewReviews />
     </div>
   );
