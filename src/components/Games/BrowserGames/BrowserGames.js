@@ -29,7 +29,6 @@ export default function BrowserGames() {
     fetchData();
   }, [text]);
 
-
   if (!fetchend) {
     return <Loading />;
   }

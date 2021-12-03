@@ -1,0 +1,46 @@
+.user-info{
+    display: flex;
+    flex-direction: row;
+    width: 100vw;
+    height: 100px;
+    text-align: center;
+    background-color: #212528;
+    justify-content: space-between;
+}   
+
+.profile-avatar {
+    margin: auto;
+    border-radius: 50%;
+    width: 80px;
+    height: 80px;
+    align-self: center;
+}
+
+.user-info > h2{
+    margin: auto;
+    color: white;
+    text-align: left;
+}
+
+.user-data-list{
+    margin: auto;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+}
+
+.user-data-item{
+    list-style: none;
+    padding: 10px;
+    color: white;
+}
+
+.btn{
+    width: auto;
+    height: 40px;
+    margin: auto;
+}
+
+.btn > svg{
+    font-size: 1.25rem;
+}

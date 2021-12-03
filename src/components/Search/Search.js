@@ -1,28 +1,33 @@
-import { useState, useCallback } from "react";
+import { useState, useRef, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
-import debounce from "lodash/debounce";
 import "bootstrap/dist/css/bootstrap.min.css";
-import InputGroup from "react-bootstrap/InputGroup";
-import FormControl from "react-bootstrap/FormControl";
-import Button from "react-bootstrap/Button";
+import { InputGroup, FormControl, Button } from "react-bootstrap";
+import { BiSearch } from "react-icons/bi";
+import { createAutocomplete } from "@algolia/autocomplete-core";
+
+import debounced from "../../lib/debounced";
 import queryApi from "../../lib/queryApi";
 import type from "../../lib/types.enum";
 import CardSwitch from "../CardSwitch/CardSwitch";
-import { BiSearch } from "react-icons/bi";
-
 
 export default function Search(props) {
-  const [text, setText] = useState("");
-  const [response, setResponse] = useState(null);
-  const elementType = props.url?.split("/")[1];
   let navigate = useNavigate();
+  const [autocompleteState, setAutocompleteState] = useState({
+    collections: [],
+    isOpen: false,
+  });
+
+  const formRef = useRef(null);
+  const inputRef = useRef(null);
+  const panelRef = useRef(null);
+
+  const elementType = props.url?.split("/")[1];
 
   const handleSearch = (e) => {
     e.preventDefault();
-    if (text.trim() !== "") {
-      let sendText = text.trim().split(" ").join("-");
+    if (inputRef.current && inputRef.current.value.trim() !== "") {
+      let sendText = inputRef.current.value.trim().split(" ").join("-");
       navigate(`${props.url}${sendText}`);
-      setText("");
     }
   };
 
@@ -32,45 +37,60 @@ export default function Search(props) {
         text: query,
         type: elementType,
       });
-      setResponse(response);
+      return elementType === type.books ? response.items : response.results;
     } catch (e) {
       console.error("Error fetching api:", e.message);
     }
   };
 
-  const debouncedHandleApiSearch = useCallback(
-    debounce(handleApiSearch, 500),
+  const autocomplete = useMemo(
+    () =>
+      createAutocomplete({
+        placeholder: "Search...",
+        onStateChange: ({ state }) => setAutocompleteState(state),
+        getSources: () =>
+          debounced([
+            {
+              sourceId: "",
+              getItems: ({ query }) => {
+                if (!!query) {
+                  return handleApiSearch(query);
+                }
+              },
+            },
+          ]),
+      }),
     []
   );
 
-  const handleTextInput = async (event) => {
-    const query = event.target.value;
-    setText(query);
-    if (query.length >= 3) {
-      debouncedHandleApiSearch(query);
-    } else {
-      setResponse(null);
-    }
-  };
+  const formProps = autocomplete.getFormProps({
+    inputElement: inputRef.current,
+  });
+
+  const inputProps = autocomplete.getInputProps({
+    inputElement: inputRef.current,
+  });
 
   return (
     <div style={{ position: "relative" }}>
-      <form onSubmit={handleSearch}>
+      <form ref={formRef} {...formProps}>
         <InputGroup>
-          <InputGroup.Text id="search"><BiSearch /></InputGroup.Text>
+          <InputGroup.Text id="search">
+            <BiSearch />
+          </InputGroup.Text>
           <FormControl
+            ref={inputRef}
             placeholder="Search"
             aria-label="Search"
             aria-describedby="search"
-            onChange={handleTextInput}
-            value={text}
+            {...inputProps}
           />
-          <Button variant="primary" type="submit">
+          <Button variant="primary" type="submit" onMouseDown={handleSearch}>
             Buscar
           </Button>
         </InputGroup>
       </form>
-      {response && (
+      {autocompleteState.isOpen && (
         <div
           style={{
             width: "100%",
@@ -80,10 +100,12 @@ export default function Search(props) {
             zIndex: "99",
             maxWidth: "100%",
           }}
+          ref={panelRef}
+          {...autocomplete.getPanelProps()}
         >
-          {(elementType === type.books ? response.items : response.results)
+          {autocompleteState.collections?.[0]?.items
             ?.slice(0, 5)
-            .map((element) => (
+            .map((element, _index) => (
               <CardSwitch type={elementType} element={element} />
             ))}
         </div>
@@ -91,3 +113,67 @@ export default function Search(props) {
     </div>
   );
 }
+
+/* {(elementType === type.books ? response.items : response.results)
+          ?.slice(0, 5)
+          .map((element) => (
+            <CardSwitch type={elementType} element={element} />
+          ))} */
+/**
+ *   const autocomplete = useMemo(
+    () =>
+      createAutocomplete({
+        placeholder: "Search...",
+        onStateChange: ({ state }) => setAutocompleteState(state),
+        getSources: () =>
+          debounced([
+            {
+              sourceId: type.books,
+              getItems: ({ query }) => {
+                if (!!query) {
+                  return queryApi({
+                    text: query,
+                    type: type.books,
+                  }).then((response) =>
+                    elementType === type.books
+                      ? response.items
+                      : response.results
+                  );
+                }
+              },
+            },
+            {
+              sourceId: type.tv,
+              getItems: ({ query }) => {
+                if (!!query) {
+                  return queryApi({
+                    text: query,
+                    type: type.tv,
+                  }).then((response) =>
+                    elementType === type.books
+                      ? response.items
+                      : response.results
+                  );
+                }
+              },
+            },
+            {
+              sourceId: type.games,
+              getItems: ({ query }) => {
+                if (!!query) {
+                  return queryApi({
+                    text: query,
+                    type: type.games,
+                  }).then((response) =>
+                    elementType === type.books
+                      ? response.items
+                      : response.results
+                  );
+                }
+              },
+            },
+          ]),
+      }),
+    []
+  );
+ */

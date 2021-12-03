@@ -17,115 +17,187 @@ import NavbarMain from "../NavbarMain/NavbarMain";
 import Singup from "../Singup/Singup";
 import Login from "../Login/Login";
 import useUser from "../../hooks/useUser";
+import { useState, useEffect } from "react";
+import Sidebar from "../NavbarMain/Sidebar";
+import Profile from "../Profile/Profile";
+import "./Home.css";
+import "../Agenda/Agenda.css";
+import Landing from "../Landing/Landing";
+import MyMovies from "../Agenda/MyMovies";
+import MyTV from "../Agenda/MyTV";
+import MyGames from "../Agenda/MyGames";
+import MyBooks from "../Agenda/MyBooks";
+import { Image } from "react-bootstrap";
 import getUser from "../../services/getUser";
-import { useEffect, useState } from "react";
 import Loading from "../Loading/Loading";
-import ViewReviews from '../ViewReviews/ViewReviews';
-
+import DiaryCard from "../Agenda/DiaryCard";
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
 export default function Home() {
-	//isLogged es una variable de nuestro Hook perzonalisado
-    const {isLogged} = useUser()
+  //isLogged es una variable de nuestro Hook perzonalisado
+  const { isLogged } = useUser();
 
-    if (!isLogged){
-		return (
-			<BrowserRouter>
-				<Routes>
-					<Route path="/" element={<Login />} />
-					<Route path="/Singup" element={<Singup />} />
-					<Route path="*" element={<Login />} />
-				</Routes>
-			</BrowserRouter>
-		)
-	} 
+  const [sidebar, setSidebar] = useState(false);
 
-    
+  if (!isLogged) {
+    return (
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Landing />} />
+          <Route path="/Singup" element={<Singup />} />
+          <Route path="*" element={<Login />} />
+        </Routes>
+      </BrowserRouter>
+    );
+  }
 
-	return (
-			<BrowserRouter>
-				<NavbarMain />
-				<Routes>
-					<Route path="/" element={<Main />} />
-					{/* Inicio Routin de Videojuego */}
-					<Route path="/Games" element={<Navigate replace to="/Games/Page/1" />} />
-					<Route path="/Games">
-						<Route path="Page/:page" element={<Games />} />
-						<Route path="View" element={<Navigate replace to="/Games/Page/1" />} />
-						<Route path="View">
-							<Route path=":id" element={<ViewGame />} />
-						</Route>
-						<Route path="Browser/:text" element={<BrowserGames />} />
-					</Route>
-					{/* Fin Routin de Videojuego */}
-					{/* Inicio Routin de Peliculas */}
-					<Route path="/Movies" element={<Navigate replace to="/Movies/Page/1" />} />
-					<Route path="/Movies">
-						<Route path="Page/:page" element={<Movies />} />
-						<Route path="View" element={<Navigate replace to="/Movies/Page/1" />} />
-						<Route path="View">
-							<Route path=":id" element={<ViewMovie />} />
-						</Route>
-						<Route path="Browser/:text" element={<BrowserMovies />} />
-					</Route>
-					{/* Fin Routin de Peliculas */}
-					{/* Inicio Routin de Series */}
-			<Route
-			path="/TV"
-			element={<Navigate replace to="/TV/Page/1" />}
-			/>
-			<Route path="/TV">
-			<Route path="Page/:page" element={<TVShows />} />
-			<Route
-				path="View"
-				element={<Navigate replace to="/TV/Page/1" />}
-			/>
-			<Route path="View">
-				<Route path=":id" element={<ViewShow />} />
-			</Route>
-			<Route path="Browser/:text" element={<BrowserTV />} />
-			</Route>
-					{/* Fin Routin de Serie */}
-					{/* Inicio Routin de Libros */}
-					<Route path="/Books" 
-			element={<Navigate replace to="/Books/Page/1" />} />
+  return (
+    <BrowserRouter>
+      <NavbarMain show={sidebar} onShow={(show) => setSidebar(show)} />
+      <div className="content">
+        <div className={sidebar ? "content-sidebar" : "invisible"}>
+          <Sidebar />
+        </div>
+        <div className={sidebar ? "content-web" : "content-web-full"}>
+          <Routes>
+            <Route path="/" element={<Main />} />
+            {/* Inicio Routin de Videojuego */}
+            <Route
+              path="/Games"
+              element={<Navigate replace to="/Games/Page/1" />}
+            />
+            <Route path="/Games">
+              <Route path="Page/:page" element={<Games />} />
+              <Route
+                path="View"
+                element={<Navigate replace to="/Games/Page/1" />}
+              />
+              <Route path="View">
+                <Route path=":id" element={<ViewGame />} />
+              </Route>
+              <Route path="Browser/:text" element={<BrowserGames />} />
+            </Route>
+            {/* Fin Routin de Videojuego */}
+            {/* Inicio Routin de Peliculas */}
+            <Route
+              path="/Movies"
+              element={<Navigate replace to="/Movies/Page/1" />}
+            />
+            <Route path="/Movies">
+              <Route path="Page/:page" element={<Movies />} />
+              <Route
+                path="View"
+                element={<Navigate replace to="/Movies/Page/1" />}
+              />
+              <Route path="View">
+                <Route path=":id" element={<ViewMovie />} />
+              </Route>
+              <Route path="Browser/:text" element={<BrowserMovies />} />
+            </Route>
+            {/* Fin Routin de Peliculas */}
+            {/* Inicio Routin de Series */}
+            <Route path="/TV" element={<Navigate replace to="/TV/Page/1" />} />
+            <Route path="/TV">
+              <Route path="Page/:page" element={<TVShows />} />
+              <Route
+                path="View"
+                element={<Navigate replace to="/TV/Page/1" />}
+              />
+              <Route path="View">
+                <Route path=":id" element={<ViewShow />} />
+              </Route>
+              <Route path="Browser/:text" element={<BrowserTV />} />
+            </Route>
+            {/* Fin Routin de Serie */}
+            {/* Inicio Routin de Libros */}
+            <Route
+              path="/Books"
+              element={<Navigate replace to="/Books/Page/1" />}
+            />
 
-					<Route path="/Books">
-						<Route path="Page/:page" element={<Books />} />
-						<Route path="View" element={<Navigate replace to="/Books/Page/1" />} />
-						<Route path="View">
-							<Route path=":id" element={<ViewBook />} />
-						</Route>
-						<Route path="Browser/:text" element={<BrowserBooks />} /> 
-					</Route>
-					{/* Fin Routin de Libros */}
-					<Route path="/test" element={<ViewReviews />} />
-					<Route path="*" element={<NotFound />} />
-				</Routes>
-			</BrowserRouter>
-	);
+            <Route path="/Books">
+              <Route path="Page/:page" element={<Books />} />
+              <Route
+                path="View"
+                element={<Navigate replace to="/Books/Page/1" />}
+              />
+              <Route path="View">
+                <Route path=":id" element={<ViewBook />} />
+              </Route>
+              <Route path="Browser/:text" element={<BrowserBooks />} />
+            </Route>
+            {/* Fin Routin de Libros */}
+            {/* Inicio Rutin de perfil y agenda*/}
+            <Route path="/Profile" element={<Profile />} />
+            <Route path="/Agenda" element={<Navigate replace to="/" />} />
+            <Route path="/Agenda">
+              <Route path="Movies" element={<MyMovies />} />
+              <Route path="Games" element={<MyGames />} />
+              <Route path="TV" element={<MyTV />} />
+              <Route path="Books" element={<MyBooks />} />
+            </Route>
+            {/* Fin Rutin de perfil y agenda*/}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </div>
+      </div>
+    </BrowserRouter>
+  );
 }
 
 function Main() {
-	const[user, setUser] = useState(null);
-	const {jwt} = useUser();
+  const [user, setUser] = useState(null);
+  const { jwt } = useUser();
 
-	useEffect(() => {
-		if(user===null){
-			getUser({jwt})
-				.then(res => setUser(res));
-		}
-	}, [user, jwt]);
+  useEffect(() => {
+    if (user === null) {
+      getUser({ jwt }).then((res) => setUser(res));
+    }
+  }, [user, jwt]);
 
-	if (user===null) return <Loading />
-	console.log(user);
-	return (
-		<section className="py-5 marginNav">
-			<div className="container">
-				<h1>Bienvenido {user.name}</h1>
-				<h3>Actualmente la agenda esta en desarrollo pero puede navegar por nuestros elementos de ocio</h3>
-			</div>
-		</section>
-	);
+  if (user === null) return <Loading />;
+
+  let watching = user.diary.watching;
+  let pending = user.diary.pending;
+  let completed = user.diary.completed;
+  let dropped = user.diary.dropped;
+
+  console.log(user);
+  console.log(watching)
+
+  return (
+    <section className=" py-5 marginNav">
+      {/* <UserInfo /> */}
+      <div className="container">
+        <div className={watching.length !== 0 ? "state-section" : "invisible"}>
+          <h2>Siguiendo</h2>
+          <div className="elements-list">
+            {watching.map(item => <DiaryCard key={item.id} elemento={item}/>)}
+          </div>
+        </div>
+        <div className={pending.length !== 0 ? "state-section" : "invisible"}>
+          <h2>Pendiente</h2>
+          <div className="elements-list">
+            {pending.map(item => <DiaryCard key={item.id} elemento={item}/>)}
+          </div>
+        </div>
+        <div className={completed.length !== 0 ? "state-section" : "invisible"}>
+          <h2>Terminado</h2>
+          <div className="elements-list">
+            {completed.map(item => <DiaryCard key={item.id} elemento={item}/>)}
+          </div>
+        </div>
+        <div className={dropped.length !== 0 ? "state-section" : "invisible"}>
+          <h2>Abandonado</h2>
+          <div className="elements-list">
+            {dropped.map(item => <DiaryCard key={item.id} elemento={item}/>)}
+          </div>
+        </div>
+        <p className={watching.length==0 && pending.length==0 && completed.length==0 && dropped.length== 0 ? "empty-diary" : "invisible"}>
+          ¡Oops...! Parece que tu agenda está vacía. Navega para añadir un elemento a la lista.
+        </p>
+      </div>
+    </section>
+  );
 }
