@@ -2,17 +2,17 @@ import './Agenda.css'
 import { Image } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 
+function ImageByMovieDB(posterPath) {
+  return `https://image.tmdb.org/t/p/original/${posterPath}`;
+}
 
 export default function DiaryCard(props) {
     let elemento = props.elemento;
   return (
     <Link to='#' className="list-item">
-      <Image
-        src="https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg"
-        fluid
-      />
+      {elemento.poster_path!==undefined ? <Image src={ImageByMovieDB(elemento.poster_path)} fluid/> : <Image src={elemento.background_image} fluid/>}
       <div className="overlay">
-        <h1>Titulo</h1>
+        {elemento.name!==undefined ? <h1>{elemento.name}</h1> : <h1>{elemento.original_title}</h1>}
       </div>
     </Link>
   );

@@ -31,6 +31,8 @@ import { Image } from "react-bootstrap";
 import getUser from "../../services/getUser";
 import Loading from "../Loading/Loading";
 import DiaryCard from "../Agenda/DiaryCard";
+import getDiary from "../../services/getDiary";
+import { getGamesFromThird, getFromTheMovieDB } from "../../services/getFromThirdApis";
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -147,28 +149,76 @@ export default function Home() {
 }
 
 function Main() {
-  const [user, setUser] = useState(null);
-  const { jwt } = useUser();
+  const {jwt} = useUser()
+  const [watching, setWatching] = useState([]);
+  const [pending, setPending] = useState([]);
+  const [dropped, setDropped] = useState([]);
+  const [completed, setCompleted] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    if (user === null) {
-      getUser({ jwt }).then((res) => setUser(res));
-    }
-  }, [user, jwt]);
+    async function fetchData() {
+			try {
+				const diary = await getDiary({jwt})
+        console.log(diary);
 
-  if (user === null) return <Loading />;
+        const allPromiseCompleted =  diary.completed.map(element => {
+          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` }); 
+          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie" })
+          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv"})
+      })
 
-  let watching = user.diary.watching;
-  let pending = user.diary.pending;
-  let completed = user.diary.completed;
-  let dropped = user.diary.dropped;
+        const allPromiseWatching =  diary.watching.map(element => {
+          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` }); 
+          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie" })
+          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv"})
+      })
 
-  console.log(user);
-  console.log(watching)
+        const allPromiseDropped =  diary.dropped.map(element => {
+          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` }); 
+          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie" })
+          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv"})
+      })
+
+        const allPromisePending =  diary.pending.map(element => {
+          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` }); 
+          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie" })
+          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv"})
+      })
+
+      Promise.all(allPromiseCompleted).then(res => {
+        console.log(res);
+        setCompleted(res);
+        Promise.all(allPromiseWatching).then(res => {
+          console.log(res);
+          setWatching(res);
+          Promise.all(allPromiseDropped).then(res => {
+            console.log(res);
+            setDropped(res);
+            Promise.all(allPromisePending).then(res => {
+              console.log(res);
+              setPending(res);
+              setLoading(false);
+            }).catch(error => console.error(error))
+          })
+        })
+      }).catch(error => console.error(error))
+      
+
+			} catch (e) {
+				// window.location.href = "/NotFound";
+        console.error(e);
+			}
+		}
+		fetchData();
+  },[jwt])
+
+  if (loading) {
+    return <Loading />;
+}
 
   return (
     <section className=" py-5 marginNav">
-      {/* <UserInfo /> */}
       <div className="container">
         <div className={watching.length !== 0 ? "state-section" : "invisible"}>
           <h2>Siguiendo</h2>
