@@ -35,12 +35,12 @@
     color: white;
 }
 
-.btn{
+.user-info .btn{
     width: auto;
     height: 40px;
     margin: auto;
 }
 
-.btn > svg{
+.user-info svg{
     font-size: 1.25rem;
 }

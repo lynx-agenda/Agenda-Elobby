@@ -1,42 +1,132 @@
-import './Agenda.css'
+import "./Agenda.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { Card } from "react-bootstrap";
+import DiaryCard from "./DiaryCard";
+import { useState, useEffect } from "react";
+import useUser from "../../hooks/useUser";
+import { getFromTheMovieDB, getGamesFromThird } from "../../services/getFromThirdApis";
+import getDiary from "../../services/getDiary";
+import Loading from "../Loading/Loading";
 
-export default function MyTV (){
-    return(
-        <section className=" py-5 marginNav">
-      {/* <UserInfo /> */}
+export default function MyTV() {
+  const { jwt } = useUser();
+  const [watching, setWatching] = useState([]);
+  const [pending, setPending] = useState([]);
+  const [dropped, setDropped] = useState([]);
+  const [completed, setCompleted] = useState([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    async function fetchData() {
+			try {
+				const diary = await getDiary({jwt})
+        console.log(diary);
+
+        const allPromiseCompleted =  diary.completed.map(element => {
+          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
+          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
+          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+      })
+
+        const allPromiseWatching =  diary.watching.map(element => {
+          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
+          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
+          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+      })
+
+        const allPromiseDropped =  diary.dropped.map(element => {
+          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
+          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
+          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+      })
+
+        const allPromisePending =  diary.pending.map(element => {
+          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
+          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
+          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+      })
+
+      Promise.all(allPromiseCompleted).then(res => {
+        console.log(res);
+        setCompleted(res);
+        Promise.all(allPromiseWatching).then(res => {
+          console.log(res);
+          setWatching(res);
+          Promise.all(allPromiseDropped).then(res => {
+            console.log(res);
+            setDropped(res);
+            Promise.all(allPromisePending).then(res => {
+              console.log(res);
+              setPending(res);
+              setLoading(false);
+            }).catch(error => console.error(error))
+          })
+        })
+      }).catch(error => console.error(error))
+      
+
+			} catch (e) {
+				// window.location.href = "/NotFound";
+        console.error(e);
+			}
+		}
+		fetchData();
+  },[jwt])
+
+  if (loading) {
+    return <Loading />;
+  }
+  return (
+    <section className=" py-5 marginNav">
       <div className="container">
-        <div className='state-section'>
+        <div className={watching.some(el => el.typeElobby === 'tv') ? "state-section" : "invisible"}>
           <h2>Siguiendo</h2>
-          <div className='elements-list'>
-            <Card className='list-item'>
-              <Card.Img variant='top' src='https://media.rawg.io/media/games/618/618c2031a07bbff6b4f611f10b6bcdbc.jpg'/>
-              <Card.Body>
-                <Card.Text className='text-center'>Titulo</Card.Text>
-              </Card.Body>
-            </Card>
+          <div className="elements-list">
+            {watching.map((item) => {
+              if(item.typeElobby === 'tv'){
+                return(
+                  <DiaryCard key={item.id} elemento={item} />
+                )
+              }
+            })}
           </div>
-        </div> 
-        <div className='state-section'>
+        </div>
+        <div className={pending.some(el => el.typeElobby === 'tv') ? "state-section" : "invisible"}>
           <h2>Pendiente</h2>
-          <div className='elements-list'>
-            
+          <div className="elements-list">
+          {pending.map((item) => {
+              if(item.typeElobby === 'tv'){
+                return(
+                  <DiaryCard key={item.id} elemento={item} />
+                )
+              }
+            })}
           </div>
-        </div> 
-        <div className='state-section'>
+        </div>
+        <div className={completed.some(el => el.typeElobby === 'tv') ? "state-section" : "invisible"}>
           <h2>Terminado</h2>
-          <div className='elements-list'>
-            
+          <div className="elements-list">
+          {completed.map((item) => {
+              if(item.typeElobby === 'tv'){
+                return(
+                  <DiaryCard key={item.id} elemento={item} />
+                )
+              }
+            })}
           </div>
-        </div>  
-        <div className='state-section'>
+        </div>
+        <div className={dropped.some(el => el.typeElobby === 'tv') ? "state-section" : "invisible"}>
           <h2>Abandonado</h2>
-          <div className='elements-list'>
-            
+          <div className="elements-list">
+          {dropped.map((item) => {
+              if(item.typeElobby === 'tv'){
+                return(
+                  <DiaryCard key={item.id} elemento={item} />
+                )
+              }
+            })}
           </div>
-        </div> 
+        </div>
       </div>
     </section>
-    )
+  );
 }
