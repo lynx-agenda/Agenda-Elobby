@@ -27,7 +27,6 @@ export default function DiaryCard(props) {
 
   return (
     <div onClick={handleClick} className="list-item">
-      console.log(elemento.typeElobby);
       {elemento.poster_path !== undefined ? (
         <Image src={ImageByMovieDB(elemento.poster_path)} fluid />
       ) : (
