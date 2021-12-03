@@ -40,6 +40,11 @@ export default function useModal()  {
                 let text = values[0];
                 console.log({idApi, note, text, type, jwt});
                 await postReview({idApi, note, text, type, jwt});
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se ha crcedo la review',
+                    text: 'Se ha añadido la review al elemento'
+                })
             }else {
                 Swal.fire({
                     icon: 'error',
@@ -96,9 +101,12 @@ export default function useModal()  {
             const select = formValues.find(element => element.ckecked);
             const status = select.type;
 
-            console.log({idApi, status, type, jwt});
-            const element = await postElement({idApi, status, type, jwt});
-            console.log(element);
+            await postElement({idApi, status, type, jwt});
+            Swal.fire({
+                icon: 'success',
+                title: 'Se ha añadido',
+                text: '¡Ya podras ver el elemento en tu agenda!'
+            })
         }
     },[jwt])
 

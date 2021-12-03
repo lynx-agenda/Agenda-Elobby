@@ -16,7 +16,6 @@ function getBooksFromThird({
   startIndex = 0, // The position in the collection at which to start. The index of the first item is 0.
   fields = "totalItems,items(id,volumeInfo(title,authors,publisher,publishedDate,description,industryIdentifiers,pageCount,categories,imageLinks,language))", // Filter search results by volume type and availability.
 } = {}) {
-  // console.log(process.env);
 
   return fetch(`${ENDPOINT}/books`, {
     headers: { "Content-Type": "application/json" },
