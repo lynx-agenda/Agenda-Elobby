@@ -38,7 +38,6 @@ export default function useModal()  {
             if (values[1]>=0 && values[1]<=10 && values[0]!=="") {
                 let note = values[1];
                 let text = values[0];
-                console.log({idApi, note, text, type, jwt});
                 await postReview({idApi, note, text, type, jwt});
                 Swal.fire({
                     icon: 'success',

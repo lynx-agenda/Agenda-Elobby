@@ -14,5 +14,5 @@ export default function getUser({ jwt }) {
       return res.json();
     })
     .then((res) => res)
-    .catch((error) => console.log(error));
+    .catch((error) => console.error(error));
 }

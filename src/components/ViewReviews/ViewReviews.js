@@ -23,7 +23,6 @@ export default function ViewReviews(){
         try {
             const reviews = await getReviewsForUser({jwt}) //Todas las reviews
             setAllReviews(reviews);
-            console.log(reviews)
             const allElements = reviews.map((review) => {
                 let res = null
                 if(review.idElement.type==="game") res = getGamesFromThird({ idResource: `${review.idElement.idApi}` });
@@ -32,10 +31,8 @@ export default function ViewReviews(){
 
                 return res;
             })
-            console.log(allElements)
             Promise.all(allElements).then(res => {
                 setElements(res);
-                console.log(res);
                 setFetchend(true);
             })
             .catch(error => console.error(error));

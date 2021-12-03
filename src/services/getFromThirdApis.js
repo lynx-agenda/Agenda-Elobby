@@ -38,7 +38,7 @@ function getBooksFromThird({
       res.typeElobby = typeElobby;
       return res;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.error(error));
 }
 
 
@@ -71,7 +71,7 @@ function getFromTheMovieDB({
       res.typeElobby = typeElobby;
       return res;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.error(error));
 }
 
 function getGamesFromThird({ search = "", idResource = "", page = "", typeElobby= "" } = {}) {
@@ -88,5 +88,5 @@ function getGamesFromThird({ search = "", idResource = "", page = "", typeElobby
       res.typeElobby = typeElobby;
 			return res;
 		})
-		.catch((error) => console.log(error));
+		.catch((error) => console.error(error));
 }

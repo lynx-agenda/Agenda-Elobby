@@ -10,19 +10,18 @@ export default function DiaryCard(props) {
   let elemento = props.elemento;
   let navigate = useNavigate();
   let viewURL = "";
-  if (elemento.typeElobby == "game") {
+  if (elemento.typeElobby === "game") {
     viewURL = `/Games/View/${elemento.id}`;
   }
-  if (elemento.typeElobby == "tv") {
+  if (elemento.typeElobby === "tv") {
     viewURL = `/TV/View/${elemento.id}`;
   }
-  if (elemento.typeElobby == "movie") {
+  if (elemento.typeElobby === "movie") {
     viewURL = `/Movies/View/${elemento.id}`;
   }
 
   const handleClick = () => {
     navigate(viewURL);
-    console.log(viewURL);
   };
 
   return (

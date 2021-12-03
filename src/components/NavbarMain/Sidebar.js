@@ -2,7 +2,7 @@ import SidebarAgenda from "./SidebarAgenda"
 import "bootstrap/dist/css/bootstrap.min.css";
 import { Link } from "react-router-dom"
 import * as BiIcons from 'react-icons/bi'
-import * as GoIcons from 'react-icons/go'
+
 import './Sidebar.css'
 import useUser from "../../hooks/useUser";
 import logo from "../../img/lince.png"

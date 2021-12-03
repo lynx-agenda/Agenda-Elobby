@@ -27,8 +27,6 @@ import MyMovies from "../Agenda/MyMovies";
 import MyTV from "../Agenda/MyTV";
 import MyGames from "../Agenda/MyGames";
 import MyBooks from "../Agenda/MyBooks";
-import { Image } from "react-bootstrap";
-import getUser from "../../services/getUser";
 import Loading from "../Loading/Loading";
 import DiaryCard from "../Agenda/DiaryCard";
 import getDiary from "../../services/getDiary";
@@ -160,43 +158,42 @@ function Main() {
     async function fetchData() {
 			try {
 				const diary = await getDiary({jwt})
-        console.log(diary);
 
         const allPromiseCompleted =  diary.completed.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          return null;
       })
 
         const allPromiseWatching =  diary.watching.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          return null;
       })
 
         const allPromiseDropped =  diary.dropped.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          return null;
       })
 
         const allPromisePending =  diary.pending.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          return null;
       })
 
       Promise.all(allPromiseCompleted).then(res => {
-        console.log(res);
         setCompleted(res);
         Promise.all(allPromiseWatching).then(res => {
-          console.log(res);
           setWatching(res);
           Promise.all(allPromiseDropped).then(res => {
-            console.log(res);
             setDropped(res);
             Promise.all(allPromisePending).then(res => {
-              console.log(res);
               setPending(res);
               setLoading(false);
             }).catch(error => console.error(error))
@@ -206,8 +203,7 @@ function Main() {
       
 
 			} catch (e) {
-				// window.location.href = "/NotFound";
-        console.error(e);
+				window.location.href = "/NotFound";
 			}
 		}
 		fetchData();
@@ -244,7 +240,7 @@ function Main() {
             {dropped.map(item => <DiaryCard key={item.id} elemento={item}/>)}
           </div>
         </div>
-        <p className={watching.length==0 && pending.length==0 && completed.length==0 && dropped.length== 0 ? "empty-diary" : "invisible"}>
+        <p className={watching.length===0 && pending.length===0 && completed.length===0 && dropped.length=== 0 ? "empty-diary" : "invisible"}>
           ¡Oops...! Parece que tu agenda está vacía. Navega para añadir un elemento a la lista.
         </p>
       </div>

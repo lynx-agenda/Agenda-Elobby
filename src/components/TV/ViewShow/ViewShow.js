@@ -44,13 +44,13 @@ export default function ViewShow() {
       }
     }
     getData();
-  }, [id,reviews]);
+  }, [id, jwt]);
 
   const handlerReviewClick = () => {
 		let idApi = id;
 		let type = "tv"
 		ViewModalReview({idApi, type})
-    setReviews([])
+    
 	}
 
 	const handlerAddClick = () => {

@@ -18,5 +18,5 @@ export default function singup({
     .then((res) => {
       return res;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.error(error));
 }
