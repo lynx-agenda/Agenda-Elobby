@@ -39,12 +39,15 @@ export default function ViewGame() {
 	}, [id]);
 
 	const handlerReviewClick = () => {
-		let type = "Videojuego"
-		ViewModalReview({type})
+		let idApi = id;
+		let type = "game"
+		ViewModalReview({idApi, type})
 	}
 
 	const handlerAddClick = () => {
-		ViewModalState()
+		let idApi = id;
+		let type = "game"
+		ViewModalState({idApi, type});
 	}
 
 

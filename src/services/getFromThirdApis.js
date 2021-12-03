@@ -69,17 +69,20 @@ function getFromTheMovieDB({
     .catch((error) => console.log(error));
 }
 
-function getGamesFromThird({ search = "", idResource = "" } = {}) {
-  return fetch(`${ENDPOINT}/games`, {
-    headers: { "Content-Type": "application/json" },
-    method: "POST",
-    body: JSON.stringify({ search, idResource }),
-  })
-    .then((res) => {
-      return res.json();
-    })
-    .then((res) => {
-      return res;
-    })
-    .catch((error) => console.log(error));
+function getGamesFromThird({ search = "", idResource = "", page = "" } = {}) {
+
+	return fetch(`${ENDPOINT}/games`, {
+		headers: { "Content-Type": "application/json" },
+		method: "POST",
+		body: JSON.stringify({ search, idResource, page }),
+	})
+		.then((res) => {
+			console.log(res);
+			return res.json();
+		})
+		.then((res) => {
+			console.log(res);
+			return res;
+		})
+		.catch((error) => console.log(error));
 }
