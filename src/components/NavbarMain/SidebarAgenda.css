@@ -1,0 +1,50 @@
+*{
+    box-sizing: border-box;
+    margin: 0%;
+    padding: 0%;
+}
+
+.nav-text{
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.nav-text:hover{
+    text-decoration: none !important;
+    color: white !important;
+}
+
+.accordion-header{
+    color: white;
+}
+
+.accordion-button{
+    background: transparent;
+    text-align: right;
+}
+.button.accordion-button::after{
+    color: white;
+}
+
+.accordion-body{
+    padding: 15px 20px;
+}
+
+.accordion-header:hover{
+    box-shadow: inset 0px 0px 2px 0 #fff;
+}
+
+
+.accordion-button:not(.collapsed) {
+    color: #fff; 
+    background: transparent; 
+}
+
+.accordion-body:hover{
+    box-shadow: inset 0px 0px 2px 0 #fff;
+}
+
+.accordion-button:focus {
+    border-color: #fff;
+    box-shadow: none !important;
+}
