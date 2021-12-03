@@ -44,13 +44,13 @@ export default function ViewGame() {
 			}
 		}
 		fetchData();
-	}, [id,reviews]);
+	}, [reviews,id]);
 
 	const handlerReviewClick = () => {
 		let idApi = id;
 		let type = "game"
 		ViewModalReview({idApi, type})
-		setReviews([])
+		setReviews([]);
 	}
 
 	const handlerAddClick = () => {
@@ -131,7 +131,7 @@ export default function ViewGame() {
 				return (<Toast key={res._id} className="mt-2">
 					<Toast.Header closeButton={false}>
 						<img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
-						<strong className="me-auto">Bootstrap</strong>
+						<strong className="me-auto">{res.idUser.username}</strong>
 						<small>{moment(res.created).format('DD/MM/YYYY')}</small>
 						</Toast.Header>
 						<Toast.Body>{res.text}</Toast.Body>
