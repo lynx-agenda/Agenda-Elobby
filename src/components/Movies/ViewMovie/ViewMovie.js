@@ -13,8 +13,6 @@ import "./ViewMovie.css"
 
 import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
 
-import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
-
 import Loading from "../../Loading/Loading";
 
 export default function ViewMovie() {
