@@ -150,7 +150,7 @@ export default function ViewShow() {
 				return (<Toast key={res._id} className="mt-2">
 					<Toast.Header closeButton={false}>
 						<img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
-						<strong className="me-auto">{res.idUser.username}</strong>
+						<strong className="me-auto">{res.idUser.username} - {res.note}</strong>
 						<small>{moment(res.created).format('DD/MM/YYYY')}</small>
 						</Toast.Header>
 						<Toast.Body>{res.text}</Toast.Body>
