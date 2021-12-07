@@ -1,28 +1,27 @@
 .note {
-    border: 2px solid black;
     font-size: 2.5rem;
     border-radius: 50%;
     padding: 1.5rem 2rem;
 }
 
 .bad {
-    border-color: #e63946;
-    color: #e63946;
+    background-color: #e63946;
+    color: #fff;
 }
 
 .nice{
-    border-color: #ffc300;
-    color: #ffc300;
+    background-color: #ffc300;
+    color: #fff;
 }
 
 .great {
-    border-color: #80b918;
-    color: #80b918;
+    background-color: #80b918;
+    color: #fff;
 }
 
 .spectacular{
-    border-color: #007f5f;
-    color: #007f5f;
+    background-color: #007f5f;
+    color: #fff;
 }
 
 .toast {

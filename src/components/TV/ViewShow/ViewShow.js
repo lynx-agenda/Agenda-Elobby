@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { Image } from "react-bootstrap";
 import ReactHtmlParser from "react-html-parser";
 import Button from 'react-bootstrap/Button'
-import Toast from 'react-bootstrap/Toast'
+import ReviewUser from "../../ReviewUser/ReviewUser";
 import moment from 'moment';
 import { BiCommentDetail } from "react-icons/bi";
 import useModal from "../../../hooks/useModal";
@@ -147,14 +147,7 @@ export default function ViewShow() {
       <article className="container pb-5">
 			{reviews.length===0 ? <h3>No tine ninguna reseña</h3> : 
 			reviews.map(res => {
-				return (<Toast key={res._id} className="mt-2">
-					<Toast.Header closeButton={false}>
-						<img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
-						<strong className="me-auto">{res.idUser.username} - {res.note}</strong>
-						<small>{moment(res.created).format('DD/MM/YYYY')}</small>
-						</Toast.Header>
-						<Toast.Body>{res.text}</Toast.Body>
-				</Toast>)
+        return (<ReviewUser key={res._id} note={res.note} username={res.idUser.username} date={moment(res.created).format('DD/MM/YYYY')} text={res.text} />);
 			})
 			}
 			</article>
