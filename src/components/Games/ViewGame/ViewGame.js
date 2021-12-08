@@ -7,6 +7,8 @@ import Button from 'react-bootstrap/Button'
 import ReviewUser from "../../ReviewUser/ReviewUser";
 import moment from 'moment';
 import { BiCommentDetail } from "react-icons/bi";
+import getDiary from "../../../services/getDiary";
+
 
 
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -23,6 +25,7 @@ export default function ViewGame() {
 	const {ViewModalReview, ViewModalState} = useModal();
 	const {jwt} = useUser()
 	const { id } = useParams();
+	const [diary, setDiary] = useState({});
 	const [game, setGame] = useState({});
 	const [reviews, setReviews] = useState([]);
 	const [fetchend, setFetchend] = useState(false);
@@ -36,6 +39,9 @@ export default function ViewGame() {
 
 				const allReviews = await getAllReviews({jwt})
 				const ReviewsForElement = allReviews.filter(review => (review.idElement.idApi===id && review.idElement.type==="game"));
+
+				const resDiary = await getDiary({jwt});
+				setDiary(resDiary);
 
 				setReviews(ReviewsForElement);
 				setFetchend(true);
@@ -109,7 +115,12 @@ export default function ViewGame() {
                 				{game.genres.map((genre, index) => {return ( <span key={index} className="badge bg-secondary mx-1">{genre.name}</span> ) })}
             				</p>
 							<div className="d-flex">
-                				<Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>{' '}
+							{diary.watching.some(res => res.idApi===id) ? <Button variant="outline-success" className="w-50 me-2" onClick={handlerAddClick}>Jugando</Button> : null}{' '}
+                    		{diary.completed.some(res => res.idApi===id) ? <Button variant="outline-primary" className="w-50 me-2" onClick={handlerAddClick}>Terminado</Button> : null}{' '}
+                    		{diary.pending.some(res => res.idApi===id) ? <Button variant="outline-info" className="w-50 me-2" onClick={handlerAddClick}>Pendiente</Button> : null}{' '}
+                    		{diary.dropped.some(res => res.idApi===id) ? <Button variant="outline-danger" className="w-50 me-2" onClick={handlerAddClick}>Descartado</Button> : null}{' '}
+                			{diary.dropped.some(res => res.idApi===id) || diary.watching.some(res => res.idApi===id) || diary.completed.some(res => res.idApi===id) || diary.pending.some(res => res.idApi===id) ? 
+                    		null: <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>}{' '}
                 				<Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
                     		</div>
 						</div>

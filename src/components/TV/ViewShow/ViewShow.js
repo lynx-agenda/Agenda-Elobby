@@ -17,6 +17,7 @@ import Seasons from "./Seasons";
 
 import getAllReviews from "../../../services/getAllReviews";
 import useUser from "../../../hooks/useUser";
+import getDiary from "../../../services/getDiary";
 
 
 export default function ViewShow() {
@@ -25,6 +26,7 @@ export default function ViewShow() {
   const {ViewModalReview, ViewModalState} = useModal();
   const [response, setResponse] = useState({});
   const [reviews, setReviews] = useState([]);
+  const [diary, setDiary] = useState({});
   const [loading, setLoading] = useState(false);
 
   useEffect(() => {
@@ -37,6 +39,9 @@ export default function ViewShow() {
         const allReviews = await getAllReviews({jwt})
 				const ReviewsForElement = allReviews.filter(review => (review.idElement.idApi===id && review.idElement.type==="tv"));
 
+        const resDiary = await getDiary({jwt});
+        setDiary(resDiary);
+        
 				setReviews(ReviewsForElement);
         setLoading(true);
       } catch (e) {
@@ -114,7 +119,12 @@ export default function ViewShow() {
                       </ul>
                     </div>
                     <div className="d-flex">
-                      <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>{' '}
+                      {diary.watching.some(res => res.idApi===id) ? <Button variant="outline-success" className="w-50 me-2" onClick={handlerAddClick}>Viendo</Button> : null}{' '}
+                      {diary.completed.some(res => res.idApi===id) ? <Button variant="outline-primary" className="w-50 me-2" onClick={handlerAddClick}>Terminado</Button> : null}{' '}
+                      {diary.pending.some(res => res.idApi===id) ? <Button variant="outline-info" className="w-50 me-2" onClick={handlerAddClick}>Pendiente</Button> : null}{' '}
+                      {diary.dropped.some(res => res.idApi===id) ? <Button variant="outline-danger" className="w-50 me-2" onClick={handlerAddClick}>Descartado</Button> : null}{' '}
+                      {diary.dropped.some(res => res.idApi===id) || diary.watching.some(res => res.idApi===id) || diary.completed.some(res => res.idApi===id) || diary.pending.some(res => res.idApi===id) ? 
+                      null: <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>}{' '}
                       <Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
                     </div>
                   </div>

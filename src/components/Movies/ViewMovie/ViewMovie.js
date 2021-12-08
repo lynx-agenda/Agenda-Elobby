@@ -17,11 +17,13 @@ import useUser from "../../../hooks/useUser";
 
 import Loading from "../../Loading/Loading";
 import ReviewUser from "../../ReviewUser/ReviewUser";
+import getDiary from "../../../services/getDiary";
 
 export default function ViewMovie() {
   const {ViewModalReview, ViewModalState} = useModal();
   const { id } = useParams();
   const {jwt} = useUser()
+  const [diary, setDiary] = useState({});
   const [response, setResponse] = useState({});
   const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -35,6 +37,9 @@ export default function ViewMovie() {
 
         const allReviews = await getAllReviews({jwt})
 				const ReviewsForElement = allReviews.filter(review => (review.idElement.idApi===id && review.idElement.type==="movie"));
+
+        const resDiary = await getDiary({jwt});
+        setDiary(resDiary);
 
 				setReviews(ReviewsForElement);
         setLoading(true);
@@ -100,7 +105,12 @@ export default function ViewMovie() {
                       {response.genres.map((genre, index) => {return ( <span key={index} className="badge bg-secondary mx-1">{genre.name}</span> ) })}
                     </p>
                     <div className="d-flex">
-                      <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>{' '}
+                      {diary.watching.some(res => res.idApi===id) ? <Button variant="outline-success" className="w-50 me-2" onClick={handlerAddClick}>Viendo</Button> : null}{' '}
+                      {diary.completed.some(res => res.idApi===id) ? <Button variant="outline-primary" className="w-50 me-2" onClick={handlerAddClick}>Terminado</Button> : null}{' '}
+                      {diary.pending.some(res => res.idApi===id) ? <Button variant="outline-info" className="w-50 me-2" onClick={handlerAddClick}>Pendiente</Button> : null}{' '}
+                      {diary.dropped.some(res => res.idApi===id) ? <Button variant="outline-danger" className="w-50 me-2" onClick={handlerAddClick}>Descartado</Button> : null}{' '}
+                      {diary.dropped.some(res => res.idApi===id) || diary.watching.some(res => res.idApi===id) || diary.completed.some(res => res.idApi===id) || diary.pending.some(res => res.idApi===id) ? 
+                      null: <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>}{' '}
                       <Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
                     </div>
                   </div>
