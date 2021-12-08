@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import Image from "react-bootstrap/Image";
 import ReactHtmlParser from "react-html-parser";
 import Button from 'react-bootstrap/Button'
-import Toast from 'react-bootstrap/Toast'
 import moment from 'moment';
 import { BiCommentDetail } from "react-icons/bi";
 import useModal from "../../../hooks/useModal";
@@ -12,15 +11,21 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import "./ViewMovie.css"
 
 import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
+import getAllReviews from "../../../services/getAllReviews";
+import useUser from "../../../hooks/useUser";
 
-import { getFromTheMovieDB } from "../../../services/getFromThirdApis";
 
 import Loading from "../../Loading/Loading";
+import ReviewUser from "../../ReviewUser/ReviewUser";
+import getDiary from "../../../services/getDiary";
 
 export default function ViewMovie() {
   const {ViewModalReview, ViewModalState} = useModal();
   const { id } = useParams();
+  const {jwt} = useUser()
+  const [diary, setDiary] = useState({});
   const [response, setResponse] = useState({});
+  const [reviews, setReviews] = useState([]);
   const [loading, setLoading] = useState(false);
   
   useEffect(() => {
@@ -28,24 +33,36 @@ export default function ViewMovie() {
       try {
 
 				let response = await getFromTheMovieDB({ idResource: `${id}`, resourceType: "movie" });
-
         setResponse(response);
+
+        const allReviews = await getAllReviews({jwt})
+				const ReviewsForElement = allReviews.filter(review => (review.idElement.idApi===id && review.idElement.type==="movie"));
+
+        const resDiary = await getDiary({jwt});
+        setDiary(resDiary);
+
+				setReviews(ReviewsForElement);
         setLoading(true);
       } catch (e) {
         window.location.href = "/NotFound";
       }
     }
     getData();
-  }, [id]);
+  }, [id, jwt]);
 
   const handlerReviewClick = () => {
-		let type = "Pelicula"
-		ViewModalReview({type})
+		let idApi = id;
+		let type = "movie"
+		ViewModalReview({idApi, type})
+
 	}
 
 	const handlerAddClick = () => {
-		ViewModalState()
+		let idApi = id;
+		let type = "movie"
+		ViewModalState({idApi, type});
 	}
+
 
 
   if (!loading) {
@@ -88,7 +105,12 @@ export default function ViewMovie() {
                       {response.genres.map((genre, index) => {return ( <span key={index} className="badge bg-secondary mx-1">{genre.name}</span> ) })}
                     </p>
                     <div className="d-flex">
-                      <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>{' '}
+                      {diary.watching.some(res => res.idApi===id) ? <Button variant="outline-success" className="w-50 me-2" onClick={handlerAddClick}>Viendo</Button> : null}{' '}
+                      {diary.completed.some(res => res.idApi===id) ? <Button variant="outline-primary" className="w-50 me-2" onClick={handlerAddClick}>Terminado</Button> : null}{' '}
+                      {diary.pending.some(res => res.idApi===id) ? <Button variant="outline-info" className="w-50 me-2" onClick={handlerAddClick}>Pendiente</Button> : null}{' '}
+                      {diary.dropped.some(res => res.idApi===id) ? <Button variant="outline-danger" className="w-50 me-2" onClick={handlerAddClick}>Descartado</Button> : null}{' '}
+                      {diary.dropped.some(res => res.idApi===id) || diary.watching.some(res => res.idApi===id) || diary.completed.some(res => res.idApi===id) || diary.pending.some(res => res.idApi===id) ? 
+                      null: <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>}{' '}
                       <Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
                     </div>
                   </div>
@@ -105,16 +127,13 @@ export default function ViewMovie() {
         <p>{ReactHtmlParser(response.overview)}</p>
       </article>
       <hr className="my-5" />
-      <article className="container">
-      <Toast>
-        <Toast.Header closeButton={false}>
-          <img src="https://fakeimg.pl/20x20" className="rounded me-2" alt="" />
-          <strong className="me-auto">Bootstrap</strong>
-          <small>11 mins ago</small>
-        </Toast.Header>
-        <Toast.Body>Hello, world! This is a toast message.</Toast.Body>
-      </Toast>
-      </article>
+      <article className="container pb-5">
+			{reviews.length===0 ? <h3>No tine ninguna reseña</h3> : 
+			reviews.map(res => {
+				return (<ReviewUser key={res._id} note={res.note} username={res.idUser.username} date={moment(res.created).format('DD/MM/YYYY')} text={res.text} />);
+			})
+			}
+			</article>
     </section>
   );
 }

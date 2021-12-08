@@ -79,8 +79,8 @@ export default function ViewBook() {
 									? data.volumeInfo.imageLinks.thumbnail
 									: "Thumbnail"
 							} fluid rounded />
-          <h4 className="my-4">Descripción</h4>
-          <p>{ReactHtmlParser(data.volumeInfo.description)}</p>
+        <h4 className="my-4">Descripción</h4>
+        <div>{ReactHtmlParser(data.volumeInfo.description)}</div>
         </article>
       </div>
     </section>

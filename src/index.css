@@ -5,3 +5,7 @@
 .marginNav {
   margin-top: 56px; 
 }
+
+.invisible{
+  display: none;
+}

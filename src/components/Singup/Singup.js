@@ -29,7 +29,7 @@ export default function Singup(){
                         setMsg(res.message)
                     }
                 })
-                .catch(error => console.log(error))
+                .catch(error => console.error(error))
         }else {
             setPassCkeck(true);
             setMsg("Las contraseñas no coinciden")

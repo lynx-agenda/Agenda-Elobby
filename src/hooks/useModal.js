@@ -1,10 +1,14 @@
 import { useCallback } from "react";
 import Swal from "sweetalert2";
+import postElement from "../services/postElement";
+import postReview from "../services/postReviews";
+import useUser from "./useUser"
 
 
 export default function useModal()  {
+    const {jwt} = useUser();
 
-    const ViewModalReview = useCallback(async ({type}) => { 
+    const ViewModalReview = useCallback(async ({idApi, type}) => { 
         const { value: formValues } = await Swal.fire({
             title: 'Crear review',
             showCancelButton: true,
@@ -32,7 +36,14 @@ export default function useModal()  {
             values[1] = parseInt(values[1]) 
         
             if (values[1]>=0 && values[1]<=10 && values[0]!=="") {
-                Swal.fire(JSON.stringify(formValues))
+                let note = values[1];
+                let text = values[0];
+                await postReview({idApi, note, text, type, jwt});
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se ha crcedo la review',
+                    text: 'Se ha añadido la review al elemento'
+                }).then(() => window.location.reload());
             }else {
                 Swal.fire({
                     icon: 'error',
@@ -41,9 +52,9 @@ export default function useModal()  {
                 })
             }
         }
-    },[])
+    },[jwt])
 
-    const ViewModalState = useCallback(async () => {
+    const ViewModalState = useCallback(async ({idApi, type}) => {
         const { value: formValues } = await Swal.fire({
             title: 'Añadir a...',
             showCancelButton: true,
@@ -87,10 +98,17 @@ export default function useModal()  {
         if (formValues!==undefined){
             
             const select = formValues.find(element => element.ckecked);
-            
-            console.log(select.type);
+            if(select!==undefined){
+            const status = select.type;
+                await postElement({idApi, status, type, jwt});
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Se ha añadido',
+                    text: '¡Ya podras ver el elemento en tu agenda!'
+                }).then(() => window.location.reload());
+            }
         }
-    },[])
+    },[jwt])
 
     return{
         ViewModalReview,

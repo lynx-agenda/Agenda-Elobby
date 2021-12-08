@@ -10,8 +10,7 @@ export default function CardSwitch(props) {
   const { type, element } = props;
 
   const switchCardRender = () => {
-    //   console.log(`type`, type);
-    //   console.log(`types.books === type`, types.books === type);
+
     switch (type) {
       case types.movies:
         return (
@@ -24,7 +23,6 @@ export default function CardSwitch(props) {
           />
         );
       case types.books:
-        console.log(`element`, element);
         return (
           <Book
             title={
