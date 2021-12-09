@@ -1,4 +1,5 @@
-const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/elements";
+const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/api/elements`;
+// const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/elements";
 
 export default function getElement({ jwt, id }) {
   return fetch(`${ENDPOINT}/${id}`, {
