@@ -34,7 +34,7 @@ export default function ViewGame() {
 		async function fetchData() {
 			try {
 				
-				let response = await getGamesFromThird({ idResource: `${id}` });
+				let response = await getGamesFromThird({ idResource: `${id}`, typeElobby: "game"  });
 				setGame(response);
 
 				const allReviews = await getAllReviews({jwt})
@@ -115,13 +115,13 @@ export default function ViewGame() {
                 				{game.genres.map((genre, index) => {return ( <span key={index} className="badge bg-secondary mx-1">{genre.name}</span> ) })}
             				</p>
 							<div className="d-flex">
-							{diary.watching.some(res => res.idApi===id) ? <Button variant="outline-success" className="w-50 me-2" onClick={handlerAddClick}>Jugando</Button> : null}{' '}
-                    		{diary.completed.some(res => res.idApi===id) ? <Button variant="outline-primary" className="w-50 me-2" onClick={handlerAddClick}>Terminado</Button> : null}{' '}
-                    		{diary.pending.some(res => res.idApi===id) ? <Button variant="outline-info" className="w-50 me-2" onClick={handlerAddClick}>Pendiente</Button> : null}{' '}
-                    		{diary.dropped.some(res => res.idApi===id) ? <Button variant="outline-danger" className="w-50 me-2" onClick={handlerAddClick}>Descartado</Button> : null}{' '}
-                			{diary.dropped.some(res => res.idApi===id) || diary.watching.some(res => res.idApi===id) || diary.completed.some(res => res.idApi===id) || diary.pending.some(res => res.idApi===id) ? 
-                    		null: <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>}{' '}
-                				<Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
+							{diary.watching.some(res => res.idApi===id && res.type === game.typeElobby) ? <Button variant="outline-success" className="w-50 me-2" onClick={handlerAddClick}>Jugando</Button> : null}{' '}
+							{diary.completed.some(res => res.idApi===id && res.type === game.typeElobby) ? <Button variant="outline-primary" className="w-50 me-2" onClick={handlerAddClick}>Terminado</Button> : null}{' '}
+							{diary.pending.some(res => res.idApi===id && res.type === game.typeElobby) ? <Button variant="outline-info" className="w-50 me-2" onClick={handlerAddClick}>Pendiente</Button> : null}{' '}
+							{diary.dropped.some(res => res.idApi===id && res.type === game.typeElobby) ? <Button variant="outline-danger" className="w-50 me-2" onClick={handlerAddClick}>Descartado</Button> : null}{' '}
+							{diary.dropped.some(res => res.idApi===id && res.type === game.typeElobby) || diary.watching.some(res => res.idApi===id && res.type === game.typeElobby) || diary.completed.some(res => res.idApi===id && res.type === game.typeElobby) || diary.pending.some(res => res.idApi===id && res.type === game.typeElobby) ? 
+							null: <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>}{' '}
+                			<Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
                     		</div>
 						</div>
 					</div>
