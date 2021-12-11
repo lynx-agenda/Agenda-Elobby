@@ -31,9 +31,11 @@ import Loading from "../Loading/Loading";
 import DiaryCard from "../Agenda/DiaryCard";
 import getDiary from "../../services/getDiary";
 
-import { getGamesFromThird, getFromTheMovieDB } from "../../services/getFromThirdApis";
+import {
+  getGamesFromThird,
+  getFromTheMovieDB,
+} from "../../services/getFromThirdApis";
 import ReviewUser from "../ReviewUser/ReviewUser";
-
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -182,6 +184,12 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
+          if (element.type === "book")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "book",
+              typeElobby: "book",
+            });
         });
 
         const allPromiseWatching = diary.watching.map((element) => {
@@ -201,6 +209,12 @@ function Main() {
               idResource: `${element.idApi}`,
               resourceType: "tv",
               typeElobby: "tv",
+            });
+          if (element.type === "book")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "book",
+              typeElobby: "book",
             });
         });
 
@@ -222,6 +236,12 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
+          if (element.type === "book")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "book",
+              typeElobby: "book",
+            });
         });
 
         const allPromisePending = diary.pending.map((element) => {
@@ -241,6 +261,12 @@ function Main() {
               idResource: `${element.idApi}`,
               resourceType: "tv",
               typeElobby: "tv",
+            });
+          if (element.type === "book")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "book",
+              typeElobby: "book",
             });
         });
 
@@ -266,13 +292,12 @@ function Main() {
           })
           .catch((error) => console.error(error));
       } catch (e) {
-        // window.location.href = "/NotFound";
+        window.location.href = "/NotFound";
         console.error(e);
       }
     }
     fetchData();
   }, [jwt]);
-
 
   if (loading) {
     return <Loading />;
