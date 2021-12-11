@@ -32,7 +32,10 @@ import getUser from "../../services/getUser";
 import Loading from "../Loading/Loading";
 import DiaryCard from "../Agenda/DiaryCard";
 import getDiary from "../../services/getDiary";
-import { getGamesFromThird, getFromTheMovieDB } from "../../services/getFromThirdApis";
+import {
+  getGamesFromThird,
+  getFromTheMovieDB,
+} from "../../services/getFromThirdApis";
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -149,7 +152,7 @@ export default function Home() {
 }
 
 function Main() {
-  const {jwt} = useUser()
+  const { jwt } = useUser();
   const [watching, setWatching] = useState([]);
   const [pending, setPending] = useState([]);
   const [dropped, setDropped] = useState([]);
@@ -158,94 +161,178 @@ function Main() {
 
   useEffect(() => {
     async function fetchData() {
-			try {
-				const diary = await getDiary({jwt})
+      try {
+        const diary = await getDiary({ jwt });
         console.log(diary);
 
-        const allPromiseCompleted =  diary.completed.map(element => {
-          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
-          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
-          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
-      })
+        const allPromiseCompleted = diary.completed.map((element) => {
+          if (element.type === "game")
+            return getGamesFromThird({
+              idResource: `${element.idApi}`,
+              typeElobby: "game",
+            });
+          if (element.type === "movie")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "movie",
+              typeElobby: "movie",
+            });
+          if (element.type === "tv")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "tv",
+              typeElobby: "tv",
+            });
+        });
 
-        const allPromiseWatching =  diary.watching.map(element => {
-          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
-          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
-          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
-      })
+        const allPromiseWatching = diary.watching.map((element) => {
+          if (element.type === "game")
+            return getGamesFromThird({
+              idResource: `${element.idApi}`,
+              typeElobby: "game",
+            });
+          if (element.type === "movie")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "movie",
+              typeElobby: "movie",
+            });
+          if (element.type === "tv")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "tv",
+              typeElobby: "tv",
+            });
+        });
 
-        const allPromiseDropped =  diary.dropped.map(element => {
-          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
-          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
-          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
-      })
+        const allPromiseDropped = diary.dropped.map((element) => {
+          if (element.type === "game")
+            return getGamesFromThird({
+              idResource: `${element.idApi}`,
+              typeElobby: "game",
+            });
+          if (element.type === "movie")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "movie",
+              typeElobby: "movie",
+            });
+          if (element.type === "tv")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "tv",
+              typeElobby: "tv",
+            });
+        });
 
-        const allPromisePending =  diary.pending.map(element => {
-          if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
-          if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
-          if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
-      })
+        const allPromisePending = diary.pending.map((element) => {
+          if (element.type === "game")
+            return getGamesFromThird({
+              idResource: `${element.idApi}`,
+              typeElobby: "game",
+            });
+          if (element.type === "movie")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "movie",
+              typeElobby: "movie",
+            });
+          if (element.type === "tv")
+            return getFromTheMovieDB({
+              idResource: `${element.idApi}`,
+              resourceType: "tv",
+              typeElobby: "tv",
+            });
+        });
 
-      Promise.all(allPromiseCompleted).then(res => {
-        console.log(res);
-        setCompleted(res);
-        Promise.all(allPromiseWatching).then(res => {
-          console.log(res);
-          setWatching(res);
-          Promise.all(allPromiseDropped).then(res => {
+        Promise.all(allPromiseCompleted)
+          .then((res) => {
             console.log(res);
-            setDropped(res);
-            Promise.all(allPromisePending).then(res => {
+            setCompleted(res);
+            Promise.all(allPromiseWatching).then((res) => {
               console.log(res);
-              setPending(res);
-              setLoading(false);
-            }).catch(error => console.error(error))
+              setWatching(res);
+              Promise.all(allPromiseDropped).then((res) => {
+                console.log(res);
+                setDropped(res);
+                Promise.all(allPromisePending)
+                  .then((res) => {
+                    console.log(res);
+                    setPending(res);
+                    setLoading(false);
+                  })
+                  .catch((error) => console.error(error));
+              });
+            });
           })
-        })
-      }).catch(error => console.error(error))
-      
-
-			} catch (e) {
-				// window.location.href = "/NotFound";
+          .catch((error) => console.error(error));
+      } catch (e) {
+        // window.location.href = "/NotFound";
         console.error(e);
-			}
-		}
-		fetchData();
-  },[jwt])
+      }
+    }
+    fetchData();
+  }, [jwt]);
 
   if (loading) {
     return <Loading />;
-}
+  }
 
   return (
     <section className=" py-5 marginNav">
       <div className="container">
-        <div className={watching.length !== 0 ? "state-section" : "invisible"}>
+        <div
+          className={watching.length !== 0 ? "state-section row" : "invisible"}
+        >
           <h2>Siguiendo</h2>
-          <div className="elements-list">
-            {watching.map(item => <DiaryCard key={item.id} elemento={item}/>)}
-          </div>
+          {watching.map((item) => (
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+              <DiaryCard key={item.id} elemento={item} />
+            </div>
+          ))}
         </div>
-        <div className={pending.length !== 0 ? "state-section" : "invisible"}>
+        <div
+          className={pending.length !== 0 ? "state-section row" : "invisible"}
+        >
           <h2>Pendiente</h2>
-          <div className="elements-list">
-            {pending.map(item => <DiaryCard key={item.id} elemento={item}/>)}
-          </div>
+          {pending.map((item) => (
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+              <DiaryCard key={item.id} elemento={item} />
+            </div>
+          ))}
         </div>
-        <div className={completed.length !== 0 ? "state-section" : "invisible"}>
+        <div
+          className={completed.length !== 0 ? "state-section row" : "invisible"}
+        >
           <h2>Terminado</h2>
-          <div className="elements-list">
-            {completed.map(item => <DiaryCard key={item.id} elemento={item}/>)}
-          </div>
+          {completed.map((item) => (
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+              <DiaryCard key={item.id} elemento={item} />
+            </div>
+          ))}
         </div>
-        <div className={dropped.length !== 0 ? "state-section" : "invisible"}>
+        <div
+          className={dropped.length !== 0 ? "state-section row" : "invisible"}
+        >
           <h2>Abandonado</h2>
-          <div className="elements-list">
-            {dropped.map(item => <DiaryCard key={item.id} elemento={item}/>)}
-          </div>
+          {dropped.map((item) => (
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+              <DiaryCard key={item.id} elemento={item} />
+            </div>
+          ))}
         </div>
-        <p className={watching.length==0 && pending.length==0 && completed.length==0 && dropped.length== 0 ? "empty-diary" : "invisible"}>
-          ¡Oops...! Parece que tu agenda está vacía. Navega para añadir un elemento a la lista.
+        <p
+          className={
+            watching.length == 0 &&
+            pending.length == 0 &&
+            completed.length == 0 &&
+            dropped.length == 0
+              ? "empty-diary"
+              : "invisible"
+          }
+        >
+          ¡Oops...! Parece que tu agenda está vacía. Navega para añadir un
+          elemento a la lista.
         </p>
       </div>
     </section>

@@ -1,7 +1,9 @@
 import { useNavigate } from "react-router-dom";
-
 import "bootstrap/dist/css/bootstrap.min.css";
 import SSRProvider from "react-bootstrap/SSRProvider";
+import { Card } from "react-bootstrap";
+import "../../Agenda/Agenda.css";
+import "../index.css"
 
 /**
  * @param {los parámetros del libro que queremos añadir a la card} props
@@ -12,60 +14,30 @@ export default function BookCard(props) {
   const book = {
     img: "",
     title: "",
-    desc: "",
     authors: "",
   };
 
   if (props.image) book.image = props.image;
   if (props.title) book.title = props.title;
-  if (props.desc) book.desc = props.desc.slice(0, 44) + "...";
   if (props.authors) book.authors = props.authors;
 
   const handlerClickBook = () => {
     navigate(`/Books/View/${props.id}`);
   };
 
-  const cardStyle = { cursor: "pointer" };
-
   return (
-    <SSRProvider
-      className="mt-4"
-      style={
-        props.isHorizontal
-          ? {
-              display: "flex",
-              flexDirection: "row",
-              height: "50px",
-              maxHeight: "50px",
-              ...cardStyle,
-            }
-          : cardStyle
-      }
-    >
-      <div className="card book-container" onClick={handlerClickBook}>
-        <div className="book-card">
-          <img
-            className="book-card-cover"
-            src={book.image}
-            alt="portada libro"
-            style={
-              props.isHorizontal ? { width: "inherit", object: "fit" } : {}
-            }
-          />
-
-          <div className="book-card-body">
-            <div className="book-card-body-title">
-              <b>{book.title}</b>
-            </div>
-            {!props.isHorizontal && (
-              <div className="book-card-body-desc">{book.desc}</div>
-            )}
-            {!props.isHorizontal && <br />}
-            {!props.isHorizontal && <small>{book.authors}</small>}
-            {!props.isHorizontal && <br />}
-          </div>
-        </div>
-      </div>
+    <SSRProvider>
+      <Card onClick={handlerClickBook} className="book-item">
+        <Card.Img variant="top" alt={book.title} src={book.image} />
+        <Card.Body>
+          <Card.Title>{
+            book.title?.length < 40
+            ? book.title
+            : book.title.slice(0, 40) + '...'
+            }</Card.Title>
+          <Card.Text>{book.authors}</Card.Text>
+        </Card.Body>
+      </Card>
     </SSRProvider>
   );
 }

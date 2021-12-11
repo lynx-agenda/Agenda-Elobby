@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DiaryCard from "./DiaryCard";
 import { useState, useEffect } from "react";
 import useUser from "../../hooks/useUser";
-import { getFromTheMovieDB, getGamesFromThird } from "../../services/getFromThirdApis";
+import { getFromTheMovieDB, getGamesFromThird, getBooksFromThird } from "../../services/getFromThirdApis";
 import getDiary from "../../services/getDiary";
 import Loading from "../Loading/Loading";
 
@@ -25,24 +25,28 @@ export default function MyTV() {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          if(element.type==="book") return getBooksFromThird({ idResource: `${element.idApi}` , typeElobby: "book"});
       })
 
         const allPromiseWatching =  diary.watching.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          if(element.type==="book") return getBooksFromThird({ idResource: `${element.idApi}` , typeElobby: "book"});
       })
 
         const allPromiseDropped =  diary.dropped.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          if(element.type==="book") return getBooksFromThird({ idResource: `${element.idApi}` , typeElobby: "book"});
       })
 
         const allPromisePending =  diary.pending.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
+          if(element.type==="book") return getBooksFromThird({ idResource: `${element.idApi}` , typeElobby: "book"});
       })
 
       Promise.all(allPromiseCompleted).then(res => {
@@ -80,51 +84,51 @@ export default function MyTV() {
       <div className="container">
         <div className={watching.some(el => el.typeElobby === 'tv') ? "state-section" : "invisible"}>
           <h2>Siguiendo</h2>
-          <div className="elements-list">
             {watching.map((item) => {
               if(item.typeElobby === 'tv'){
                 return(
-                  <DiaryCard key={item.id} elemento={item} />
+                  <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+                    <DiaryCard key={item.id} elemento={item} />
+                  </div>
                 )
               }
             })}
-          </div>
         </div>
         <div className={pending.some(el => el.typeElobby === 'tv') ? "state-section" : "invisible"}>
           <h2>Pendiente</h2>
-          <div className="elements-list">
           {pending.map((item) => {
-              if(item.typeElobby === 'tv'){
-                return(
-                  <DiaryCard key={item.id} elemento={item} />
+            if(item.typeElobby === 'tv'){
+              return(
+                  <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+                    <DiaryCard key={item.id} elemento={item} />
+                  </div>
                 )
               }
             })}
-          </div>
         </div>
         <div className={completed.some(el => el.typeElobby === 'tv') ? "state-section" : "invisible"}>
           <h2>Terminado</h2>
-          <div className="elements-list">
           {completed.map((item) => {
-              if(item.typeElobby === 'tv'){
-                return(
-                  <DiaryCard key={item.id} elemento={item} />
+            if(item.typeElobby === 'tv'){
+              return(
+                  <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+                    <DiaryCard key={item.id} elemento={item} />
+                  </div>
                 )
               }
             })}
-          </div>
         </div>
         <div className={dropped.some(el => el.typeElobby === 'tv') ? "state-section" : "invisible"}>
           <h2>Abandonado</h2>
-          <div className="elements-list">
           {dropped.map((item) => {
-              if(item.typeElobby === 'tv'){
-                return(
-                  <DiaryCard key={item.id} elemento={item} />
+            if(item.typeElobby === 'tv'){
+              return(
+                  <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+                    <DiaryCard key={item.id} elemento={item} />
+                  </div>
                 )
               }
             })}
-          </div>
         </div>
       </div>
     </section>
