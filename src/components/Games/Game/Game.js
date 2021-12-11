@@ -20,8 +20,8 @@ export default function Game(props) {
             ? {
                 display: "flex",
                 flexDirection: "row",
-                height: "50px",
-                maxHeight: "50px",
+                height: "3.125rem",
+                maxHeight: "3.125rem",
                 ...cardStyle,
               }
             : cardStyle
@@ -30,7 +30,7 @@ export default function Game(props) {
         <Card.Img
           variant="bottom"
           src={props.img}
-          style={props.isHorizontal ? { width: "inherit" } : {}}
+          style={props.isHorizontal ? { maxWidth: "6.25rem" } : {}}
         />
         <Card.Body>
           <Card.Title>{props.name}</Card.Title>
