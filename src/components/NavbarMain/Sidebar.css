@@ -1,6 +1,6 @@
 
 .nav-menu{
-    background-color: #212528;
+    background-color: var(--color-primary) !important;
     position: fixed;
     /* display: flex; */
 }

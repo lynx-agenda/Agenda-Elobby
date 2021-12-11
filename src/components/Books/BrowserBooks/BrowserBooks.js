@@ -84,14 +84,11 @@ export default function BrowserBooks() {
                         : "Título"
                     }
                     image={
-                      item.volumeInfo.imageLinks?.thumbnail !== undefined
+                      item.volumeInfo.imageLinks?.large !== undefined
+                        ? item.volumeInfo.imageLinks.large
+                        : item.volumeInfo.imageLinks?.thumbnail !== undefined
                         ? item.volumeInfo.imageLinks.thumbnail
                         : "Thumbnail"
-                    }
-                    desc={
-                      item.volumeInfo.description !== undefined
-                        ? item.volumeInfo.description
-                        : "Description"
                     }
                     authors={
                       item.volumeInfo.authors !== undefined

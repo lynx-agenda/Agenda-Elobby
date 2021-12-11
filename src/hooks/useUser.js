@@ -10,12 +10,12 @@ export default function useUser() {
   const [error, setError] = useState(false);
 
   const login = useCallback(
-    ({ email, password, ckeckRemenber }) => {
+    ({ email, password, checkRemember }) => {
       loginService({ email, password })
         .then((jwt) => {
           if (jwt !== null) {
             window.sessionStorage.setItem("jwt", jwt);
-            if (ckeckRemenber) window.localStorage.setItem("jwt", jwt);
+            if (checkRemember) window.localStorage.setItem("jwt", jwt);
             setJwt(jwt);
           } else {
             setError(true);
