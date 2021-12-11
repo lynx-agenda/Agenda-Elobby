@@ -1,9 +1,11 @@
 import axios from "axios";
 import type from "./types.enum";
 
+const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/third`;
+
 const urlType = ({ text, startIndex }) => ({
   [type.books]: {
-    url: "https://www.googleapis.com/books/v1/volumes",
+    url: `${ENDPOINT}/books`,
     params: {
       q: text,
       startIndex: startIndex,
@@ -16,9 +18,8 @@ const urlType = ({ text, startIndex }) => ({
     },
   },
   [type.games]: {
-    url: `https://api.rawg.io/api/games`,
+    url: `${ENDPOINT}/games`,
     params: {
-      key: "f65e3ff64bf5436f83b6ba0f8b83ac3b",
       search: text,
       search_precise: true,
       parent_platforms: "1,2,3,7",
@@ -26,13 +27,12 @@ const urlType = ({ text, startIndex }) => ({
     },
   },
   [type.movies]: {
-    url: `https://api.themoviedb.org/3/search/movie`,
-    params: { api_key: "d6c7a342258732312d949314913635e7", query: text },
+    url: `${ENDPOINT}/movies-tvshows`,
+    params: { query: text },
   },
   [type.tv]: {
-    url: `https://api.themoviedb.org/3/search/tv`,
+    url: `${ENDPOINT}/movies-tvshows`,
     params: {
-      api_key: "d6c7a342258732312d949314913635e7",
       query: text,
     },
   },
