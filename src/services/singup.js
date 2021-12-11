@@ -1,4 +1,5 @@
-const ENDPOINT = "https://young-badlands-18005.herokuapp.com/auth";
+const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/auth`;
+// const ENDPOINT = "https://young-badlands-18005.herokuapp.com/auth";
 
 export default function singup({
   name,
@@ -18,5 +19,5 @@ export default function singup({
     .then((res) => {
       return res;
     })
-    .catch((error) => console.log(error));
+    .catch((error) => console.error(error));
 }

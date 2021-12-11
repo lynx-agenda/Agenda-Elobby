@@ -1,6 +1,7 @@
 import parseJwt from "./parseJwt";
 
-const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/diaries";
+const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/api/diaries`;
+// const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/diaries";
 
 export default function getDiary({ jwt }) {
     let user = parseJwt(jwt);
@@ -14,5 +15,5 @@ export default function getDiary({ jwt }) {
         return res.json();
     })
     .then((res) => res)
-    .catch((error) => console.log(error));
+    .catch((error) => console.error(error));
 }

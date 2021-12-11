@@ -1,4 +1,5 @@
-const ENDPOINT = "https://young-badlands-18005.herokuapp.com/auth"
+const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/auth`;
+// const ENDPOINT = "https://young-badlands-18005.herokuapp.com/auth";
 
 export default function login({email , password}){
     return fetch(`${ENDPOINT}/signin` , {
@@ -11,5 +12,5 @@ export default function login({email , password}){
         let { token } = res;
         if (token === undefined) token = null;
         return token;
-    }).catch(error => console.log(error))
+    }).catch(error => console.error(error))
 }

@@ -1,0 +1,22 @@
+.user-review{
+    border: 1px solid #ddd;
+    border-radius: .25rem;
+}
+
+.user-review-info p{
+    margin: 0;
+    padding: 0;
+    font-size: 1.20rem;
+}
+
+.user-review-info p:last-child{
+    color: #777;
+    font-size: 1rem;
+}
+
+.user-review-note{
+    padding: .6rem 1.15rem;
+    margin-right: 1rem;
+    border-radius: .25rem;
+    font-size: 1.25rem;
+}

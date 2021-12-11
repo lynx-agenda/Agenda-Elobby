@@ -19,7 +19,6 @@ export default function MyMovies() {
     async function fetchData() {
 			try {
 				const diary = await getDiary({jwt})
-        console.log(diary);
 
         const allPromiseCompleted =  diary.completed.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
@@ -50,16 +49,12 @@ export default function MyMovies() {
       })
 
       Promise.all(allPromiseCompleted).then(res => {
-        console.log(res);
         setCompleted(res);
         Promise.all(allPromiseWatching).then(res => {
-          console.log(res);
           setWatching(res);
           Promise.all(allPromiseDropped).then(res => {
-            console.log(res);
             setDropped(res);
             Promise.all(allPromisePending).then(res => {
-              console.log(res);
               setPending(res);
               setLoading(false);
             }).catch(error => console.error(error))
@@ -91,7 +86,7 @@ export default function MyMovies() {
                     <DiaryCard key={item.id} elemento={item} />
                   </div>
                 )
-              }
+              }else return null;
             })}
         </div>
         <div className={pending.some(el => el.typeElobby === 'movie') ? "state-section" : "invisible"}>
@@ -103,7 +98,7 @@ export default function MyMovies() {
                     <DiaryCard key={item.id} elemento={item} />
                   </div>
                 )
-              }
+              }else return null;
             })}
         </div>
         <div className={completed.some(el => el.typeElobby === 'movie') ? "state-section" : "invisible"}>
@@ -115,7 +110,7 @@ export default function MyMovies() {
                     <DiaryCard key={item.id} elemento={item} />
                   </div>
                 )
-              }
+              }else return null;
             })}
         </div>
         <div className={dropped.some(el => el.typeElobby === 'movie') ? "state-section" : "invisible"}>
@@ -127,7 +122,7 @@ export default function MyMovies() {
                     <DiaryCard key={item.id} elemento={item} />
                   </div>
                 )
-              }
+              }else return null;
             })}
         </div>
       </div>

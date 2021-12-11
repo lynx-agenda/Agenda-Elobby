@@ -27,15 +27,13 @@ import MyMovies from "../Agenda/MyMovies";
 import MyTV from "../Agenda/MyTV";
 import MyGames from "../Agenda/MyGames";
 import MyBooks from "../Agenda/MyBooks";
-import { Image } from "react-bootstrap";
-import getUser from "../../services/getUser";
 import Loading from "../Loading/Loading";
 import DiaryCard from "../Agenda/DiaryCard";
 import getDiary from "../../services/getDiary";
-import {
-  getGamesFromThird,
-  getFromTheMovieDB,
-} from "../../services/getFromThirdApis";
+
+import { getGamesFromThird, getFromTheMovieDB } from "../../services/getFromThirdApis";
+import ReviewUser from "../ReviewUser/ReviewUser";
+
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -143,6 +141,7 @@ export default function Home() {
               <Route path="Books" element={<MyBooks />} />
             </Route>
             {/* Fin Rutin de perfil y agenda*/}
+            <Route path="test" element={<ReviewUser />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
@@ -273,6 +272,7 @@ function Main() {
     }
     fetchData();
   }, [jwt]);
+
 
   if (loading) {
     return <Loading />;

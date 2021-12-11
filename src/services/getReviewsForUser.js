@@ -1,6 +1,7 @@
 import parseJwt from "./parseJwt"
 
-const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/reviews"
+const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/api/reviews`;
+// const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/reviews";
 
 export default function getReviewsForUser({jwt}){
     let user = parseJwt(jwt);
@@ -9,5 +10,5 @@ export default function getReviewsForUser({jwt}){
     }).then(res => {
         return res.json()
     }).then(res => res)
-    .catch(error => console.log(error))
+    .catch(error => console.error(error))
 }
