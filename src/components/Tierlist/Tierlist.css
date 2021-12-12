@@ -1,5 +1,6 @@
 .main-container-tierlist {
-  position: relative;
+  /* position: relative; */
+  height: 100px;
 }
 .tier-container {
   display: flex;
@@ -23,7 +24,7 @@
   color: #1a1a17;
 
   color: #333;
-  min-height: 300px;
+  min-height: 150px;
 }
 .tierlist-item {
   margin: 10px;
@@ -80,4 +81,9 @@
 }
 .category-color-diary {
   background: hsl(221deg 44% 41%);
+}
+.list-item-tierlist {
+  object-fit: cover;
+  height: 150px;
+  width: 100px;
 }
