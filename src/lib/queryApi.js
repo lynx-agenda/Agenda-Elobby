@@ -28,20 +28,25 @@ const urlType = ({ text, startIndex }) => ({
   },
   [type.movies]: {
     url: `${ENDPOINT}/movies-tvshows`,
-    params: { query: text },
+    params: { 
+      query: text, 
+      action: "search", 
+      resourceType: "movie" },
   },
   [type.tv]: {
     url: `${ENDPOINT}/movies-tvshows`,
     params: {
       query: text,
+      action: "search",
+      resourceType: "tv"
     },
   },
 });
 
 const queryApi = async ({ text, type, startIndex }) => {
   const { url, params } = urlType({ text, startIndex })[type];
-  let response = await axios.get(url, {
-    params,
+  let response = await axios.post(url, {
+    ... params,
   });
 
   return response.data;
