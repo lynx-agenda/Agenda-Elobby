@@ -30,8 +30,8 @@ export default function ViewMovie() {
           "https://www.googleapis.com/books/v1/volumes/" + id
         );
         const data = await response.json();
+        data.typeElobby = 'book'
         setResponse(data);
-        console.log(data);
 
         const allReviews = await getAllReviews({ jwt });
         const ReviewsForElement = allReviews.filter(

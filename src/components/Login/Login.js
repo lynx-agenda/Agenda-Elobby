@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useUser from "../../hooks/useUser";
 import logo from "../../img/lince.png"
-import LoginGoogle from "./LoginGoogle";
+// import LoginGoogle from "./LoginGoogle";
 
 
 export default function Login(){

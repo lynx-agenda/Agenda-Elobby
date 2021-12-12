@@ -177,9 +177,6 @@ function Books() {
       <section className="py-5 marginNav">
         <div className="container">
           <Search url="/Books/Browser/" />
-
-          <h1>Destacados</h1>
-
           <BooksData subject="Fiction" key="Fiction" page={page} />
         </div>
       </section>
