@@ -84,6 +84,12 @@ export default function useModal()  {
                             Descartado
                         </label>
                     </div>
+                    <div class="form-check mt-3">
+                        <input class="form-check-input" type="radio" name="state" id="swal-radio5" value="delete">
+                        <label class="form-check-label" for="swal-radio5">
+                            Eliminar
+                        </label>
+                    </div>
                 </div>`,
             focusConfirm: false,
             preConfirm: () => {
@@ -91,7 +97,8 @@ export default function useModal()  {
                     {ckecked: document.getElementById('swal-radio1').checked, type: document.getElementById('swal-radio1').value},
                     {ckecked: document.getElementById('swal-radio2').checked, type: document.getElementById('swal-radio2').value},
                     {ckecked: document.getElementById('swal-radio3').checked, type: document.getElementById('swal-radio3').value},
-                    {ckecked: document.getElementById('swal-radio4').checked, type: document.getElementById('swal-radio4').value}
+                    {ckecked: document.getElementById('swal-radio4').checked, type: document.getElementById('swal-radio4').value},
+                    {ckecked: document.getElementById('swal-radio5').checked, type: document.getElementById('swal-radio5').value}
                 ]
             }
         })
@@ -100,12 +107,20 @@ export default function useModal()  {
             const select = formValues.find(element => element.ckecked);
             if(select!==undefined){
             const status = select.type;
-                await postElement({idApi, status, type, jwt});
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Se ha añadido',
-                    text: '¡Ya podras ver el elemento en tu agenda!'
-                }).then(() => window.location.reload());
+            await postElement({idApi, status, type, jwt});
+                if(status !== "delete"){
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Se ha añadido',
+                        text: '¡Ya podras ver el elemento en tu agenda!'
+                    }).then(() => window.location.reload());
+                }else{
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Se ha eliminado',
+                        text: '¡Ya no tendrás el elemento en tu agenda!'
+                    }).then(() => window.location.reload());
+                }
             }
         }
     },[jwt])
