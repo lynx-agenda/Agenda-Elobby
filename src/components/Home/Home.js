@@ -28,6 +28,7 @@ import MyTV from "../Agenda/MyTV";
 import MyGames from "../Agenda/MyGames";
 import MyBooks from "../Agenda/MyBooks";
 import Loading from "../Loading/Loading";
+import Tierlist from "../Tierlist/Tierlist";
 import DiaryCard from "../Agenda/DiaryCard";
 import getDiary from "../../services/getDiary";
 
@@ -35,6 +36,7 @@ import {
   getGamesFromThird,
   getFromTheMovieDB,
 } from "../../services/getFromThirdApis";
+
 import ReviewUser from "../ReviewUser/ReviewUser";
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
@@ -135,6 +137,7 @@ export default function Home() {
             {/* Fin Routin de Libros */}
             {/* Inicio Rutin de perfil y agenda*/}
             <Route path="/Profile" element={<Profile />} />
+            <Route path="/Tierlist" element={<Tierlist />} />
             <Route path="/Agenda" element={<Navigate replace to="/" />} />
             <Route path="/Agenda">
               <Route path="Movies" element={<MyMovies />} />
@@ -164,8 +167,6 @@ function Main() {
     async function fetchData() {
       try {
         const diary = await getDiary({ jwt });
-        console.log(diary);
-
         const allPromiseCompleted = diary.completed.map(async (element) => {
           if (element.type === "game")
             return getGamesFromThird({
@@ -184,6 +185,7 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
+
             if (element.type === "book"){
               return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
                 res.typeElobby = 'book'
@@ -236,6 +238,7 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
+
             if (element.type === "book"){
               return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
                 res.typeElobby = 'book'
@@ -262,6 +265,7 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
+
             if (element.type === "book"){
               return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
                 res.typeElobby = 'book'
@@ -272,6 +276,7 @@ function Main() {
 
         Promise.all(allPromiseCompleted)
           .then((res) => {
+
             
             setCompleted(res);
             Promise.all(allPromiseWatching).then((res) => {
@@ -292,7 +297,6 @@ function Main() {
           })
           .catch((error) => console.error(error));
       } catch (e) {
-        // console.error(e);
         window.location.href = "/NotFound";
       }
     }
