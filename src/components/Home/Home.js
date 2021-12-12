@@ -31,9 +31,11 @@ import Loading from "../Loading/Loading";
 import DiaryCard from "../Agenda/DiaryCard";
 import getDiary from "../../services/getDiary";
 
-import { getGamesFromThird, getFromTheMovieDB } from "../../services/getFromThirdApis";
+import {
+  getGamesFromThird,
+  getFromTheMovieDB,
+} from "../../services/getFromThirdApis";
 import ReviewUser from "../ReviewUser/ReviewUser";
-
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -164,7 +166,7 @@ function Main() {
         const diary = await getDiary({ jwt });
         console.log(diary);
 
-        const allPromiseCompleted = diary.completed.map((element) => {
+        const allPromiseCompleted = diary.completed.map(async (element) => {
           if (element.type === "game")
             return getGamesFromThird({
               idResource: `${element.idApi}`,
@@ -182,9 +184,15 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
+            if (element.type === "book"){
+              return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+                res.typeElobby = 'book'
+                return res
+              })
+            }
         });
 
-        const allPromiseWatching = diary.watching.map((element) => {
+        const allPromiseWatching = diary.watching.map(async (element) => {
           if (element.type === "game")
             return getGamesFromThird({
               idResource: `${element.idApi}`,
@@ -202,9 +210,15 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
+            if (element.type === "book"){
+              return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+                res.typeElobby = 'book'
+                return res
+              })
+            }
         });
 
-        const allPromiseDropped = diary.dropped.map((element) => {
+        const allPromiseDropped = diary.dropped.map(async (element) => {
           if (element.type === "game")
             return getGamesFromThird({
               idResource: `${element.idApi}`,
@@ -222,9 +236,15 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
+            if (element.type === "book"){
+              return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+                res.typeElobby = 'book'
+                return res
+              })
+            }
         });
 
-        const allPromisePending = diary.pending.map((element) => {
+        const allPromisePending = diary.pending.map(async (element) => {
           if (element.type === "game")
             return getGamesFromThird({
               idResource: `${element.idApi}`,
@@ -242,21 +262,27 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
+            if (element.type === "book"){
+              return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+                res.typeElobby = 'book'
+                return res
+              })
+            }
         });
 
         Promise.all(allPromiseCompleted)
           .then((res) => {
-            console.log(res);
+            
             setCompleted(res);
             Promise.all(allPromiseWatching).then((res) => {
-              console.log(res);
+              
               setWatching(res);
               Promise.all(allPromiseDropped).then((res) => {
-                console.log(res);
+                
                 setDropped(res);
                 Promise.all(allPromisePending)
                   .then((res) => {
-                    console.log(res);
+                    console.log(res)
                     setPending(res);
                     setLoading(false);
                   })
@@ -266,13 +292,12 @@ function Main() {
           })
           .catch((error) => console.error(error));
       } catch (e) {
-        // window.location.href = "/NotFound";
-        console.error(e);
+        // console.error(e);
+        window.location.href = "/NotFound";
       }
     }
     fetchData();
   }, [jwt]);
-
 
   if (loading) {
     return <Loading />;
@@ -286,7 +311,7 @@ function Main() {
         >
           <h2>Siguiendo</h2>
           {watching.map((item) => (
-            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center" key={item.id}>
               <DiaryCard key={item.id} elemento={item} />
             </div>
           ))}
@@ -296,7 +321,7 @@ function Main() {
         >
           <h2>Pendiente</h2>
           {pending.map((item) => (
-            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center" key={item.id}>
               <DiaryCard key={item.id} elemento={item} />
             </div>
           ))}
@@ -306,7 +331,7 @@ function Main() {
         >
           <h2>Terminado</h2>
           {completed.map((item) => (
-            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center" key={item.id}>
               <DiaryCard key={item.id} elemento={item} />
             </div>
           ))}
@@ -316,7 +341,7 @@ function Main() {
         >
           <h2>Abandonado</h2>
           {dropped.map((item) => (
-            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center" key={item.id}>
               <DiaryCard key={item.id} elemento={item} />
             </div>
           ))}

@@ -53,7 +53,7 @@ export default function Login(){
                                     Crear cuenta
                                 </Button>
                             </div>
-                            <LoginGoogle />
+                            {/* <LoginGoogle /> */}
                         </Form>
                     </div>
                 </div>
