@@ -23,8 +23,8 @@ export default function TVShow(props) {
             ? {
                 display: "flex",
                 flexDirection: "row",
-                height: "50px",
-                maxHeight: "50px",
+                height: "3.125rem",
+                maxHeight: "3.125rem",
                 ...cardStyle,
               }
             : cardStyle

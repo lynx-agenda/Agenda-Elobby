@@ -43,7 +43,7 @@ export default function useModal()  {
                     icon: 'success',
                     title: 'Se ha crcedo la review',
                     text: 'Se ha añadido la review al elemento'
-                })
+                }).then(() => window.location.reload());
             }else {
                 Swal.fire({
                     icon: 'error',
@@ -105,7 +105,7 @@ export default function useModal()  {
                     icon: 'success',
                     title: 'Se ha añadido',
                     text: '¡Ya podras ver el elemento en tu agenda!'
-                })
+                }).then(() => window.location.reload());
             }
         }
     },[jwt])

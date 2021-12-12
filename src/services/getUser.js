@@ -1,7 +1,7 @@
 import parseJwt from "./parseJwt";
 
-// const ENDPOINT = "http://localhost:27017/api/users";
 const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/api/users`;
+// const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/users";
 
 export default function getUser({ jwt }) {
   let user = parseJwt(jwt);

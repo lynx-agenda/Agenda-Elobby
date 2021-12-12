@@ -20,41 +20,42 @@ export default function Movie(props) {
   const imageStyle = { display: !srcImage ? "none" : "inherit" };
 
   return (
-      <Card
-        onClick={handlerClickMovie}
+    <Card
+      onClick={handlerClickMovie}
+      style={
+        props.isHorizontal
+          ? {
+              display: "flex",
+              flexDirection: "row",
+              height: "50px",
+              maxHeight: "50px",
+              ...cardStyle,
+            }
+          : cardStyle
+      }
+    >
+      <Card.Img
+        variant="bottom"
+        onError={(_e) => {
+          setSrcImage(undefined);
+        }}
+        alt={props?.original_title}
+        src={srcImage}
         style={
-          props.isHorizontal
-            ? {
-                display: "flex",
-                flexDirection: "row",
-                height: "50px",
-                maxHeight: "50px",
-                ...cardStyle,
-              }
-            : cardStyle
+          props.isHorizontal ? { width: "inherit", ...imageStyle } : imageStyle
         }
-      >
-        <Card.Img
-          variant="bottom"
-          onError={(_e) => {
-            setSrcImage(undefined);
-          }}
-          alt={props?.original_title}
-          src={srcImage}
-          style={
-            props.isHorizontal
-              ? { width: "inherit", ...imageStyle }
-              : imageStyle
-          }
-        />
-        <Card.Body>
+      />
+      <Card.Body>
+        <Card.Title>{props?.original_title}</Card.Title>
 
-          <Card.Title>{props?.original_title}</Card.Title>
-
-          {!props.isHorizontal && (
-            <Card.Text>{props?.overview}</Card.Text>
-          )}
-        </Card.Body>
-      </Card>
+        {!props.isHorizontal && (
+          <Card.Text>
+            {props?.overview?.length < 60
+              ? props?.overview
+              : props?.overview.slice(0, 60) + "..."}
+          </Card.Text>
+        )}
+      </Card.Body>
+    </Card>
   );
 }

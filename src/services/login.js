@@ -1,5 +1,5 @@
-// const ENDPOINT = "http://localhost:27017/auth";
 const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/auth`;
+// const ENDPOINT = "https://young-badlands-18005.herokuapp.com/auth";
 
 export default function login({ email, password }) {
   return fetch(`${ENDPOINT}/signin`, {

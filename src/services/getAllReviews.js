@@ -1,6 +1,9 @@
 // const ENDPOINT = "http://localhost:27017/api/reviews";
 const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/api/reviews`;
 
+const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/api/reviews`;
+// const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/reviews"
+
 export default function getAllReviews({ jwt }) {
   return fetch(`${ENDPOINT}`, {
     headers: {
