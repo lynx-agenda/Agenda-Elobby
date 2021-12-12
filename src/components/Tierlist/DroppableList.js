@@ -1,7 +1,7 @@
 import PropTypes from "prop-types";
 import { Droppable, Draggable } from "react-beautiful-dnd";
-import DiaryCard from "../Agenda/DiaryCard";
 import "./Tierlist.css";
+import ItemTierlist from "./ItemsTierlist";
 
 function DroppableList(props) {
   const { type, elements } = props;
@@ -38,7 +38,7 @@ function DroppableList(props) {
                     {...draggableProvided.dragHandleProps}
                     className="tierlist-item"
                   >
-                    <DiaryCard key={element.id} elemento={element} />
+                    <ItemTierlist key={element.id} elemento={element} />
                   </div>
                 )}
               </Draggable>
