@@ -25,28 +25,48 @@ export default function MyGames (){
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
-          if(element.type==="book") return getBooksFromThird({ idResource: `${element.idApi}` , typeElobby: "book"});
+          if (element.type === "book"){
+            return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+              res.typeElobby = 'book'
+              return res
+            })
+          }
       })
 
         const allPromiseWatching =  diary.watching.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
-          if(element.type==="book") return getBooksFromThird({ idResource: `${element.idApi}` , typeElobby: "book"});
+          if (element.type === "book"){
+            return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+              res.typeElobby = 'book'
+              return res
+            })
+          }
       })
 
         const allPromiseDropped =  diary.dropped.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
-          if(element.type==="book") return getBooksFromThird({ idResource: `${element.idApi}` , typeElobby: "book"});
+          if (element.type === "book"){
+            return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+              res.typeElobby = 'book'
+              return res
+            })
+          }
       })
 
         const allPromisePending =  diary.pending.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
           if(element.type==="movie") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "movie", typeElobby: "movie" })
           if(element.type==="tv") return getFromTheMovieDB({ idResource: `${element.idApi}`, resourceType: "tv", typeElobby: "tv"})
-          if(element.type==="book") return getBooksFromThird({ idResource: `${element.idApi}` , typeElobby: "book"});
+          if (element.type === "book"){
+            return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+              res.typeElobby = 'book'
+              return res
+            })
+          }
       })
 
       Promise.all(allPromiseCompleted).then(res => {
@@ -69,8 +89,7 @@ export default function MyGames (){
       
 
 			} catch (e) {
-				// window.location.href = "/NotFound";
-        console.error(e);
+				window.location.href = "/NotFound";
 			}
 		}
 		fetchData();
