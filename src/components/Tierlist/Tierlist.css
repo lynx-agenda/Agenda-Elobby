@@ -1,5 +1,6 @@
 .main-container-tierlist {
-  position: relative;
+  /* position: relative; */
+  height: 100px;
 }
 .tier-container {
   display: flex;

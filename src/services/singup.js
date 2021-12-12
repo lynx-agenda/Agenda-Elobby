@@ -1,4 +1,5 @@
-const ENDPOINT = "https://young-badlands-18005.herokuapp.com/auth";
+// const ENDPOINT = "http://localhost:27017/auth";
+const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/auth`;
 
 export default function singup({
   name,

@@ -95,76 +95,78 @@ export default function TierList() {
   }
 
   return (
-    <div className="marginNav ">
-      <DragDropContext
-        onDragEnd={(result) => {
-          const { source, destination } = result;
-          if (!destination) {
-            return;
-          }
-          if (source.droppableId === destination.droppableId) {
-            setAll((prevAll) => ({
-              ...prevAll,
-              [source.droppableId]: reorder(
-                prevAll[source.droppableId],
-                source.index,
-                destination.index
-              ),
-            }));
-            return;
-          } else {
-            // const element = all[source.droppableId][source.index];
-            setAll((prevAll) => {
-              const elements = {
+    <div className="marginNav">
+      <div className="main-container-tierlist">
+        <DragDropContext
+          onDragEnd={(result) => {
+            const { source, destination } = result;
+            if (!destination) {
+              return;
+            }
+            if (source.droppableId === destination.droppableId) {
+              setAll((prevAll) => ({
                 ...prevAll,
-                ...move(
+                [source.droppableId]: reorder(
                   prevAll[source.droppableId],
-                  prevAll[destination.droppableId],
-                  source,
-                  destination
+                  source.index,
+                  destination.index
                 ),
-              };
-              patchTierlist({
-                body: {
-                  elements: elements[source.droppableId].map(
-                    (element) => element._id
+              }));
+              return;
+            } else {
+              // const element = all[source.droppableId][source.index];
+              setAll((prevAll) => {
+                const elements = {
+                  ...prevAll,
+                  ...move(
+                    prevAll[source.droppableId],
+                    prevAll[destination.droppableId],
+                    source,
+                    destination
                   ),
-                },
-                category: source.droppableId,
-                jwt,
-              });
-              patchTierlist({
-                body: {
-                  elements: elements[destination.droppableId].map(
-                    (element) => element._id
-                  ),
-                },
-                category: destination.droppableId,
-                jwt,
-              });
+                };
+                patchTierlist({
+                  body: {
+                    elements: elements[source.droppableId].map(
+                      (element) => element._id
+                    ),
+                  },
+                  category: source.droppableId,
+                  jwt,
+                });
+                patchTierlist({
+                  body: {
+                    elements: elements[destination.droppableId].map(
+                      (element) => element._id
+                    ),
+                  },
+                  category: destination.droppableId,
+                  jwt,
+                });
 
-              return elements;
-            });
-            /**
-             * source es la fuente de donde viene el elemento
-             * destination es el destino donde se envia el elemento
-             * por tanto queremos guardar el elemento es el destination que
-             * en este caso corresponde a "destination.droppableId" que sera 'S' o 'B' por ejemplo
-             * asi llamaremos a la api para guardar el elemento que es all[source.droppableId][source.index]
-             */
-            return;
-          }
-        }}
-      >
-        {tierlistTypes.map((type) => (
-          <DroppableList
-            className="main-container-tierlist"
-            type={type}
-            elements={all[type]}
-          />
-        ))}
-        <DroppableList type="diary" elements={all.diary} />
-      </DragDropContext>
+                return elements;
+              });
+              /**
+               * source es la fuente de donde viene el elemento
+               * destination es el destino donde se envia el elemento
+               * por tanto queremos guardar el elemento es el destination que
+               * en este caso corresponde a "destination.droppableId" que sera 'S' o 'B' por ejemplo
+               * asi llamaremos a la api para guardar el elemento que es all[source.droppableId][source.index]
+               */
+              return;
+            }
+          }}
+        >
+          {tierlistTypes.map((type) => (
+            <DroppableList
+              className="main-container-tierlist"
+              type={type}
+              elements={all[type]}
+            />
+          ))}
+          <DroppableList type="diary" elements={all.diary} />
+        </DragDropContext>
+      </div>
     </div>
   );
 }
