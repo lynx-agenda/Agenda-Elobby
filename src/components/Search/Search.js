@@ -106,8 +106,8 @@ export default function Search(props) {
         >
           {autocompleteState.collections?.[0]?.items
             ?.slice(0, 5)
-            .map((element, _index) => (
-              <CardSwitch type={elementType} element={element} />
+            .map((element, index) => (
+              <CardSwitch key={index} type={elementType} element={element} />
             ))}
         </div>
       )}
