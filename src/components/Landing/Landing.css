@@ -7,13 +7,30 @@
     background-position: center;
     background-repeat: no-repeat;
     object-fit: cover;
-    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .form{
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
 .slogan{
-    margin:auto;
+   margin-top: auto;
+   margin-bottom: auto;
+   text-align: right;
+   padding-right: 10rem;
+   display: flex;
+   flex-direction: column;
+   justify-content: space-between;
+}
+
+.slogan h1{
+    margin-bottom: 2rem;
+}
+
+.organiza{
+    margin-right: 10rem;
+}
+
+.comenta{
+    margin-right: 5rem;
 }

@@ -8,9 +8,9 @@ export default function Landing (){
             {/* <div className='container'> */}
                 <div className='row'>
                     <div className='col-6 slogan'>
-                        <h1>
-                            Organiza y comenta tus historias favoritas.
-                        </h1>
+                        <h1 className='organiza'>Organiza</h1>
+                        <h1 className='comenta'>Comenta</h1>
+                        <h1 className='comparte'>Comparte</h1>
                     </div>
                     <div className='col-6 form'>
                         <Login />

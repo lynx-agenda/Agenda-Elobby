@@ -9,18 +9,20 @@ import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import useUser from "../../hooks/useUser";
 import logo from "../../img/lince.png"
+// import LoginGoogle from "./LoginGoogle";
+
 
 export default function Login(){
     const [email , setEmail] = useState("");
     const [password , setPassword] = useState("");
     const {login, error, setError} = useUser();
-    const [ckeckRemenber, setCkeckRemenber] = useState(false)
+    const [checkRemember, setCheckRemember] = useState(false)
     let navigate = useNavigate();
 
     const handlerSubmitUser = (e) => {
         e.preventDefault();
         if(email!=="" && password!==""){
-            login({email, password, ckeckRemenber});
+            login({email, password, checkRemember});
         }
     }
 
@@ -41,7 +43,7 @@ export default function Login(){
                                 <Form.Control className="inputs" type="password" placeholder="Contraseña" value={password} onChange={(e) => setPassword(e.target.value)} required/>
                             </Form.Group>
                             <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                                <Form.Check size="lg" type="checkbox" label="Recuérdarme" onChange={() => setCkeckRemenber(!ckeckRemenber)} />
+                                <Form.Check size="lg" type="checkbox" label="Recuérdame" onChange={() => setCheckRemember(!checkRemember)} />
                             </Form.Group>
                             <div className="d-flex flex-column justify-content-center">
                                 <Button variant="light" type="submit">
@@ -51,6 +53,7 @@ export default function Login(){
                                     Crear cuenta
                                 </Button>
                             </div>
+                            {/* <LoginGoogle /> */}
                         </Form>
                     </div>
                 </div>

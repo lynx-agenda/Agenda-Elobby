@@ -92,6 +92,7 @@ export default function Search(props) {
       </form>
       {autocompleteState.isOpen && (
         <div
+          className="shadow"
           style={{
             width: "100%",
             backgroundColor: " rgba(200, 200, 200, 0.8)",

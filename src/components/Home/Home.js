@@ -31,10 +31,13 @@ import Loading from "../Loading/Loading";
 import Tierlist from "../Tierlist/Tierlist";
 import DiaryCard from "../Agenda/DiaryCard";
 import getDiary from "../../services/getDiary";
+
 import {
   getGamesFromThird,
   getFromTheMovieDB,
 } from "../../services/getFromThirdApis";
+
+import ReviewUser from "../ReviewUser/ReviewUser";
 
 //Este es el componente que contiene las Routin, ahora hay 2 BrowserRouter, uno cuando este logeado y otro cuuando no
 
@@ -143,6 +146,7 @@ export default function Home() {
               <Route path="Books" element={<MyBooks />} />
             </Route>
             {/* Fin Rutin de perfil y agenda*/}
+            <Route path="test" element={<ReviewUser />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
         </div>
@@ -163,8 +167,7 @@ function Main() {
     async function fetchData() {
       try {
         const diary = await getDiary({ jwt });
-
-        const allPromiseCompleted = diary.completed.map((element) => {
+        const allPromiseCompleted = diary.completed.map(async (element) => {
           if (element.type === "game")
             return getGamesFromThird({
               idResource: `${element.idApi}`,
@@ -182,10 +185,16 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
-          return null;
+
+            if (element.type === "book"){
+              return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+                res.typeElobby = 'book'
+                return res
+              })
+            }
         });
 
-        const allPromiseWatching = diary.watching.map((element) => {
+        const allPromiseWatching = diary.watching.map(async (element) => {
           if (element.type === "game")
             return getGamesFromThird({
               idResource: `${element.idApi}`,
@@ -203,10 +212,15 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
-          return null;
+            if (element.type === "book"){
+              return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+                res.typeElobby = 'book'
+                return res
+              })
+            }
         });
 
-        const allPromiseDropped = diary.dropped.map((element) => {
+        const allPromiseDropped = diary.dropped.map(async (element) => {
           if (element.type === "game")
             return getGamesFromThird({
               idResource: `${element.idApi}`,
@@ -224,10 +238,16 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
-          return null;
+
+            if (element.type === "book"){
+              return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+                res.typeElobby = 'book'
+                return res
+              })
+            }
         });
 
-        const allPromisePending = diary.pending.map((element) => {
+        const allPromisePending = diary.pending.map(async (element) => {
           if (element.type === "game")
             return getGamesFromThird({
               idResource: `${element.idApi}`,
@@ -245,18 +265,29 @@ function Main() {
               resourceType: "tv",
               typeElobby: "tv",
             });
-          return null;
+
+            if (element.type === "book"){
+              return fetch("https://www.googleapis.com/books/v1/volumes/" + element.idApi).then((res) => res.json()).then((res) => {
+                res.typeElobby = 'book'
+                return res
+              })
+            }
         });
 
         Promise.all(allPromiseCompleted)
           .then((res) => {
+
+            
             setCompleted(res);
             Promise.all(allPromiseWatching).then((res) => {
+              
               setWatching(res);
               Promise.all(allPromiseDropped).then((res) => {
+                
                 setDropped(res);
                 Promise.all(allPromisePending)
                   .then((res) => {
+                    console.log(res)
                     setPending(res);
                     setLoading(false);
                   })
@@ -279,44 +310,52 @@ function Main() {
   return (
     <section className=" py-5 marginNav">
       <div className="container">
-        <div className={watching.length !== 0 ? "state-section" : "invisible"}>
+        <div
+          className={watching.length !== 0 ? "state-section row" : "invisible"}
+        >
           <h2>Siguiendo</h2>
-          <div className="elements-list">
-            {watching.map((item) => (
+          {watching.map((item) => (
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center" key={item.id}>
               <DiaryCard key={item.id} elemento={item} />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-        <div className={pending.length !== 0 ? "state-section" : "invisible"}>
+        <div
+          className={pending.length !== 0 ? "state-section row" : "invisible"}
+        >
           <h2>Pendiente</h2>
-          <div className="elements-list">
-            {pending.map((item) => (
+          {pending.map((item) => (
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center" key={item.id}>
               <DiaryCard key={item.id} elemento={item} />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-        <div className={completed.length !== 0 ? "state-section" : "invisible"}>
+        <div
+          className={completed.length !== 0 ? "state-section row" : "invisible"}
+        >
           <h2>Terminado</h2>
-          <div className="elements-list">
-            {completed.map((item) => (
+          {completed.map((item) => (
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center" key={item.id}>
               <DiaryCard key={item.id} elemento={item} />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
-        <div className={dropped.length !== 0 ? "state-section" : "invisible"}>
+        <div
+          className={dropped.length !== 0 ? "state-section row" : "invisible"}
+        >
           <h2>Abandonado</h2>
-          <div className="elements-list">
-            {dropped.map((item) => (
+          {dropped.map((item) => (
+            <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center" key={item.id}>
               <DiaryCard key={item.id} elemento={item} />
-            ))}
-          </div>
+            </div>
+          ))}
         </div>
         <p
           className={
-            watching.length === 0 &&
-            pending.length === 0 &&
-            completed.length === 0 &&
-            dropped.length === 0
+            watching.length == 0 &&
+            pending.length == 0 &&
+            completed.length == 0 &&
+            dropped.length == 0
               ? "empty-diary"
               : "invisible"
           }
