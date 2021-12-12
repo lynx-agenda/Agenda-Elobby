@@ -10,14 +10,27 @@ export default function DiaryCard(props) {
   let elemento = props.elemento;
   let navigate = useNavigate();
   let viewURL = "";
+  let imgSRC = '';
+  let title = ''
   if (elemento.typeElobby === "game") {
     viewURL = `/Games/View/${elemento.id}`;
+    imgSRC = elemento.background_image
+    title = elemento.name
   }
   if (elemento.typeElobby === "tv") {
     viewURL = `/TV/View/${elemento.id}`;
+    imgSRC = ImageByMovieDB(elemento.poster_path)
+    title = elemento.original_title
   }
   if (elemento.typeElobby === "movie") {
     viewURL = `/Movies/View/${elemento.id}`;
+    imgSRC = ImageByMovieDB(elemento.poster_path)
+    title = elemento.original_title
+  }
+  if(elemento.typeElobby === "book") {
+    viewURL = `/Books/View/${elemento.id}`;
+    imgSRC = elemento.volumeInfo.imageLinks?.thumbnail
+    title = elemento.volumeInfo.title
   }
 
   const handleClick = () => {
@@ -26,17 +39,11 @@ export default function DiaryCard(props) {
 
   return (
     <div onClick={handleClick} className="list-item">
-      {elemento.poster_path !== undefined ? (
-        <Image src={ImageByMovieDB(elemento.poster_path)} fluid />
-      ) : (
-        <Image src={elemento.background_image} fluid />
-      )}
+      {
+        <Image src={imgSRC} fluid />
+      }
       <div className="overlay">
-        {elemento.name !== undefined ? (
-          <h1>{elemento.name}</h1>
-        ) : (
-          <h1>{elemento.original_title}</h1>
-        )}
+        {<h1>{title}</h1>}
       </div>
     </div>
   );
