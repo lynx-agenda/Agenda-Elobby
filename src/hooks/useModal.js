@@ -56,14 +56,13 @@ export default function useModal()  {
 
     const ViewModalState = useCallback(async ({idApi, type, newElement}) => {
         let addDeleteCheck = '';
-        if(!newElement) {
-            addDeleteCheck = `<div class="form-check mt-3">
-                                <input class="form-check-input" type="radio" name="state" id="swal-radio5" value="delete">
-                                <label class="form-check-label" for="swal-radio5">
-                                    Eliminar
-                                </label>
-                            </div>`}
-        console.log(newElement)
+        // if(!newElement) {
+        //     addDeleteCheck = `<div class="form-check mt-3">
+        //                         <input class="form-check-input" type="radio" name="state" id="swal-radio5" value="delete">
+        //                         <label class="form-check-label" for="swal-radio5">
+        //                             Eliminar
+        //                         </label>
+        //                     </div>`}
         const { value: formValues } = await Swal.fire({
             title: 'Añadir a...',
             showCancelButton: true,
@@ -104,7 +103,7 @@ export default function useModal()  {
                     {ckecked: document.getElementById('swal-radio4').checked, type: document.getElementById('swal-radio4').value},
                 ]
                 if(!newElement){
-                    option.push({ckecked: document.getElementById('swal-radio5').checked, type: document.getElementById('swal-radio5').value})
+                    // option.push({ckecked: document.getElementById('swal-radio5').checked, type: document.getElementById('swal-radio5').value})
                 }
                 return option
             }

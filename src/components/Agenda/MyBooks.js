@@ -3,7 +3,7 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import DiaryCard from "./DiaryCard";
 import { useState, useEffect } from "react";
 import useUser from "../../hooks/useUser";
-import { getFromTheMovieDB, getGamesFromThird, getBooksFromThird } from "../../services/getFromThirdApis";
+import { getFromTheMovieDB, getGamesFromThird} from "../../services/getFromThirdApis";
 import getDiary from "../../services/getDiary";
 import Loading from "../Loading/Loading";
 
@@ -19,7 +19,6 @@ export default function MyGames (){
     async function fetchData() {
 			try {
 				const diary = await getDiary({jwt})
-        console.log(diary);
 
         const allPromiseCompleted =  diary.completed.map(element => {
           if(element.type==="game") return getGamesFromThird({ idResource: `${element.idApi}` , typeElobby: "game"}); 
@@ -30,7 +29,7 @@ export default function MyGames (){
               res.typeElobby = 'book'
               return res
             })
-          }
+          } else return null;
       })
 
         const allPromiseWatching =  diary.watching.map(element => {
@@ -42,7 +41,7 @@ export default function MyGames (){
               res.typeElobby = 'book'
               return res
             })
-          }
+          } else return null;
       })
 
         const allPromiseDropped =  diary.dropped.map(element => {
@@ -54,7 +53,7 @@ export default function MyGames (){
               res.typeElobby = 'book'
               return res
             })
-          }
+          } else return null;
       })
 
         const allPromisePending =  diary.pending.map(element => {
@@ -66,20 +65,16 @@ export default function MyGames (){
               res.typeElobby = 'book'
               return res
             })
-          }
+          } else return null;
       })
 
       Promise.all(allPromiseCompleted).then(res => {
-        console.log(res);
         setCompleted(res);
         Promise.all(allPromiseWatching).then(res => {
-          console.log(res);
           setWatching(res);
           Promise.all(allPromiseDropped).then(res => {
-            console.log(res);
             setDropped(res);
             Promise.all(allPromisePending).then(res => {
-              console.log(res);
               setPending(res);
               setLoading(false);
             }).catch(error => console.error(error))
@@ -106,11 +101,11 @@ export default function MyGames (){
             {watching.map((item) => {
               if(item.typeElobby === 'book'){
                 return(
-                  <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
-                    <DiaryCard key={item.id} elemento={item} />
+                  <div key={item.id} className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+                    <DiaryCard elemento={item} />
                   </div>
                 )
-              }
+              } else return null
             })}
         </div>
         <div className={pending.some(el => el.typeElobby === 'book') ? "state-section" : "invisible"}>
@@ -118,11 +113,11 @@ export default function MyGames (){
           {pending.map((item) => {
             if(item.typeElobby === 'book'){
               return(
-                  <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
-                    <DiaryCard key={item.id} elemento={item} />
+                  <div key={item.id} className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+                    <DiaryCard elemento={item} />
                   </div>
                 )
-              }
+              }else return null
             })}
         </div>
         <div className={completed.some(el => el.typeElobby === 'book') ? "state-section" : "invisible"}>
@@ -130,11 +125,11 @@ export default function MyGames (){
           {completed.map((item) => {
             if(item.typeElobby === 'book'){
               return(
-                  <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
-                    <DiaryCard key={item.id} elemento={item} />
+                  <div key={item.id} className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+                    <DiaryCard elemento={item} />
                   </div>
                 )
-              }
+              }else return null
             })}
         </div>
         <div className={dropped.some(el => el.typeElobby === 'book') ? "state-section" : "invisible"}>
@@ -142,11 +137,11 @@ export default function MyGames (){
           {dropped.map((item) => {
             if(item.typeElobby === 'book'){
               return(
-                  <div className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
-                    <DiaryCard key={item.id} elemento={item} />
+                  <div key={item.id} className="col-12 col-md-6 col-lg-3 mt-4 d-flex justify-content-center">
+                    <DiaryCard elemento={item} />
                   </div>
                 )
-              }
+              }else return null
             })}
         </div>
       </div>

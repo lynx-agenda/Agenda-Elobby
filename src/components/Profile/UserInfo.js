@@ -1,11 +1,7 @@
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./UserInfo.css";
-import getUser from "../../services/getUser";
-import useUser from "../../hooks/useUser";
-import { useEffect, useState } from "react";
 
 export default function UserInfo() {
-  const { jwt } = useUser();
 
   return (
     <div className="user-info ">
