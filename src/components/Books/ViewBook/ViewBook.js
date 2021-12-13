@@ -58,10 +58,10 @@ export default function ViewMovie() {
     ViewModalReview({ idApi, type });
   };
 
-  const handlerAddClick = () => {
+  const handlerAddClick = (newElement) => {
     let idApi = id;
     let type = "book";
-    ViewModalState({ idApi, type });
+    ViewModalState({ idApi, type, newElement });
   };
 
   function SeparateGenres(categories) {
@@ -125,7 +125,7 @@ export default function ViewMovie() {
                         <Button
                           variant="outline-success"
                           className="w-50 me-2"
-                          onClick={handlerAddClick}
+                          onClick={() => handlerAddClick(false)}
                         >
                           Viendo
                         </Button>
@@ -137,7 +137,7 @@ export default function ViewMovie() {
                         <Button
                           variant="outline-primary"
                           className="w-50 me-2"
-                          onClick={handlerAddClick}
+                          onClick={() => handlerAddClick(false)}
                         >
                           Terminado
                         </Button>
@@ -149,7 +149,7 @@ export default function ViewMovie() {
                         <Button
                           variant="outline-info"
                           className="w-50 me-2"
-                          onClick={handlerAddClick}
+                          onClick={() => handlerAddClick(false)}
                         >
                           Pendiente
                         </Button>
@@ -161,7 +161,7 @@ export default function ViewMovie() {
                         <Button
                           variant="outline-danger"
                           className="w-50 me-2"
-                          onClick={handlerAddClick}
+                          onClick={() => handlerAddClick(false)}
                         >
                           Descartado
                         </Button>
@@ -185,7 +185,7 @@ export default function ViewMovie() {
                         <Button
                           variant="secondary"
                           className="w-50 me-2"
-                          onClick={handlerAddClick}
+                          onClick={() => handlerAddClick(true)}
                         >
                           Añadir
                         </Button>

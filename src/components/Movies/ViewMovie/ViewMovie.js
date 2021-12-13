@@ -57,10 +57,10 @@ export default function ViewMovie() {
 
 	}
 
-	const handlerAddClick = () => {
+	const handlerAddClick = (newElement) => {
 		let idApi = id;
 		let type = "movie"
-		ViewModalState({idApi, type});
+		ViewModalState({idApi, type, newElement});
 	}
 
 
@@ -105,12 +105,12 @@ export default function ViewMovie() {
                       {response.genres.map((genre, index) => {return ( <span key={index} className="badge bg-secondary mx-1">{genre.name}</span> ) })}
                     </p>
                     <div className="d-flex">
-                      {diary.watching.some(res => res.idApi===id && res.type === response.typeElobby) ? <Button variant="outline-success" className="w-50 me-2" onClick={handlerAddClick}>Viendo</Button> : null}{' '}
-                      {diary.completed.some(res => res.idApi===id && res.type === response.typeElobby) ? <Button variant="outline-primary" className="w-50 me-2" onClick={handlerAddClick}>Terminado</Button> : null}{' '}
-                      {diary.pending.some(res => res.idApi===id && res.type === response.typeElobby) ? <Button variant="outline-info" className="w-50 me-2" onClick={handlerAddClick}>Pendiente</Button> : null}{' '}
-                      {diary.dropped.some(res => res.idApi===id && res.type === response.typeElobby) ? <Button variant="outline-danger" className="w-50 me-2" onClick={handlerAddClick}>Descartado</Button> : null}{' '}
+                      {diary.watching.some(res => res.idApi===id && res.type === response.typeElobby) ? <Button variant="outline-success" className="w-50 me-2" onClick={()=>handlerAddClick(false)}>Viendo</Button> : null}{' '}
+                      {diary.completed.some(res => res.idApi===id && res.type === response.typeElobby) ? <Button variant="outline-primary" className="w-50 me-2" onClick={()=>handlerAddClick(false)}>Terminado</Button> : null}{' '}
+                      {diary.pending.some(res => res.idApi===id && res.type === response.typeElobby) ? <Button variant="outline-info" className="w-50 me-2" onClick={()=>handlerAddClick(false)}>Pendiente</Button> : null}{' '}
+                      {diary.dropped.some(res => res.idApi===id && res.type === response.typeElobby) ? <Button variant="outline-danger" className="w-50 me-2" onClick={()=>handlerAddClick(false)}>Descartado</Button> : null}{' '}
                       {diary.dropped.some(res => res.idApi===id && res.type === response.typeElobby) || diary.watching.some(res => res.idApi===id && res.type === response.typeElobby) || diary.completed.some(res => res.idApi===id && res.type === response.typeElobby) || diary.pending.some(res => res.idApi===id && res.type === response.typeElobby) ? 
-                      null: <Button variant="secondary" className="w-50 me-2" onClick={handlerAddClick}>Añadir</Button>}{' '}
+                      null: <Button variant="secondary" className="w-50 me-2" onClick={()=>handlerAddClick(true)}>Añadir</Button>}{' '}
                       <Button variant="outline-dark" className="w-50 " onClick={handlerReviewClick}><BiCommentDetail /> Review</Button>
                     </div>
                   </div>
