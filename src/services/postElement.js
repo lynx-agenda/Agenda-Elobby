@@ -1,4 +1,4 @@
-import addToDiary from "./addToDiary"
+import updateDiary from "./updateDiary"
 
 const ENDPOINT = `${process.env.REACT_APP_BACKEND_HOST}/api/elements`;
 // const ENDPOINT = "https://young-badlands-18005.herokuapp.com/api/elements"
@@ -12,7 +12,7 @@ export default function postElement({idApi, status, type, jwt}){
         return res.json()
     }).then(res => {
         let idElement = res.element._id;
-        return addToDiary({idElement, status, jwt})
+        return updateDiary({idElement, status, jwt})
             .then(res2 => res2);
     })
     .catch(error => console.error(error))
