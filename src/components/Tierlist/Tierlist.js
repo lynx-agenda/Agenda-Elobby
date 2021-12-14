@@ -83,12 +83,11 @@ export default function TierList() {
           diary,
         }));
       } catch (e) {
-        // window.location.href = "/NotFound";
-        console.error(e);
+        window.location.href = "/NotFound";
       }
     }
     fetchData();
-  }, []);
+  }, [jwt]);
 
   if (loading) {
     return <Loading />;

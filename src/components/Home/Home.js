@@ -287,7 +287,6 @@ function Main() {
                 setDropped(res);
                 Promise.all(allPromisePending)
                   .then((res) => {
-                    console.log(res)
                     setPending(res);
                     setLoading(false);
                   })
@@ -352,10 +351,10 @@ function Main() {
         </div>
         <p
           className={
-            watching.length == 0 &&
-            pending.length == 0 &&
-            completed.length == 0 &&
-            dropped.length == 0
+            watching.length === 0 &&
+            pending.length === 0 &&
+            completed.length === 0 &&
+            dropped.length === 0
               ? "empty-diary"
               : "invisible"
           }

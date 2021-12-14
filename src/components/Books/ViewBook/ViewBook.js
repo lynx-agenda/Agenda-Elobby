@@ -4,7 +4,7 @@ import Image from "react-bootstrap/Image";
 import ReactHtmlParser from "react-html-parser";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
-import { BiCommentDetail, BiTrim } from "react-icons/bi";
+import { BiCommentDetail} from "react-icons/bi";
 import useModal from "../../../hooks/useModal";
 import "bootstrap/dist/css/bootstrap.min.css";
 import getAllReviews from "../../../services/getAllReviews";
@@ -45,8 +45,7 @@ export default function ViewMovie() {
         setReviews(ReviewsForElement);
         setLoading(true);
       } catch (e) {
-        console.log(e);
-        // window.location.href = "/NotFound";
+        window.location.href = "/NotFound";
       }
     }
     getData();
@@ -66,7 +65,6 @@ export default function ViewMovie() {
 
   function SeparateGenres(categories) {
     const genres = categories[0].split('/')
-    console.log(genres)
     return(
         <>
             {genres.map((genre, index) => {

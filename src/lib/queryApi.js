@@ -46,7 +46,7 @@ const urlType = ({ text, startIndex }) => ({
 const queryApi = async ({ text, type, startIndex }) => {
   const { url, params } = urlType({ text, startIndex })[type];
   let response = await axios.post(url, {
-    ... params,
+    ...params,
   });
 
   return response.data;

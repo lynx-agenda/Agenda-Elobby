@@ -15,5 +15,9 @@ export default function postElement({idApi, status, type, jwt}){
         return updateDiary({idElement, status, jwt})
             .then(res2 => res2);
     })
-    .catch(error => console.error(error))
+    .then((res) => {
+      let idElement = res.element._id;
+      return updateDiary({ idElement, status, jwt }).then((res2) => res2);
+    })
+    .catch((error) => console.error(error));
 }
